@@ -11,7 +11,7 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField] private float thrust = 4.0f;
+    [SerializeField] private float thrustSpeed = 4.0f;
     [SerializeField] private float maxPlayerSpeed = 6.0f;
     private float rotationSpeed = 1.5F;
     [SerializeField] Boundary boundary;
@@ -30,15 +30,15 @@ public class PlayerController : MonoBehaviour {
 	void Update ()
     {
 
-        ProcessMovement();
+        ProcessThrust();
         ProcessRotation();
         KeepPlayerOnScreen();
     }
 
-    void ProcessMovement()
+    void ProcessThrust()
     {
-        float moveVertical = Input.GetAxis("Vertical");
-        rbody.AddForce(transform.up * thrust * moveVertical);
+        float thrust = Input.GetAxis("Vertical");
+        rbody.AddForce(transform.up * thrustSpeed * thrust);
         rbody.velocity = Vector3.ClampMagnitude(rbody.velocity, maxPlayerSpeed);
 
         if (rbody.velocity.magnitude > maxPlayerSpeed)
