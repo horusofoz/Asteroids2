@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4063b1abb597043822728e381c2bc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 4
+  thrustSpeed: 4
   maxPlayerSpeed: 6
   boundary:
     xMin: -8.25
