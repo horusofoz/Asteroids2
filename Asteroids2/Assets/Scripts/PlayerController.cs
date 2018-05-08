@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,24 +12,31 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField] private float thrustSpeed = 4.0f;
-    [SerializeField] private float maxPlayerSpeed = 6.0f;
-    private float rotationSpeed = 1.5F;
+    // Movement
+    [SerializeField] private float thrustSpeed = 7.5f;
+    [SerializeField] private float maxPlayerSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 5.0f;
     [SerializeField] Boundary boundary;
-
-
     Rigidbody2D rbody;
 
-	// Use this for initialization
+    // Shooting
+    [SerializeField] private float fireRate = 3f;
+    private float fireCountdown = 0f;
+    public GameObject bullet;
+    public Transform bulletSpawn;
+
 	void Start ()
     {
         rbody = GetComponent<Rigidbody2D>();
 	}
 	
-	// Update is called once per frame
-	void Update ()
+    void Update()
     {
+        ProcessShoot();
+    }
 
+	void FixedUpdate ()
+    {
         ProcessThrust();
         ProcessRotation();
         KeepPlayerOnScreen();
@@ -37,13 +45,9 @@ public class PlayerController : MonoBehaviour {
     void ProcessThrust()
     {
         float thrust = Input.GetAxis("Vertical");
-        rbody.AddForce(transform.up * thrustSpeed * thrust);
-        rbody.velocity = Vector3.ClampMagnitude(rbody.velocity, maxPlayerSpeed);
-
-        if (rbody.velocity.magnitude > maxPlayerSpeed)
-        {
-            rbody.velocity = rbody.velocity.normalized * maxPlayerSpeed;
-        }
+        Vector2 direction = new Vector2(transform.up.x, transform.up.y);
+        rbody.velocity = direction * thrustSpeed * thrust;
+        rbody.velocity = Vector2.ClampMagnitude(rbody.velocity, maxPlayerSpeed);
     }
 
     void ProcessRotation()
@@ -58,4 +62,24 @@ public class PlayerController : MonoBehaviour {
             Mathf.Clamp(rbody.position.x, boundary.xMin, boundary.xMax),
             Mathf.Clamp(rbody.position.y, boundary.yMin, boundary.yMax));
     }
+
+    private void ProcessShoot()
+    {
+        if (Input.GetButton("Fire1") == true)
+        {
+            if (fireCountdown <= 0f)
+            {
+                Shoot();
+                fireCountdown = 1f / fireRate;
+            }
+
+            fireCountdown -= Time.deltaTime;
+        }
+    }
+
+    private void Shoot()
+    {
+        Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+    }
+
 }
