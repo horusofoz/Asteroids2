@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 487479443}
   - component: {fileID: 487479442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Starfield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
