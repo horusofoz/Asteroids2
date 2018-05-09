@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour {
         rbody = GetComponent<Rigidbody2D>();
         rbody.velocity = transform.up * speed;
 	}
-
     void OnBecameInvisible()
     {
         Destroy(gameObject);

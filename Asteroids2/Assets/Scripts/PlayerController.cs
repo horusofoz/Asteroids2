@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour {
     private void Shoot()
     {
         Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+        print("Shoot");
     }
 
 }
