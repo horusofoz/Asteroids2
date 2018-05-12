@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75966cf4b405c34c91936a3b3960a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 0.25
+  lifeTime: 0.5
   explosionSound: {fileID: 8300000, guid: f66b4074f48644847ac6b50d9c87491e, type: 3}
 --- !u!212 &212639248961116714
 SpriteRenderer:
