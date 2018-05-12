@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 12
+  bulletSound: {fileID: 8300000, guid: 6e1f1963a01973140a12900e5babb0f8, type: 3}
 --- !u!212 &212337024240094704
 SpriteRenderer:
   m_ObjectHideFlags: 1
