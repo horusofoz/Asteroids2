@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour {
         Vector2 direction = new Vector2(transform.up.x, transform.up.y);
         rbody.velocity = direction * thrustSpeed * thrust;
         rbody.velocity = Vector2.ClampMagnitude(rbody.velocity, maxPlayerSpeed);
+        
     }
 
     void ProcessRotation()

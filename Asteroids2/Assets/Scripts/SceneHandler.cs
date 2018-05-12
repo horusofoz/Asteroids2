@@ -12,8 +12,8 @@ public class SceneHandler : MonoBehaviour {
     const int SCENE_MISSION_START = 1;
     const int SCENE_HELP = 2;
     const int SCENE_GAME = 3;
-
-
+    const int SCENE_MISSION_FAILED = 4;
+    const int SCENE_GAME_WON = 5;
 
     void Awake()
     {
@@ -35,22 +35,24 @@ public class SceneHandler : MonoBehaviour {
 
     private void ProcessInput()
     {
-        // If Menu Scene
-        if (SceneManager.GetActiveScene().buildIndex == SCENE_MENU)
-        {
-            LoadMissionScene();
-        }
+        print(SceneManager.GetActiveScene().buildIndex);
 
-        // If Mission Start Scene
-        if (SceneManager.GetActiveScene().buildIndex == SCENE_MISSION_START)
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            ProcessMissionSceneInput();
-        }
-
-        // If Help Scene
-        if (SceneManager.GetActiveScene().buildIndex == SCENE_HELP)
-        {
-            LoadMissionScene();
+            case SCENE_MENU:
+                LoadMissionScene();
+                break;
+            case SCENE_MISSION_START:
+                ProcessMissionSceneInput();
+                break;
+            case SCENE_HELP:
+                ProcessMissionSceneInput();
+                break;
+            case SCENE_GAME:
+                LoadMissionScene();
+                break;
+            default:
+                break;
         }
     }
 
@@ -72,5 +74,10 @@ public class SceneHandler : MonoBehaviour {
         {
             SceneManager.LoadScene(SCENE_GAME);
         }
+    }
+
+    private void PlayerDies()
+    {
+
     }
 }
