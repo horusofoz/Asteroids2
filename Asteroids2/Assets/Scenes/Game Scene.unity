@@ -432,26 +432,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &556921090 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1537167107582112, guid: 220bc39d4a40feb499ba723800eac50c,
-    type: 2}
-  m_PrefabInternal: {fileID: 70742206}
---- !u!58 &556921096
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 556921090}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 7
 --- !u!4 &611805714 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4451959765031468, guid: f3e39c461e9044965a256dba43ba9347,
