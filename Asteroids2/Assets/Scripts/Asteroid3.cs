@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class Asteroid3 : MonoBehaviour
 {
-
     public float maxSpeed;
     public float maxSpin;
     public Rigidbody2D rbody;
     public float screenTop;
     public float screenBottom;
     public float screenLeft;
-    public float screenRight;
+	public float screenRight;
+	float x;
+	float y;
+	Vector2 startingPosition;
 
     // Use this for initialization
     void Start()
     {
+		//Start location
+		x = Random.Range(screenLeft, screenRight);
+		y = Random.Range(screenBottom, screenTop);
+		startingPosition = new Vector2(x, y);
+		transform.position = startingPosition;
+
         //Add random amount of Speed & Spin
         Vector2 speed = new Vector2(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
         float spin = Random.Range(-maxSpin, maxSpin);
