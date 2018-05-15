@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Random to pick which edge of the screen to spawn at 
+Create new empty vector2
+If top or bottom, set Y value to 0 or max
+If left or right, set X value to 0 or max
+Randomise orther X or Y value depending on screen edge selected
+Spawn object position at that vector
+*/
+
+
 public class Asteroid3 : MonoBehaviour
 {
     public float maxSpeed;
