@@ -89,13 +89,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d71b3d7db65f4cf89500c72c3d102a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbody: {fileID: 50103542636265054}
   maxSpeed: 80
   maxSpin: 150
-  rbody: {fileID: 50103542636265054}
-  screenTop: 5.9
-  screenBottom: -5.9
   screenLeft: -9.6
   screenRight: 9.6
+  screenBottom: -5.9
+  screenTop: 5.9
+  spawnBoundaryLeft: -11.6
+  spawnBoundaryRight: 11.6
+  spawnBoundaryBottom: -7.9
+  spawnBoundaryTop: 7.9
 --- !u!212 &212793907196349640
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -2,29 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-Random to pick which edge of the screen to spawn at 
-Create new empty vector2
-If top or bottom, set Y value to 0 or max
-If left or right, set X value to 0 or max
-Randomise orther X or Y value depending on screen edge selected
-Spawn object position at that vector
-*/
-
 
 public class Asteroid3 : MonoBehaviour
 {
+	public Rigidbody2D rbody;
 	public float maxSpeed;
 	public float maxSpin;
-	public Rigidbody2D rbody;
-	public float screenTop;
-	public float screenBottom;
-	public float screenLeft;
+    public float screenLeft;
 	public float screenRight;
+	public float screenBottom;
+	public float screenTop;
+    public float spawnBoundaryLeft;
+	public float spawnBoundaryRight;
+	public float spawnBoundaryBottom;
+	public float spawnBoundaryTop;
 	float x;
 	float y;
-	Vector2 startingPosition;
 	bool withinViewport = false;
+	Vector2 startingPosition;
+	Vector2 spawnArea = new Vector2();
 
 	// Use this for initialization
 	void Start()
@@ -74,16 +70,59 @@ public class Asteroid3 : MonoBehaviour
 
 			transform.position = newPos;
 		}
+
+		else if (withinViewport == false)
+		{
+			Vector2 newPos = transform.position;
+
+            if (transform.position.y > spawnBoundaryTop)
+            {
+				newPos.y = spawnBoundaryBottom;
+            }
+			if (transform.position.y < spawnBoundaryBottom)
+            {
+				newPos.y = spawnBoundaryTop;
+            }
+			if (transform.position.x > spawnBoundaryRight)
+            {
+				newPos.x = spawnBoundaryLeft;
+            }
+			if (transform.position.x < spawnBoundaryLeft)
+            {
+				newPos.x = spawnBoundaryRight;
+            }
+
+            transform.position = newPos;
+		}
 	}
 
 	//Spawn the asteroids
 	public void AsteroidSpawn()
 	{
-		//Start location
-        x = Random.Range(screenLeft, screenRight);
-		y = Random.Range(screenBottom, screenTop);
-		startingPosition = new Vector2(x, y);
-		transform.position = startingPosition;
+		//Left spawn box
+        float xLeft = Random.Range(spawnBoundaryLeft, screenLeft);
+        float yLeft = Random.Range(screenBottom, screenTop);
+		Vector2 leftSpawn = new Vector2(xLeft, yLeft);
+
+        //Right spawn box
+        float xRight = Random.Range(screenRight, spawnBoundaryRight);
+        float yRight = Random.Range(screenBottom, screenTop);
+		Vector2 rightSpawn = new Vector2(xRight, yRight);
+
+        //Bottom spawn box
+        float xBottom = Random.Range(screenLeft, screenRight);
+        float yBottom = Random.Range(screenBottom, spawnBoundaryBottom);
+		Vector2 bottomSpawn = new Vector2(xBottom, yBottom);
+
+        //Top spawn box
+        float xTop = Random.Range(screenLeft, screenRight);
+        float yTop = Random.Range(spawnBoundaryTop, screenTop);
+		Vector2 topSpawn = new Vector2(xTop, yTop);
+
+		//Create Random Spawn location
+		Vector2 spawnPosition = new Vector2((xLeft + xRight + xBottom + xTop), (yLeft + yRight + yBottom + yTop));
+
+        transform.position = spawnPosition;
 
 		//Add random amount of Speed & Spin
         Vector2 speed = new Vector2(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
@@ -99,10 +138,4 @@ public class Asteroid3 : MonoBehaviour
 		IsWithinViewport();
         ScreenWrap();
 	}
-
-    /*void spawnArea ()
-	{
-		Vector2 spawnArea = new Vector2();
-        float 
-	}*/
 }
