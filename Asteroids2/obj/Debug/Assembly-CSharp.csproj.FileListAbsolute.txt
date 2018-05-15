@@ -1,0 +1,2 @@
+/Users/Jamie/Desktop/Asteroids2/Asteroids2/obj/Debug/Assembly-CSharp.csprojResolveAssemblyReference.cache
+/Users/Jamie/Desktop/Asteroids2/Asteroids2/obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache
