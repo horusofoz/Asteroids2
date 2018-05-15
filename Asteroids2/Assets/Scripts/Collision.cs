@@ -9,21 +9,25 @@ public class Collision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Bullet")
-        {
-            print("Asteroid Hit");
-            Instantiate(explosion, transform.position, transform.rotation);
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
-        }
+		if (collision.gameObject.tag == "Asteroid") 
+		{
+			if (gameObject.tag == "Bullet")
+			{
+				print("Asteroid Hit");
+				Instantiate(explosion, transform.position, transform.rotation);
+				Destroy(collision.gameObject);
+				Destroy(gameObject);
+			}
 
-        if (collision.gameObject.tag == "Player")
-        {
-            print("Player Hit");
-            Instantiate(explosion, transform.position, transform.rotation);
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
-        }
+			if (gameObject.tag == "Player")
+			{
+				print("Player Hit");
+				Instantiate(explosion, transform.position, transform.rotation);
+				Destroy(collision.gameObject);
+				Destroy(gameObject);
+			}
+		}
+
     }
 
 
