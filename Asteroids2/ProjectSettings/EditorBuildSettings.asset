@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu Scene.unity
     guid: 928b0081b989a2d45b5321887b8fe700
   - enabled: 1
-    path: Assets/Scenes/Mission Start Scene.unity
+    path: Assets/Scenes/Intro Scene.unity
     guid: 886f56597cd5ca34fbc238c2ddc70f62
   - enabled: 1
     path: Assets/Scenes/Help Scene.unity
@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scene.unity
     guid: 9b741453105be244387cf93b516604ba
+  - enabled: 1
+    path: Assets/Scenes/Game Over Scene.unity
+    guid: 6e4275d33534ca54d806b17982fea827
+  - enabled: 1
+    path: Assets/Scenes/Game Won Scene.unity
+    guid: d1e617c438bb28e45adc99ed85747109
   m_configObjects: {}

@@ -12,6 +12,8 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour {
 
+    GameObject asteroidSpawner;
+
     // Movement
     [SerializeField] private float thrustSpeed = 7.5f;
     [SerializeField] private float maxPlayerSpeed = 10f;
@@ -28,11 +30,13 @@ public class PlayerController : MonoBehaviour {
 	void Start ()
     {
         rbody = GetComponent<Rigidbody2D>();
-	}
+        asteroidSpawner = GameObject.Find("AsteroidSpawner");
+    }
 	
     void Update()
     {
         ProcessShoot();
+        CheckPlayerWon();
     }
 
 	void FixedUpdate ()
@@ -81,6 +85,16 @@ public class PlayerController : MonoBehaviour {
     private void Shoot()
     {
         Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
+    }
+
+    private void CheckPlayerWon()
+    {
+        // If no more asteroids
+        if (asteroidSpawner.transform.childCount == 0)
+        {
+            print("Loading Game Won");
+            SceneHandler.instance.LoadSceneGameWon();
+        }
     }
 
 }

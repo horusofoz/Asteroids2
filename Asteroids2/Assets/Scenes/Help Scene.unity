@@ -184,7 +184,7 @@ MonoBehaviour:
 
     Left and right arrows to rotate starship.
 
-    CTRL to fire.'
+    Left Shift to fire.'
 --- !u!222 &56496736
 CanvasRenderer:
   m_ObjectHideFlags: 0

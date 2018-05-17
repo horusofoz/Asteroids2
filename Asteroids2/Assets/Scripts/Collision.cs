@@ -25,7 +25,8 @@ public class Collision : MonoBehaviour
 				Instantiate(explosion, transform.position, transform.rotation);
 				Destroy(collision.gameObject);
 				Destroy(gameObject);
-			}
+                SceneHandler.instance.LoadSceneGameOver();
+            }
 		}
 
     }
