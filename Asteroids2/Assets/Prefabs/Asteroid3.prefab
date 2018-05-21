@@ -37,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1108853569433934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.92, y: 3.98, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0}
+  m_LocalPosition: {x: -6.932, y: 3.13, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -90,16 +90,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rbody: {fileID: 50103542636265054}
-  maxSpeed: 80
+  minSpeed: 40
+  maxSpeed: 65
+  minSpin: 45
   maxSpin: 150
-  screenLeft: -9.6
-  screenRight: 9.6
-  screenBottom: -5.9
-  screenTop: 5.9
-  spawnBoundaryLeft: -11.6
-  spawnBoundaryRight: 11.6
-  spawnBoundaryBottom: -7.9
-  spawnBoundaryTop: 7.9
+  screenLeft: -10.7
+  screenRight: 10.7
+  screenBottom: -6.8
+  screenTop: 6.8
+  spawnBoundaryLeft: -11.4
+  spawnBoundaryRight: 11.4
+  spawnBoundaryBottom: -7.5
+  spawnBoundaryTop: 7.5
 --- !u!212 &212793907196349640
 SpriteRenderer:
   m_ObjectHideFlags: 1
