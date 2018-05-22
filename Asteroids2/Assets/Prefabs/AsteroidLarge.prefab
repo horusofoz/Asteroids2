@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212793907196349640}
   - component: {fileID: 50103542636265054}
   - component: {fileID: 58206867009107294}
-  - component: {fileID: 114002993523180306}
+  - component: {fileID: 114146199576005902}
   m_Layer: 0
-  m_Name: Asteroid3
+  m_Name: AsteroidLarge
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3.6518006
---- !u!114 &114002993523180306
+--- !u!114 &114146199576005902
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,22 +86,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1108853569433934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d71b3d7db65f4cf89500c72c3d102a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 968b87ebe89224c95b420fb32de3cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rbody: {fileID: 50103542636265054}
-  minSpeed: 40
-  maxSpeed: 65
-  minSpin: 45
-  maxSpin: 150
-  screenLeft: -10.7
-  screenRight: 10.7
-  screenBottom: -6.8
-  screenTop: 6.8
-  spawnBoundaryLeft: -11.4
-  spawnBoundaryRight: 11.4
-  spawnBoundaryBottom: -7.5
-  spawnBoundaryTop: 7.5
+  minSpeed: 35
+  maxSpeed: 100
+  minSpin: 35
+  maxSpin: 100
+  screenLeft: -10
+  screenRight: 10
+  screenBottom: -8
+  screenTop: 8
+  spawnBoundaryLeft: -10.5
+  spawnBoundaryRight: 10.5
+  spawnBoundaryBottom: -8.5
+  spawnBoundaryTop: 8.5
 --- !u!212 &212793907196349640
 SpriteRenderer:
   m_ObjectHideFlags: 1

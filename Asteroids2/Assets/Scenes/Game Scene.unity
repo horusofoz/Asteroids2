@@ -197,6 +197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidLarge: {fileID: 1108853569433934, guid: f3e39c461e9044965a256dba43ba9347,
     type: 2}
+  asteroidMedium: {fileID: 0}
+  asteroidSmall: {fileID: 0}
 --- !u!1001 &418889768
 Prefab:
   m_ObjectHideFlags: 0

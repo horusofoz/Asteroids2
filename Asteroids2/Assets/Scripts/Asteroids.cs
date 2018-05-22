@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Asteroid3 : MonoBehaviour
+public class Asteroids : MonoBehaviour
 {
 	public Rigidbody2D rbody;
 	public float minSpeed;
@@ -109,3 +109,10 @@ public class Asteroid3 : MonoBehaviour
         }
     }
 }
+
+/*
+ * When collision detects large asteroid hit
+ * It calls AsteroidLargeHit()
+ * AsteroidLargeHit calls SpawnAsteroidMedium x 2, then destroy large asteroid
+ * 
+ */
