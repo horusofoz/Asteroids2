@@ -27,7 +27,7 @@ public class AsteroidSpawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		SpawnLargeAsteroids(3);
+
 	}
 	
 	// Update is called once per frame

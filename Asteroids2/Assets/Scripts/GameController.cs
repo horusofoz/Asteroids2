@@ -12,7 +12,10 @@ public class GameController : MonoBehaviour {
 
     public static GameController instance = null;
 
-    GameObject asteroidSpawner;
+    private int currentLevel = 1;
+
+    private bool levelLoaded = false;
+    private bool levelReset = false;
 
     void Awake()
     {
@@ -33,37 +36,71 @@ public class GameController : MonoBehaviour {
         ManageGameState();
     }
 
-    private void SetupGameScene()
-    {
-        if (asteroidSpawner == null)
-        {
-            asteroidSpawner = GameObject.Find("AsteroidSpawner");
-        }
-    }
-
-
-    private void CheckAsteroidsRemaining()
-    {
-        // If no more asteroids
-        if (asteroidSpawner.transform.childCount == 0)
-        {
-            //print("Loading Game Won");
-            SceneHandler.instance.LoadSceneGameWon();
-        }
-    }
-
-
     private void ManageGameState()
     {
         switch (SceneManager.GetActiveScene().buildIndex)
         {
             case SCENE_GAME:
-                SetupGameScene();
+                while(levelLoaded == false)
+                {
+                    SetupGameScene();
+                    levelLoaded = true;
+                    levelReset = false;
+                }
                 CheckAsteroidsRemaining();
+                break;
+            case SCENE_GAME_OVER:
+            case SCENE_GAME_WON:
+                while (levelReset == false)
+                {
+                    levelLoaded = false;
+                    levelReset = true;
+                }
                 break;
             default:
                 break;
         }
     }
+
+    private void SetupGameScene()
+    {
+
+        SetupCurrentLevel();
+        print("Level Loaded");
+        levelLoaded = true;
+    }
+
+    private void SetupCurrentLevel()
+    {
+        switch (currentLevel)
+        {
+            case 1:
+                AsteroidSpawner.instance.SpawnLargeAsteroids(3);
+                break;
+            case 2:
+                // TODO
+                break;
+            case 3:
+                // TODO
+                break;
+            default:
+                break;
+        }
+    }
+
+    
+
+    private void CheckAsteroidsRemaining()
+    {
+        // If no more asteroids
+        if (AsteroidSpawner.instance.transform.childCount == 0)
+        {
+            SceneHandler.instance.LoadSceneGameWon();
+        }
+    }
+
+    
+    
+
 
 }
