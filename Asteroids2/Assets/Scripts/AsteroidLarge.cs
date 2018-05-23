@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class Asteroids : MonoBehaviour
+public class AsteroidLarge : MonoBehaviour
 {
 	public Rigidbody2D rbody;
 	public float minSpeed;
@@ -18,8 +17,6 @@ public class Asteroids : MonoBehaviour
 	public float spawnBoundaryRight;
 	public float spawnBoundaryBottom;
 	public float spawnBoundaryTop;
-	float x;
-	float y;
 	bool withinViewport = false;
     Vector2 spawnLocation;
 

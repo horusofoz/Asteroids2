@@ -64,7 +64,6 @@ public class GameController : MonoBehaviour {
 
     private void SetupGameScene()
     {
-
         SetupCurrentLevel();
         print("Level Loaded");
         levelLoaded = true;
@@ -76,6 +75,8 @@ public class GameController : MonoBehaviour {
         {
             case 1:
                 AsteroidSpawner.instance.SpawnLargeAsteroids(3);
+				AsteroidSpawner.instance.SpawnMediumAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
+				AsteroidSpawner.instance.SpawnSmallAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
                 break;
             case 2:
                 // TODO
@@ -88,8 +89,6 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    
-
     private void CheckAsteroidsRemaining()
     {
         // If no more asteroids
@@ -98,9 +97,4 @@ public class GameController : MonoBehaviour {
             SceneHandler.instance.LoadSceneGameWon();
         }
     }
-
-    
-    
-
-
 }

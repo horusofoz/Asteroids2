@@ -8,7 +8,11 @@ public class AsteroidSpawner : MonoBehaviour {
 	public GameObject asteroidMedium;
 	public GameObject asteroidSmall;
 
-	public static AsteroidSpawner instance = null;
+    public static AsteroidSpawner instance = null;
+
+    //Temporary static start positions
+	Vector2 asteroidMediumStartPosition = new Vector2(20, 20);//static values for now
+	Vector2 asteroidSmallStartPosition = new Vector2(40, 40);//static values for now
 
 	void Awake()
     {
@@ -40,6 +44,22 @@ public class AsteroidSpawner : MonoBehaviour {
 		for (int i = 0; i < num; i++)
 		{
 			Instantiate(asteroidLarge, parent: transform);
+		}
+	}
+
+    public void SpawnMediumAsteroids(int num)
+	{
+		for (int i = 0; i < num; i++)
+		{
+			Instantiate(asteroidMedium, asteroidMediumStartPosition, Quaternion.identity);
+		}
+	}
+
+    public void SpawnSmallAsteroids(int num)
+	{
+		for (int i = 0; i < num; i++)
+		{
+			Instantiate(asteroidSmall, asteroidSmallStartPosition, Quaternion.identity);
 		}
 	}
 }

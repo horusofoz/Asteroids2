@@ -2,12 +2,12 @@
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AsteroidSpawner.cs">
     <Files>
-      <File FileName="Assets/Scripts/Asteroids.cs" Line="8" Column="27" />
-      <File FileName="Assets/Scripts/AsteroidSpawner.cs" Line="9" Column="34" />
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="19" Column="5" />
-      <File FileName="Assets/Scripts/Collision.cs" Line="22" Column="25" />
-      <File FileName="Assets/Scripts/Bullet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/AsteroidSpawner.cs" Line="11" Column="51" />
+      <File FileName="Assets/Scripts/AsteroidLarge.cs" Line="4" Column="1" />
+      <File FileName="Assets/Scripts/AsteroidMedium.cs" Line="112" Column="1" />
+      <File FileName="Assets/Scripts/AsteroidSmall.cs" Line="61" Column="22" />
+      <File FileName="Assets/Scripts/Collision.cs" Line="50" Column="54" />
+      <File FileName="Assets/Scripts/GameController.cs" Line="79" Column="51" />
       <File FileName="Assets/Scripts/SceneHandler.cs" Line="6" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
