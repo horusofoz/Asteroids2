@@ -5,18 +5,18 @@ using UnityEngine;
 public class AsteroidMedium : MonoBehaviour
 {
     public Rigidbody2D rbody;
-    public float minSpeed;
-    public float maxSpeed;
-    public float minSpin;
-    public float maxSpin;
-    public float screenLeft;
-    public float screenRight;
-    public float screenBottom;
-    public float screenTop;
-    public float spawnBoundaryLeft;
-    public float spawnBoundaryRight;
-    public float spawnBoundaryBottom;
-    public float spawnBoundaryTop;
+	int minSpeed = 55;
+	int maxSpeed = 75;
+	int minSpin = 80;
+	int maxSpin = 120;
+	float screenLeft = -10;
+    float screenRight = 10;
+    float screenBottom = -6.1f;
+    float screenTop = 6.1f;
+    float spawnBoundaryLeft = -10.5f;
+    float spawnBoundaryRight = 10.5f;
+    float spawnBoundaryBottom = -6.6f;
+    float spawnBoundaryTop = 6.6f;
     bool withinViewport = false;
     Vector2 spawnLocation;
 

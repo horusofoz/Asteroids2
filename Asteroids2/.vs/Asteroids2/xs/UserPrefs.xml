@@ -1,6 +1,6 @@
 ﻿<Properties StartupConfiguration="{9639EF94-83A5-FA1D-7B88-14467997D87C}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AsteroidSpawner.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AsteroidLarge.cs">
     <Files>
       <File FileName="Assets/Scripts/AsteroidSpawner.cs" Line="11" Column="51" />
       <File FileName="Assets/Scripts/AsteroidLarge.cs" Line="4" Column="1" />
