@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour {
     private bool levelLoaded = false;
     private bool levelReset = false;
 
+    public GameObject explosion;
+
     void Awake()
     {
         if (instance == null)
@@ -101,6 +103,8 @@ public class GameController : MonoBehaviour {
 
     public void PlayerDied(GameObject player)
     {
+        Transform tempPlayerTransform = player.transform;
+        Instantiate(explosion, tempPlayerTransform.transform.position, tempPlayerTransform.transform.rotation);
         Destroy(player);
         SceneHandler.instance.LoadSceneGameOver();
     }
@@ -111,5 +115,10 @@ public class GameController : MonoBehaviour {
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
+    {
+
     }
 }

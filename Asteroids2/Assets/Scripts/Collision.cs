@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-
     public GameObject explosion;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -22,7 +21,7 @@ public class Collision : MonoBehaviour
 			if (gameObject.tag == "Player")
 			{
 				print("Player Hit");
-				Instantiate(explosion, transform.position, transform.rotation);
+				//Instantiate(explosion, transform.position, transform.rotation);
                 GameController.instance.PlayerDied(collision.gameObject);
             }
 		}
