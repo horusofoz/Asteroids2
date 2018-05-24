@@ -12,15 +12,12 @@ public class Collision : MonoBehaviour
 		{
 			if (gameObject.tag == "Bullet")
 			{
-				print("Asteroid Hit");
                 GameController.instance.AsteroidLargeHitByBullet(collision.gameObject);
-                //Destroy(collision.gameObject);
-				Destroy(gameObject);
+				Destroy(gameObject); // Destroy Bullet
 			}
 
 			if (gameObject.tag == "Player")
 			{
-				print("Player Hit");
                 GameController.instance.PlayerDied(gameObject);
             }
 		}
@@ -28,19 +25,13 @@ public class Collision : MonoBehaviour
         {
             if (gameObject.tag == "Bullet")
             {
-                print("Asteroid Hit");
-                Instantiate(explosion, transform.position, transform.rotation);
-                Destroy(collision.gameObject);
-                Destroy(gameObject);
+                GameController.instance.AsteroidMediumHitByBullet(collision.gameObject);
+                Destroy(gameObject); // Destroy Bullet
             }
 
             if (gameObject.tag == "Player")
             {
-                print("Player Hit");
-                Instantiate(explosion, transform.position, transform.rotation);
-                Destroy(collision.gameObject);
-                Destroy(gameObject);
-                SceneHandler.instance.LoadSceneGameOver(); // Need to move to Game Controller
+                GameController.instance.PlayerDied(gameObject);
             }
         }
 		else if (collision.gameObject.tag == "AsteroidSmall")

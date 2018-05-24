@@ -125,6 +125,13 @@ public class GameController : MonoBehaviour {
         Destroy(asteroidLarge);
     }
 
+    public void AsteroidMediumHitByBullet(GameObject asteroidMedium)
+    {
+        Instantiate(explosion, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
+        AsteroidSpawner.instance.SpawnSmallAsteroids(2, asteroidMedium.transform);
+        Destroy(asteroidMedium);
+    }
+
     private void DelayedSceneLoad()
     {
         SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
