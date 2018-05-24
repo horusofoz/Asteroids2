@@ -14,15 +14,17 @@ public class Collision : MonoBehaviour
 			{
 				print("Asteroid Hit");
 				Instantiate(explosion, transform.position, transform.rotation);
-				Destroy(collision.gameObject);
+
+                
+
+                Destroy(collision.gameObject);
 				Destroy(gameObject);
 			}
 
 			if (gameObject.tag == "Player")
 			{
 				print("Player Hit");
-				//Instantiate(explosion, transform.position, transform.rotation);
-                GameController.instance.PlayerDied(collision.gameObject);
+                GameController.instance.PlayerDied(gameObject);
             }
 		}
 		else if (collision.gameObject.tag == "AsteroidMedium")

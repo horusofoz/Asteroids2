@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour {
     private bool levelLoaded = false;
     private bool levelReset = false;
 
+    private float sceneLoadDelay = 2.0f;
+
     public GameObject explosion;
 
     void Awake()
@@ -106,7 +108,7 @@ public class GameController : MonoBehaviour {
         Transform tempPlayerTransform = player.transform;
         Instantiate(explosion, tempPlayerTransform.transform.position, tempPlayerTransform.transform.rotation);
         Destroy(player);
-        SceneHandler.instance.LoadSceneGameOver();
+        Invoke("DelayedSceneLoad", sceneLoadDelay);
     }
 
     public void ClearSpawners()
@@ -119,6 +121,11 @@ public class GameController : MonoBehaviour {
 
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
     {
+        
+    }
 
+    private void DelayedSceneLoad()
+    {
+        SceneHandler.instance.LoadSceneGameOver();
     }
 }
