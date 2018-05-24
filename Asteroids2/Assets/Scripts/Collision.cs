@@ -13,11 +13,8 @@ public class Collision : MonoBehaviour
 			if (gameObject.tag == "Bullet")
 			{
 				print("Asteroid Hit");
-				Instantiate(explosion, transform.position, transform.rotation);
-
-                
-
-                Destroy(collision.gameObject);
+                GameController.instance.AsteroidLargeHitByBullet(collision.gameObject);
+                //Destroy(collision.gameObject);
 				Destroy(gameObject);
 			}
 

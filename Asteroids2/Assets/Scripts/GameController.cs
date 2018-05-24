@@ -103,14 +103,6 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void PlayerDied(GameObject player)
-    {
-        Transform tempPlayerTransform = player.transform;
-        Instantiate(explosion, tempPlayerTransform.transform.position, tempPlayerTransform.transform.rotation);
-        Destroy(player);
-        Invoke("DelayedSceneLoad", sceneLoadDelay);
-    }
-
     public void ClearSpawners()
     {
         foreach (Transform child in AsteroidSpawner.instance.transform)
@@ -119,13 +111,22 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public void PlayerDied(GameObject player)
+    {
+        Instantiate(explosion, player.transform.position, player.transform.rotation);
+        Destroy(player);
+        Invoke("DelayedSceneLoad", sceneLoadDelay);
+    }  
+
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
     {
-        
+        Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
+        AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
+        Destroy(asteroidLarge);
     }
 
     private void DelayedSceneLoad()
     {
-        SceneHandler.instance.LoadSceneGameOver();
+        SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
     }
 }

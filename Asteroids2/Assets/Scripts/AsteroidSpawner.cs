@@ -47,11 +47,14 @@ public class AsteroidSpawner : MonoBehaviour {
 		}
 	}
 
-    public void SpawnMediumAsteroids(int num)
+    public void SpawnMediumAsteroids(int num, Transform asteroidLargeTransform)
 	{
 		for (int i = 0; i < num; i++)
 		{
-			Instantiate(asteroidMedium, asteroidMediumStartPosition, Quaternion.identity);
+            GameObject mediumAsteroid = null; ;
+            print("Medium asteroid spawned at: " + asteroidLargeTransform.position);
+			mediumAsteroid = Instantiate(asteroidMedium, asteroidLargeTransform.transform.position, asteroidLargeTransform.transform.rotation); // Have to pass positio
+            mediumAsteroid.transform.parent = gameObject.transform;
 		}
 	}
 
@@ -63,16 +66,3 @@ public class AsteroidSpawner : MonoBehaviour {
 		}
 	}
 }
-
-
-/*
- * SpawnAsteroidMedium(transform DestroyedLargeAsteroidTransform)
- * {
- *      CREATE 2 Medium asteroids in DestroyedLargeAsteroidTransform location
- *      Direction opposite
- *      NESTED under asteroid Spawner NOT large asteroid
- * }
- * 
- * 
- * 
- */
