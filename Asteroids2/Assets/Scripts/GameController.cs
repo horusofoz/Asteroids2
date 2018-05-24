@@ -53,6 +53,7 @@ public class GameController : MonoBehaviour {
             case SCENE_GAME_WON:
                 while (levelReset == false)
                 {
+                    ClearSpawners();
                     levelLoaded = false;
                     levelReset = true;
                 }
@@ -75,8 +76,8 @@ public class GameController : MonoBehaviour {
         {
             case 1:
                 AsteroidSpawner.instance.SpawnLargeAsteroids(3);
-				AsteroidSpawner.instance.SpawnMediumAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
-				AsteroidSpawner.instance.SpawnSmallAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
+				//AsteroidSpawner.instance.SpawnMediumAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
+				//AsteroidSpawner.instance.SpawnSmallAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
                 break;
             case 2:
                 // TODO
@@ -101,5 +102,14 @@ public class GameController : MonoBehaviour {
     public void PlayerDied(GameObject player)
     {
         Destroy(player);
+        SceneHandler.instance.LoadSceneGameOver();
+    }
+
+    public void ClearSpawners()
+    {
+        foreach (Transform child in AsteroidSpawner.instance.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }
