@@ -3,14 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
+    public static GameController instance = null;
+
     const int SCENE_MENU = 0;
     const int SCENE_INTRO = 1;
     const int SCENE_HELP = 2;
     const int SCENE_GAME = 3;
     const int SCENE_GAME_OVER = 4;
     const int SCENE_GAME_WON = 5;
-
-    public static GameController instance = null;
 
     private int currentLevel = 1;
 
@@ -96,5 +96,10 @@ public class GameController : MonoBehaviour {
         {
             SceneHandler.instance.LoadSceneGameWon();
         }
+    }
+
+    public void PlayerDied(GameObject player)
+    {
+        Destroy(player);
     }
 }

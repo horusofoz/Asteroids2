@@ -23,9 +23,7 @@ public class Collision : MonoBehaviour
 			{
 				print("Player Hit");
 				Instantiate(explosion, transform.position, transform.rotation);
-				Destroy(collision.gameObject);
-				Destroy(gameObject);
-                SceneHandler.instance.LoadSceneGameOver(); // Need to move to Game Controller
+                GameController.instance.PlayerDied(collision.gameObject);
             }
 		}
 		else if (collision.gameObject.tag == "AsteroidMedium")
