@@ -38,19 +38,13 @@ public class Collision : MonoBehaviour
         {
             if (gameObject.tag == "Bullet")
             {
-                print("Asteroid Hit");
-                Instantiate(explosion, transform.position, transform.rotation);
-                Destroy(collision.gameObject);
+                GameController.instance.AsteroidSmallHitByBullet(collision.gameObject);
                 Destroy(gameObject);
             }
 
             if (gameObject.tag == "Player")
             {
-                print("Player Hit");
-                Instantiate(explosion, transform.position, transform.rotation);
-                Destroy(collision.gameObject);
-                Destroy(gameObject);
-                SceneHandler.instance.LoadSceneGameOver(); // Need to move to Game Controller
+                GameController.instance.PlayerDied(gameObject);
             }
         }
     }

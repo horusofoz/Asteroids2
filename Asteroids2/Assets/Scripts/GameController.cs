@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class GameController : MonoBehaviour {
     private bool levelReset = false;
 
     private float sceneLoadDelay = 2.0f;
+
+    public ScoreController scoreUI;
 
     public GameObject explosion;
 
@@ -123,6 +126,7 @@ public class GameController : MonoBehaviour {
         Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
         AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
         Destroy(asteroidLarge);
+        scoreUI.AddScore(150);
     }
 
     public void AsteroidMediumHitByBullet(GameObject asteroidMedium)
@@ -130,6 +134,14 @@ public class GameController : MonoBehaviour {
         Instantiate(explosion, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
         AsteroidSpawner.instance.SpawnSmallAsteroids(2, asteroidMedium.transform);
         Destroy(asteroidMedium);
+        scoreUI.AddScore(250);
+    }
+
+    public void AsteroidSmallHitByBullet(GameObject asteroidSmall)
+    {
+        Instantiate(explosion, asteroidSmall.transform.position, asteroidSmall.transform.rotation);
+        Destroy(asteroidSmall);
+        scoreUI.AddScore(400);
     }
 
     private void DelayedSceneLoad()

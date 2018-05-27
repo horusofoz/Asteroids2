@@ -35,7 +35,47 @@ public class AsteroidLarge : MonoBehaviour
 	public void SetLargeAsteroidPosition()
 	{
         
-		//List the 4 possible spawn boxes         List<Vector2> vectors = new List<Vector2>();          //Left spawn box         float xLeft = Random.Range(spawnBoundaryLeft, screenLeft);         float yLeft = Random.Range(screenBottom, screenTop);         Vector2 leftSpawn = new Vector2(xLeft, yLeft);         vectors.Add(leftSpawn);          //Right spawn box         float xRight = Random.Range(screenRight, spawnBoundaryRight);         float yRight = Random.Range(screenBottom, screenTop);         Vector2 rightSpawn = new Vector2(xRight, yRight);         vectors.Add(rightSpawn);                  //Bottom spawn box         float xBottom = Random.Range(screenLeft, screenRight);         float yBottom = Random.Range(screenBottom, spawnBoundaryBottom);         Vector2 bottomSpawn = new Vector2(xBottom, yBottom);         vectors.Add(bottomSpawn);          //Top spawn box         float xTop = Random.Range(screenLeft, screenRight);         float yTop = Random.Range(spawnBoundaryTop, screenTop);         Vector2 topSpawn = new Vector2(xTop, yTop);         vectors.Add(topSpawn);          //Choose one spawn box at random         int count = vectors.Count; 		int num = Random.Range(0, 3);         var randomVectorFromList = vectors[num];         spawnLocation = randomVectorFromList;          //Set new random vector as spawn position         transform.position = spawnLocation;          //Add random amount of Speed & Spin         Vector2 speed = new Vector2(Random.Range(minSpeed, maxSpeed), Random.Range(minSpeed, maxSpeed));         float spin = Random.Range(minSpin, maxSpin);         rbody.AddForce(speed);         rbody.AddTorque(spin);
+		//List the 4 possible spawn boxes
+        List<Vector2> vectors = new List<Vector2>();
+
+        //Left spawn box
+        float xLeft = Random.Range(spawnBoundaryLeft, screenLeft);
+        float yLeft = Random.Range(screenBottom, screenTop);
+        Vector2 leftSpawn = new Vector2(xLeft, yLeft);
+        vectors.Add(leftSpawn);
+
+        //Right spawn box
+        float xRight = Random.Range(screenRight, spawnBoundaryRight);
+        float yRight = Random.Range(screenBottom, screenTop);
+        Vector2 rightSpawn = new Vector2(xRight, yRight);
+        vectors.Add(rightSpawn);
+        
+        //Bottom spawn box
+        float xBottom = Random.Range(screenLeft, screenRight);
+        float yBottom = Random.Range(screenBottom, spawnBoundaryBottom);
+        Vector2 bottomSpawn = new Vector2(xBottom, yBottom);
+        vectors.Add(bottomSpawn);
+
+        //Top spawn box
+        float xTop = Random.Range(screenLeft, screenRight);
+        float yTop = Random.Range(spawnBoundaryTop, screenTop);
+        Vector2 topSpawn = new Vector2(xTop, yTop);
+        vectors.Add(topSpawn);
+
+        //Choose one spawn box at random
+        int count = vectors.Count;
+		int num = Random.Range(0, 3);
+        var randomVectorFromList = vectors[num];
+        spawnLocation = randomVectorFromList;
+
+        //Set new random vector as spawn position
+        transform.position = spawnLocation;
+
+        //Add random amount of Speed & Spin
+        Vector2 speed = new Vector2(Random.Range(minSpeed, maxSpeed), Random.Range(minSpeed, maxSpeed));
+        float spin = Random.Range(minSpin, maxSpin);
+        rbody.AddForce(speed);
+        rbody.AddTorque(spin);
 	}
 
 	void UpdateAsteroids()
