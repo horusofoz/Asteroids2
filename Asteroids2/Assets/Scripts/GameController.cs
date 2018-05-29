@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour {
     const int SCENE_GAME_WON = 5;
 
     private int currentLevel = 1;
+    private int currentWave = 1;
+    private int levelWaves = 0;
 
     private bool levelLoaded = false;
     private bool levelReset = false;
@@ -46,13 +48,13 @@ public class GameController : MonoBehaviour {
         switch (SceneManager.GetActiveScene().buildIndex)
         {
             case SCENE_GAME:
-                while(levelLoaded == false)
+                while (levelLoaded == false)
                 {
                     SetupGameScene();
                     levelLoaded = true;
                     levelReset = false;
                 }
-                CheckAsteroidsRemaining();
+                CheckWaveSpawnConditions();
                 break;
             case SCENE_GAME_OVER:
             case SCENE_GAME_WON:
@@ -71,7 +73,6 @@ public class GameController : MonoBehaviour {
     private void SetupGameScene()
     {
         SetupCurrentLevel();
-        print("Level Loaded");
         levelLoaded = true;
     }
 
@@ -80,9 +81,9 @@ public class GameController : MonoBehaviour {
         switch (currentLevel)
         {
             case 1:
-                AsteroidSpawner.instance.SpawnLargeAsteroids(3);
-				//AsteroidSpawner.instance.SpawnMediumAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
-				//AsteroidSpawner.instance.SpawnSmallAsteroids(2);//temp - to be deleted once they spawn on large asteroid death
+                levelWaves = 3;
+                //AsteroidSpawner.instance.SpawnLargeAsteroids(3);		
+                SpawnWave(currentWave);
                 break;
             case 2:
                 // TODO
@@ -95,12 +96,20 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    private void CheckAsteroidsRemaining()
+    private void CheckWaveSpawnConditions()
     {
         // If no more asteroids
         if (AsteroidSpawner.instance.transform.childCount == 0)
         {
-            SceneHandler.instance.LoadSceneGameWon();
+            if(currentWave <= levelWaves)
+            {
+                SpawnWave(currentWave);
+            }
+            else
+            {
+                SceneHandler.instance.LoadSceneGameWon();
+            }
+            
         }
     }
 
@@ -117,7 +126,7 @@ public class GameController : MonoBehaviour {
         Instantiate(explosion, player.transform.position, player.transform.rotation);
         Destroy(player);
         Invoke("DelayedSceneLoad", sceneLoadDelay);
-    }  
+    }
 
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
     {
@@ -143,4 +152,28 @@ public class GameController : MonoBehaviour {
     {
         SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
     }
+
+    public void SpawnWave(int waveNumber)
+    {
+        switch (waveNumber)
+        {
+            case 1:
+                AsteroidSpawner.instance.SpawnLargeAsteroids(1);
+                currentWave++;
+                break;
+            case 2:
+                AsteroidSpawner.instance.SpawnLargeAsteroids(3);
+                currentWave++;
+                break;
+            case 3:
+                AsteroidSpawner.instance.SpawnLargeAsteroids(5);
+                currentWave++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    
+
 }

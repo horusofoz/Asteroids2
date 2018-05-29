@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneHandler : MonoBehaviour {
+public class SceneHandler : MonoBehaviour
+{
 
     public static SceneHandler instance = null;
 
@@ -26,9 +27,10 @@ public class SceneHandler : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update () {
+    void Update()
+    {
         ProcessInput();
-	}
+    }
 
     private void ProcessInput()
     {
@@ -92,4 +94,5 @@ public class SceneHandler : MonoBehaviour {
     {
         SceneManager.LoadScene(SCENE_GAME_WON);
     }
+
 }

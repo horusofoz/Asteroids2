@@ -37,7 +37,6 @@ public class AsteroidSpawner : MonoBehaviour {
 		for (int i = 0; i < num; i++)
 		{
             GameObject mediumAsteroid = null;
-            print("Medium asteroid spawned at: " + asteroidLargeTransform.position);
 			mediumAsteroid = Instantiate(asteroidMedium, asteroidLargeTransform.transform.position, asteroidLargeTransform.transform.rotation);
             mediumAsteroid.transform.parent = gameObject.transform;
 		}
@@ -48,7 +47,6 @@ public class AsteroidSpawner : MonoBehaviour {
 		for (int i = 0; i < num; i++)
 		{
             GameObject smallAsteroid = null;
-            print("Small asteroid spawned at: " + asteroidMediumTransform.position);
             smallAsteroid = Instantiate(asteroidSmall, asteroidMediumTransform.transform.position, asteroidMediumTransform.transform.rotation);
             smallAsteroid.transform.parent = gameObject.transform;
         }
