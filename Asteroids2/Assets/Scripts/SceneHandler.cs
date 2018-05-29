@@ -10,8 +10,9 @@ public class SceneHandler : MonoBehaviour
     const int SCENE_INTRO = 1;
     const int SCENE_HELP = 2;
     const int SCENE_GAME = 3;
-    const int SCENE_GAME_OVER = 4;
-    const int SCENE_GAME_WON = 5;
+    const int SCENE_MISSION_COMPLETE_SCENE = 4;
+    const int SCENE_GAME_OVER = 5;
+    const int SCENE_GAME_WON = 6;
 
     void Awake()
     {
@@ -37,16 +38,19 @@ public class SceneHandler : MonoBehaviour
         switch (SceneManager.GetActiveScene().buildIndex)
         {
             case SCENE_MENU:
-                LoadSceneMissionIntro();
+                LoadSceneIntro();
                 break;
             case SCENE_INTRO:
                 ProcessInputIntro();
                 break;
             case SCENE_HELP:
-                LoadSceneMissionIntro();
+                LoadSceneIntro();
                 break;
             case SCENE_GAME:
                 //No action
+                break;
+            case SCENE_MISSION_COMPLETE_SCENE:
+                ProcessInputMissionComplete();
                 break;
             case SCENE_GAME_OVER:
             case SCENE_GAME_WON:
@@ -57,7 +61,7 @@ public class SceneHandler : MonoBehaviour
         }
     }
 
-    private void LoadSceneMissionIntro()
+    private void LoadSceneIntro()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -72,6 +76,14 @@ public class SceneHandler : MonoBehaviour
             SceneManager.LoadScene(SCENE_HELP);
         }
         else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            SceneManager.LoadScene(SCENE_GAME);
+        }
+    }
+
+    private void ProcessInputMissionComplete()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             SceneManager.LoadScene(SCENE_GAME);
         }
@@ -93,6 +105,11 @@ public class SceneHandler : MonoBehaviour
     public void LoadSceneGameWon()
     {
         SceneManager.LoadScene(SCENE_GAME_WON);
+    }
+
+    public void LoadSceneMissionComplete()
+    {
+        SceneManager.LoadScene(SCENE_MISSION_COMPLETE_SCENE);
     }
 
 }

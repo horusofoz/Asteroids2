@@ -4,26 +4,29 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
+    // Required for singleton pattern
     public static GameController instance = null;
 
+    // Level Management
     const int SCENE_MENU = 0;
     const int SCENE_INTRO = 1;
     const int SCENE_HELP = 2;
     const int SCENE_GAME = 3;
-    const int SCENE_GAME_OVER = 4;
-    const int SCENE_GAME_WON = 5;
+    const int SCENE_MISSION_COMPLETE_SCENE = 4;
+    const int SCENE_GAME_OVER = 5;
+    const int SCENE_GAME_WON = 6;
+    private bool levelLoaded = false;
+    private bool levelReset = false;
+    private float sceneLoadDelay = 2.0f;
 
+    // Wave Management
     private int currentLevel = 1;
     private int currentWave = 1;
     private int levelWaves = 0;
     private float waveTimer = 10.0f;
     private float currentWaveTime = 0.0f;
 
-    private bool levelLoaded = false;
-    private bool levelReset = false;
-
-    private float sceneLoadDelay = 2.0f;
-
+    // Store reference to explosion
     public GameObject explosion;
 
     void Awake()
@@ -52,12 +55,16 @@ public class GameController : MonoBehaviour {
             case SCENE_GAME:
                 while (levelLoaded == false)
                 {
-                    SetupGameScene();
+                    SetupCurrentLevel();
                     levelLoaded = true;
                     levelReset = false;
                 }
                 CheckWaveSpawnConditions();
                 break;
+
+            case SCENE_MISSION_COMPLETE_SCENE:
+                levelLoaded = false;
+                break ;
             case SCENE_GAME_OVER:
             case SCENE_GAME_WON:
                 while (levelReset == false)
@@ -72,12 +79,6 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    private void SetupGameScene()
-    {
-        SetupCurrentLevel();
-        levelLoaded = true;
-    }
-
     private void SetupCurrentLevel()
     {
         switch (currentLevel)
@@ -87,14 +88,18 @@ public class GameController : MonoBehaviour {
                 SpawnWave(currentWave);
                 break;
             case 2:
-                // TODO
+                levelWaves = 3;
+                SpawnWave(currentWave);
                 break;
             case 3:
-                // TODO
+                levelWaves = 3;
+                SpawnWave(currentWave);
                 break;
             default:
                 break;
         }
+
+        print("Loading Level: " + currentLevel);
     }
 
     private void CheckWaveSpawnConditions()
@@ -115,7 +120,8 @@ public class GameController : MonoBehaviour {
             }
             else
             {
-                SceneHandler.instance.LoadSceneGameWon();
+                currentLevel++;
+                SceneHandler.instance.LoadSceneMissionComplete();
             }
             
         }
@@ -133,6 +139,7 @@ public class GameController : MonoBehaviour {
     {
         Instantiate(explosion, player.transform.position, player.transform.rotation);
         Destroy(player);
+        ResetGame();
         Invoke("DelayedSceneLoad", sceneLoadDelay);
     }
 
@@ -163,8 +170,10 @@ public class GameController : MonoBehaviour {
 
     public void SpawnWave(int waveNumber)
     {
+        print("Spawning Wave: " + currentWave);
         switch (waveNumber)
         {
+            
             case 1:
                 AsteroidSpawner.instance.SpawnLargeAsteroids(1);
                 currentWave++;
@@ -181,8 +190,15 @@ public class GameController : MonoBehaviour {
                 break;
         }
         currentWaveTime = 0.0f;
+        
     }
 
-    
+    public void ResetGame()
+    {
+        currentLevel = 1;
+        currentWave = 1;
+        levelWaves = 0;
+        print("Resetting Game");
+    }
 
 }
