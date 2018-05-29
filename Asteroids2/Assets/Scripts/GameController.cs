@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -18,6 +20,7 @@ public class GameController : MonoBehaviour {
     private bool levelLoaded = false;
     private bool levelReset = false;
     private float sceneLoadDelay = 2.0f;
+    private bool gameReset = false;
 
     // Wave Management
     private int currentLevel = 1;
@@ -25,6 +28,9 @@ public class GameController : MonoBehaviour {
     private int levelWaves = 0;
     private float waveTimer = 10.0f;
     private float currentWaveTime = 0.0f;
+    List<List<int>> waveList = new List<List<int>>();
+
+    // Level 1
 
     // Store reference to explosion
     public GameObject explosion;
@@ -43,6 +49,23 @@ public class GameController : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        CreateWaveLists();
+    }
+
+    private void CreateWaveLists()
+    {
+        // Level 1
+        waveList.Add(new List<int> { 1, });
+
+        // Level 2
+        waveList.Add(new List<int> { 1, 1 });
+
+        // Level 3
+        waveList.Add(new List<int> { 1, 2 });
+    }
+
     private void Update()
     {
         ManageGameState();
@@ -52,6 +75,9 @@ public class GameController : MonoBehaviour {
     {
         switch (SceneManager.GetActiveScene().buildIndex)
         {
+            case SCENE_MENU:
+                gameReset = false;
+                break;
             case SCENE_GAME:
                 while (levelLoaded == false)
                 {
@@ -67,63 +93,14 @@ public class GameController : MonoBehaviour {
                 break ;
             case SCENE_GAME_OVER:
             case SCENE_GAME_WON:
-                while (levelReset == false)
+                if(gameReset == false)
                 {
-                    ClearSpawners();
-                    levelLoaded = false;
-                    levelReset = true;
+                    ResetGame();
                 }
+                
                 break;
             default:
                 break;
-        }
-    }
-
-    private void SetupCurrentLevel()
-    {
-        switch (currentLevel)
-        {
-            case 1:
-                levelWaves = 3;
-                SpawnWave(currentWave);
-                break;
-            case 2:
-                levelWaves = 3;
-                SpawnWave(currentWave);
-                break;
-            case 3:
-                levelWaves = 3;
-                SpawnWave(currentWave);
-                break;
-            default:
-                break;
-        }
-
-        print("Loading Level: " + currentLevel);
-    }
-
-    private void CheckWaveSpawnConditions()
-    {
-        // If spawn timer expired
-        currentWaveTime += Time.deltaTime;
-        if(currentWaveTime >= waveTimer)
-        {
-            SpawnWave(currentWave);
-        }
-
-        // If no more asteroids
-        if (AsteroidSpawner.instance.transform.childCount == 0)
-        {
-            if(currentWave <= levelWaves)
-            {
-                SpawnWave(currentWave);
-            }
-            else
-            {
-                currentLevel++;
-                SceneHandler.instance.LoadSceneMissionComplete();
-            }
-            
         }
     }
 
@@ -139,7 +116,6 @@ public class GameController : MonoBehaviour {
     {
         Instantiate(explosion, player.transform.position, player.transform.rotation);
         Destroy(player);
-        ResetGame();
         Invoke("DelayedSceneLoad", sceneLoadDelay);
     }
 
@@ -168,37 +144,68 @@ public class GameController : MonoBehaviour {
         SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
     }
 
-    public void SpawnWave(int waveNumber)
+    public void SpawnWave()
     {
         print("Spawning Wave: " + currentWave);
-        switch (waveNumber)
-        {
-            
-            case 1:
-                AsteroidSpawner.instance.SpawnLargeAsteroids(1);
-                currentWave++;
-                break;
-            case 2:
-                AsteroidSpawner.instance.SpawnLargeAsteroids(3);
-                currentWave++;
-                break;
-            case 3:
-                AsteroidSpawner.instance.SpawnLargeAsteroids(5);
-                currentWave++;
-                break;
-            default:
-                break;
-        }
+        AsteroidSpawner.instance.SpawnLargeAsteroids(waveList[currentLevel - 1][currentWave - 1]);
+        currentWave++;
         currentWaveTime = 0.0f;
-        
+    }
+
+    private void SetupCurrentLevel()
+    {
+        print("Loading Level: " + currentLevel);
+        currentWave = 1;
+        levelWaves = waveList[currentLevel - 1].Count;
+        SpawnWave();
+    }
+
+    private void CheckWaveSpawnConditions()
+    {
+        // If not the last wave
+        if (currentWave <= levelWaves)
+        {
+            // If spawn timer expired
+            currentWaveTime += Time.deltaTime;
+            if (currentWaveTime >= waveTimer)
+            {
+                SpawnWave();
+            }
+        }
+
+        // If no more asteroids
+        if (AsteroidSpawner.instance.transform.childCount == 0)
+        {
+            if (currentWave <= levelWaves)
+            {
+                SpawnWave();
+            }
+            else 
+            {
+                currentLevel++;
+
+                if(currentLevel > waveList.Count)
+                {
+                    SceneHandler.instance.LoadSceneGameWon();
+                }
+                else
+                {
+                    SceneHandler.instance.LoadSceneMissionComplete();
+                }                
+            }
+
+        }
     }
 
     public void ResetGame()
     {
+        print("Resetting Game");
+        ClearSpawners();
         currentLevel = 1;
         currentWave = 1;
         levelWaves = 0;
-        print("Resetting Game");
+        levelLoaded = false;
+        gameReset = true;
     }
 
 }

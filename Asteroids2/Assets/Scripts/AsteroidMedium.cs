@@ -18,7 +18,6 @@ public class AsteroidMedium : MonoBehaviour
     float spawnBoundaryBottom = -6.6f;
     float spawnBoundaryTop = 6.6f;
     bool withinViewport = false;
-    Vector2 spawnLocation;
 
     // Use this for initialization
     void Start()
