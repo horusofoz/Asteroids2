@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
     private int currentLevel = 1;
     private int currentWave = 1;
     private int levelWaves = 0;
+    private float waveTimer = 10.0f;
+    private float currentWaveTime = 0.0f;
 
     private bool levelLoaded = false;
     private bool levelReset = false;
@@ -82,7 +84,6 @@ public class GameController : MonoBehaviour {
         {
             case 1:
                 levelWaves = 3;
-                //AsteroidSpawner.instance.SpawnLargeAsteroids(3);		
                 SpawnWave(currentWave);
                 break;
             case 2:
@@ -98,6 +99,13 @@ public class GameController : MonoBehaviour {
 
     private void CheckWaveSpawnConditions()
     {
+        // If spawn timer expired
+        currentWaveTime += Time.deltaTime;
+        if(currentWaveTime >= waveTimer)
+        {
+            SpawnWave(currentWave);
+        }
+
         // If no more asteroids
         if (AsteroidSpawner.instance.transform.childCount == 0)
         {
@@ -172,6 +180,7 @@ public class GameController : MonoBehaviour {
             default:
                 break;
         }
+        currentWaveTime = 0.0f;
     }
 
     
