@@ -18,7 +18,6 @@ public class GameController : MonoBehaviour {
     const int SCENE_GAME_OVER = 5;
     const int SCENE_GAME_WON = 6;
     private bool levelLoaded = false;
-    private bool levelReset = false;
     private float sceneLoadDelay = 2.0f;
     private bool gameReset = false;
 
@@ -57,13 +56,13 @@ public class GameController : MonoBehaviour {
     private void CreateWaveLists()
     {
         // Level 1
-        waveList.Add(new List<int> { 1, });
+        waveList.Add(new List<int> { 1, 1});
 
         // Level 2
-        waveList.Add(new List<int> { 1, 1 });
+        waveList.Add(new List<int> { 1, 2 });
 
         // Level 3
-        waveList.Add(new List<int> { 1, 2 });
+        waveList.Add(new List<int> { 1, 2, 4 });
     }
 
     private void Update()
@@ -83,7 +82,6 @@ public class GameController : MonoBehaviour {
                 {
                     SetupCurrentLevel();
                     levelLoaded = true;
-                    levelReset = false;
                 }
                 CheckWaveSpawnConditions();
                 break;
