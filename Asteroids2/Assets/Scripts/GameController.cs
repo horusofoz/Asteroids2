@@ -35,6 +35,10 @@ public class GameController : MonoBehaviour {
     private int scoreLargeAsteroid = 250;
     private int scoreMediumAsteroid = 375;
     private int scoreSmallAsteroid = 500;
+    private float levelTime = 0.0f;
+    private int timeBonus = 0;
+    private int levelScore = 0;
+    private int levelBonusTime = 0;
 
     // Level 1
 
@@ -91,10 +95,12 @@ public class GameController : MonoBehaviour {
                     levelLoaded = true;
                 }
                 CheckWaveSpawnConditions();
+                levelTime += Time.deltaTime;
                 break;
 
             case SCENE_MISSION_COMPLETE_SCENE:
                 levelLoaded = false;
+                SetLevelCompleteScoreUI();
                 break ;
             case SCENE_GAME_OVER:
             case SCENE_GAME_WON:
@@ -164,6 +170,7 @@ public class GameController : MonoBehaviour {
     private void SetupCurrentLevel()
     {
         print("Loading Level: " + currentLevel);
+        levelTime = 0.0f;
         currentWave = 1;
         levelWaves = waveList[currentLevel - 1].Count;
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
@@ -201,6 +208,7 @@ public class GameController : MonoBehaviour {
                 }
                 else
                 {
+                    SetLevelCompleteScore();
                     SceneHandler.instance.LoadSceneMissionComplete();
                 }                
             }
@@ -235,5 +243,25 @@ public class GameController : MonoBehaviour {
     {
         scoreText = GameObject.Find("Final Score").GetComponent<Text>();
         scoreText.text = "Final Score\n" + score.ToString();
+    }
+
+    public void SetLevelCompleteScoreUI()
+    {
+        scoreText = GameObject.Find("Level Score").GetComponent<Text>();
+        scoreText.text = "Score\n" + levelScore + "\nTime Bonus\n" + timeBonus + "\nTotal\n" + score;
+    }
+
+    public void SetLevelCompleteScore()
+    {
+        levelScore = score;
+        timeBonus = 0;
+
+        levelBonusTime = (int)(waveList[currentLevel - 1].Count * waveTimer);
+        if ((int)levelTime < levelBonusTime)
+        {
+            timeBonus = (levelBonusTime - (int)levelTime) * 1000;
+        }
+
+        score += timeBonus;
     }
 }
