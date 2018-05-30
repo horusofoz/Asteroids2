@@ -29,6 +29,13 @@ public class GameController : MonoBehaviour {
     private float currentWaveTime = 0.0f;
     List<List<int>> waveList = new List<List<int>>();
 
+    // Score Management
+    private static int score;
+    private Text scoreText;
+    private int scoreLargeAsteroid = 250;
+    private int scoreMediumAsteroid = 375;
+    private int scoreSmallAsteroid = 500;
+
     // Level 1
 
     // Store reference to explosion
@@ -122,6 +129,7 @@ public class GameController : MonoBehaviour {
         Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
         AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
         Destroy(asteroidLarge);
+        AddScore(scoreLargeAsteroid);
     }
 
     public void AsteroidMediumHitByBullet(GameObject asteroidMedium)
@@ -129,12 +137,14 @@ public class GameController : MonoBehaviour {
         Instantiate(explosion, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
         AsteroidSpawner.instance.SpawnSmallAsteroids(2, asteroidMedium.transform);
         Destroy(asteroidMedium);
+        AddScore(scoreMediumAsteroid);
     }
 
     public void AsteroidSmallHitByBullet(GameObject asteroidSmall)
     {
         Instantiate(explosion, asteroidSmall.transform.position, asteroidSmall.transform.rotation);
         Destroy(asteroidSmall);
+        AddScore(scoreSmallAsteroid);
     }
 
     private void DelayedSceneLoad()
@@ -155,6 +165,9 @@ public class GameController : MonoBehaviour {
         print("Loading Level: " + currentLevel);
         currentWave = 1;
         levelWaves = waveList[currentLevel - 1].Count;
+        //scoreText = GetComponent<Text>();
+        scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
+        UpdateScoreUI();
         SpawnWave();
     }
 
@@ -204,6 +217,17 @@ public class GameController : MonoBehaviour {
         levelWaves = 0;
         levelLoaded = false;
         gameReset = true;
+        score = 0;
     }
 
+    public void AddScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        UpdateScoreUI();
+    }
+
+    public void UpdateScoreUI()
+    {
+        scoreText.text = score.ToString("000000");
+    }
 }
