@@ -100,6 +100,7 @@ public class GameController : MonoBehaviour {
             case SCENE_GAME_WON:
                 if(gameReset == false)
                 {
+                    SetFinalScoreUI();
                     ResetGame();
                 }
                 
@@ -165,7 +166,6 @@ public class GameController : MonoBehaviour {
         print("Loading Level: " + currentLevel);
         currentWave = 1;
         levelWaves = waveList[currentLevel - 1].Count;
-        //scoreText = GetComponent<Text>();
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
         UpdateScoreUI();
         SpawnWave();
@@ -228,6 +228,12 @@ public class GameController : MonoBehaviour {
 
     public void UpdateScoreUI()
     {
-        scoreText.text = score.ToString("000000");
+        scoreText.text = score.ToString();
+    }
+
+    public void SetFinalScoreUI()
+    {
+        scoreText = GameObject.Find("Final Score").GetComponent<Text>();
+        scoreText.text = "Final Score\n" + score.ToString();
     }
 }
