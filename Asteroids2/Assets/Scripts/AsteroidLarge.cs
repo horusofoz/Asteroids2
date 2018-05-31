@@ -72,6 +72,10 @@ public class AsteroidLarge : MonoBehaviour
         transform.position = spawnLocation;
 
         //Add random amount of Speed & Spin
+        // The speed vector is also setting the direction when you add it as a force
+        // It also appears to be getting set once for all asteroids, which is why they all move the same speed
+        // and direction
+
         Vector2 speed = new Vector2(Random.Range(minSpeed, maxSpeed), Random.Range(minSpeed, maxSpeed));
         float spin = Random.Range(minSpin, maxSpin);
         rbody.AddForce(speed);
