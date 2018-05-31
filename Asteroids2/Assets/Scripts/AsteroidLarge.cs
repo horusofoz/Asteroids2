@@ -5,18 +5,16 @@ using UnityEngine;
 public class AsteroidLarge : MonoBehaviour
 {
 	public Rigidbody2D rbody;
-	int minSpeed = 35;
-	int maxSpeed = 55;
-	int minSpin = 45;
-	int maxSpin = 80;
-    float screenLeft = -10.7f;
-	float screenRight = 10.7f;
-	float screenBottom = -6.8f;
-	float screenTop = 6.8f;
-    float spawnBoundaryLeft = -11.4f;
-	float spawnBoundaryRight = 11.4f;
-	float spawnBoundaryBottom = -7.5f;
-	float spawnBoundaryTop = 7.5f;
+	int speed = 100;
+	float spin = 180;
+	float screenLeft = -10.5f;
+	float screenRight = 10.5f;
+	float screenBottom = -6.6f;
+	float screenTop = 6.6f;
+    float spawnBoundaryLeft = -10.4f;
+	float spawnBoundaryRight = 10.4f;
+	float spawnBoundaryBottom = -6.5f;
+	float spawnBoundaryTop = 6.5f;
 	bool withinViewport = false;
     Vector2 spawnLocation;
 
@@ -24,6 +22,7 @@ public class AsteroidLarge : MonoBehaviour
 	void Start()
 	{
 		SetLargeAsteroidPosition();
+		SetAsteroidPhysics();
 	}
 
 	// Update is called once per frame
@@ -70,15 +69,13 @@ public class AsteroidLarge : MonoBehaviour
 
         //Set new random vector as spawn position
         transform.position = spawnLocation;
+	}
 
-        //Add random amount of Speed & Spin
-        // The speed vector is also setting the direction when you add it as a force
-        // It also appears to be getting set once for all asteroids, which is why they all move the same speed
-        // and direction
-
-        Vector2 speed = new Vector2(Random.Range(minSpeed, maxSpeed), Random.Range(minSpeed, maxSpeed));
-        float spin = Random.Range(minSpin, maxSpin);
-        rbody.AddForce(speed);
+    void SetAsteroidPhysics()
+	{
+		//Add amount of Speed & Spin
+		Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        rbody.AddForce(direction * speed);
         rbody.AddTorque(spin);
 	}
 
@@ -150,10 +147,3 @@ public class AsteroidLarge : MonoBehaviour
         }
     }
 }
-
-/*
- * When collision detects large asteroid hit
- * It calls AsteroidLargeHit()
- * AsteroidLargeHit calls SpawnAsteroidMedium x 2, then destroy large asteroid
- * 
- */

@@ -134,7 +134,7 @@ public class GameController : MonoBehaviour {
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
     {
         Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
-        AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
+		AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
         Destroy(asteroidLarge);
         AddScore(scoreLargeAsteroid);
     }

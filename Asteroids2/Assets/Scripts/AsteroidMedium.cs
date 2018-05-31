@@ -5,14 +5,12 @@ using UnityEngine;
 public class AsteroidMedium : MonoBehaviour
 {
     public Rigidbody2D rbody;
-	int minSpeed = 55;
-	int maxSpeed = 75;
-	int minSpin = 80;
-	int maxSpin = 120;
-	float screenLeft = -10;
-    float screenRight = 10;
-    float screenBottom = -6.1f;
-    float screenTop = 6.1f;
+	int speed = 100;
+	float spin = 60;
+	float screenLeft = -9.5f;
+    float screenRight = 9.5f;
+    float screenBottom = -5.6f;
+    float screenTop = 5.6f;
     float spawnBoundaryLeft = -10.5f;
     float spawnBoundaryRight = 10.5f;
     float spawnBoundaryBottom = -6.6f;
@@ -34,9 +32,8 @@ public class AsteroidMedium : MonoBehaviour
     public void SetMediumAsteroidPhysics()
     {
         //Add random amount of Speed & Spin
-        Vector2 speed = new Vector2(Random.Range(minSpeed, maxSpeed), Random.Range(minSpeed, maxSpeed));
-        float spin = Random.Range(minSpin, maxSpin);
-        rbody.AddForce(speed);
+		Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        rbody.AddForce(direction * speed);
         rbody.AddTorque(spin);
     }
 

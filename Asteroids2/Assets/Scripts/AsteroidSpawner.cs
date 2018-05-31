@@ -25,7 +25,7 @@ public class AsteroidSpawner : MonoBehaviour {
     }
 
     public void SpawnLargeAsteroids(int num)
-	{
+	{      
 		for (int i = 0; i < num; i++)
 		{
 			Instantiate(asteroidLarge, parent: transform);
