@@ -207,7 +207,6 @@ public class GameController : MonoBehaviour {
 
     public void SpawnWave()
     {
-        print("Spawning Wave: " + currentWave);
         AsteroidSpawner.instance.SpawnLargeAsteroids(waveList[currentLevel - 1][currentWave - 1].AsteroidsToSpawn);
         AsteroidSpawner.instance.SpawnEnemyShooters(waveList[currentLevel - 1][currentWave - 1].EnemyShootersToSpawn);
         AsteroidSpawner.instance.SpawnEnemyDrones(waveList[currentLevel - 1][currentWave - 1].EnemyDronesToSpawn);
@@ -217,7 +216,6 @@ public class GameController : MonoBehaviour {
 
     private void SetupCurrentLevel()
     {
-        print("Loading Level: " + currentLevel);
         levelTime = 0.0f;
         currentWave = 1;
         levelWaves = waveList[currentLevel - 1].Count;
@@ -290,9 +288,6 @@ public class GameController : MonoBehaviour {
 
     public void UpdateWaveTimer()
     {
-        print("currentWave:" + (currentWave - 1));
-        print("waveList[currentLevel - 1].Count:" + waveList[currentLevel - 1].Count);
-
         if (currentWave - 1 < levelWaves)
         {
             nextWaveTimerUI.text = ("Next Wave   " + (-(int)currentWaveTime + 20).ToString("00"));
