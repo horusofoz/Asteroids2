@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour {
     private int currentLevel = 1;
     private int currentWave = 1;
     private int levelWaves = 0;
-    private float waveTimer = 10.0f;
+    private float waveTimer = 15.0f;
     private float currentWaveTime = 0.0f;
     List<List<Wave>> waveList = new List<List<Wave>>();
 
@@ -85,20 +85,22 @@ public class GameController : MonoBehaviour {
         // Level 1
         waveList.Add(new List<Wave> {
             new Wave(1, 0, 0),
-            new Wave(1, 1, 0),
-            new Wave(2, 1, 0)
+            new Wave(1, 2, 0),
+            new Wave(1, 2, 0)
         });
 
         // Level 2
         waveList.Add(new List<Wave> {
-            new Wave(2, 1, 0),
+            new Wave(1, 2, 0),
             new Wave(2, 2, 0),
             new Wave(2, 3, 0)
         });
 
         // Level 3
         waveList.Add(new List<Wave> {
-            new Wave(2, 1, 0)
+            new Wave(2, 2, 0),
+            new Wave(2, 3, 0),
+            new Wave(3, 4, 0)
         });
 
     }
