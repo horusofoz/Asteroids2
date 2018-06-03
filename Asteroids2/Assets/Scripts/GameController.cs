@@ -44,9 +44,12 @@ public class GameController : MonoBehaviour {
     private float currentWaveTime = 0.0f;
     List<List<Wave>> waveList = new List<List<Wave>>();
 
+    // UI
+    private Text nextWaveTimerUI;
+    private Text scoreText;
+
     // Score Management
     private static int score;
-    private Text scoreText;
     private int scoreLargeAsteroid = 250;
     private int scoreMediumAsteroid = 375;
     private int scoreSmallAsteroid = 500;
@@ -56,8 +59,6 @@ public class GameController : MonoBehaviour {
     private int timeBonus = 0;
     private int levelScore = 0;
     private int levelBonusTime = 0;
-
-    // Level 1
 
     // Store reference to explosion
     public GameObject explosion;
@@ -85,9 +86,9 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 0),
-            new Wave(1, 1, 0),
-            new Wave(1, 1, 1)
+            new Wave(1, 0, 1),
+            new Wave(1, 1, 1),
+            new Wave(1, 1, 2)
         });
 
         // Level 2
@@ -124,6 +125,7 @@ public class GameController : MonoBehaviour {
                     SetupCurrentLevel();
                     levelLoaded = true;
                 }
+                UpdateWaveTimer();
                 CheckWaveSpawnConditions();
                 levelTime += Time.deltaTime;
                 break;
@@ -220,6 +222,7 @@ public class GameController : MonoBehaviour {
         currentWave = 1;
         levelWaves = waveList[currentLevel - 1].Count;
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
+        nextWaveTimerUI = GameObject.Find("NextWave").GetComponent<Text>();
         UpdateScoreUI();
         SpawnWave();
     }
@@ -283,6 +286,22 @@ public class GameController : MonoBehaviour {
     public void UpdateScoreUI()
     {
         scoreText.text = score.ToString();
+    }
+
+    public void UpdateWaveTimer()
+    {
+        print("currentWave:" + (currentWave - 1));
+        print("waveList[currentLevel - 1].Count:" + waveList[currentLevel - 1].Count);
+
+        if (currentWave - 1 < levelWaves)
+        {
+            nextWaveTimerUI.text = ("Next Wave   " + (-(int)currentWaveTime + 20).ToString("00"));
+        }
+        else
+        {
+            nextWaveTimerUI.text = ("Last Wave");
+        }
+        
     }
 
     public void SetFinalScoreUI()
