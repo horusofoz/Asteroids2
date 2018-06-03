@@ -8,6 +8,8 @@ TagManager:
   - AsteroidLarge
   - AsteroidMedium
   - AsteroidSmall
+  - EnemyBullet
+  - EnemyShooter
   layers:
   - Default
   - TransparentFX

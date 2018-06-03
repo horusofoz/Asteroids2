@@ -7,6 +7,7 @@ public class AsteroidSpawner : MonoBehaviour {
 	public GameObject asteroidLarge;
 	public GameObject asteroidMedium;
 	public GameObject asteroidSmall;
+    public GameObject enemyShooter;
 
     public static AsteroidSpawner instance = null;
 
@@ -51,4 +52,14 @@ public class AsteroidSpawner : MonoBehaviour {
             smallAsteroid.transform.parent = gameObject.transform;
         }
 	}
+
+    public void SpawnEnemyShooters(int num)
+    {
+        for (int i = 0; i < num; i++)
+        {
+            GameObject newEnemyShooter;
+            newEnemyShooter = Instantiate(enemyShooter);
+            newEnemyShooter.transform.parent = gameObject.transform;
+        }
+    }
 }

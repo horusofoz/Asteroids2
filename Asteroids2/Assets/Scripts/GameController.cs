@@ -4,6 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public class Wave
+{
+    public int AsteroidsToSpawn;
+    public int EnemyShootersToSpawn;
+    public int EnemyDronesToSpawn;
+
+    public Wave(int numAsteroids, int numEnemyShooters, int numEnemyDrones)
+    {
+        AsteroidsToSpawn = numAsteroids;
+        EnemyShootersToSpawn = numEnemyShooters;
+        EnemyDronesToSpawn = numEnemyDrones;
+    }
+}
+
+
 public class GameController : MonoBehaviour {
 
     // Required for singleton pattern
@@ -27,7 +42,7 @@ public class GameController : MonoBehaviour {
     private int levelWaves = 0;
     private float waveTimer = 10.0f;
     private float currentWaveTime = 0.0f;
-    List<List<int>> waveList = new List<List<int>>();
+    List<List<Wave>> waveList = new List<List<Wave>>();
 
     // Score Management
     private static int score;
@@ -35,6 +50,7 @@ public class GameController : MonoBehaviour {
     private int scoreLargeAsteroid = 250;
     private int scoreMediumAsteroid = 375;
     private int scoreSmallAsteroid = 500;
+    private int scoreEnemyShooter = 1000;
     private float levelTime = 0.0f;
     private int timeBonus = 0;
     private int levelScore = 0;
@@ -67,13 +83,24 @@ public class GameController : MonoBehaviour {
     private void CreateWaveLists()
     {
         // Level 1
-        waveList.Add(new List<int> { 1, 1});
+        waveList.Add(new List<Wave> {
+            new Wave(1, 0, 0),
+            new Wave(1, 1, 0),
+            new Wave(2, 1, 0)
+        });
 
         // Level 2
-        waveList.Add(new List<int> { 1, 2 });
+        waveList.Add(new List<Wave> {
+            new Wave(2, 1, 0),
+            new Wave(2, 2, 0),
+            new Wave(2, 3, 0)
+        });
 
         // Level 3
-        waveList.Add(new List<int> { 1, 2, 4 });
+        waveList.Add(new List<Wave> {
+            new Wave(2, 1, 0)
+        });
+
     }
 
     private void Update()
@@ -154,6 +181,13 @@ public class GameController : MonoBehaviour {
         AddScore(scoreSmallAsteroid);
     }
 
+    public void EnemyShooterHitByBullet(GameObject enemyShooter)
+    {
+        Instantiate(explosion, enemyShooter.transform.position, enemyShooter.transform.rotation);
+        Destroy(enemyShooter);
+        AddScore(scoreEnemyShooter);
+    }
+
     private void DelayedSceneLoad()
     {
         SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
@@ -162,7 +196,8 @@ public class GameController : MonoBehaviour {
     public void SpawnWave()
     {
         print("Spawning Wave: " + currentWave);
-        AsteroidSpawner.instance.SpawnLargeAsteroids(waveList[currentLevel - 1][currentWave - 1]);
+        AsteroidSpawner.instance.SpawnLargeAsteroids(waveList[currentLevel - 1][currentWave - 1].AsteroidsToSpawn);
+        AsteroidSpawner.instance.SpawnEnemyShooters(waveList[currentLevel - 1][currentWave - 1].EnemyShootersToSpawn);
         currentWave++;
         currentWaveTime = 0.0f;
     }
