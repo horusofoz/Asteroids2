@@ -75,5 +75,19 @@ public class Collision : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+        else if (collision.gameObject.tag == "EnemyDrone")
+        {
+            if (gameObject.tag == "Bullet")
+            {
+                GameController.instance.EnemyDroneHitByBullet(collision.gameObject);
+                Destroy(gameObject);
+            }
+
+            if (gameObject.tag == "Player")
+            {
+                GameController.instance.PlayerDied(gameObject);
+                Destroy(collision.gameObject);
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour {
     private int currentLevel = 1;
     private int currentWave = 1;
     private int levelWaves = 0;
-    private float waveTimer = 15.0f;
+    private float waveTimer = 20.0f;
     private float currentWaveTime = 0.0f;
     List<List<Wave>> waveList = new List<List<Wave>>();
 
@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour {
     private int scoreMediumAsteroid = 375;
     private int scoreSmallAsteroid = 500;
     private int scoreEnemyShooter = 1000;
+    private int scoreEnemyDrone = 1000;
     private float levelTime = 0.0f;
     private int timeBonus = 0;
     private int levelScore = 0;
@@ -85,15 +86,15 @@ public class GameController : MonoBehaviour {
         // Level 1
         waveList.Add(new List<Wave> {
             new Wave(1, 0, 0),
-            new Wave(1, 2, 0),
-            new Wave(1, 2, 0)
+            new Wave(1, 1, 0),
+            new Wave(1, 1, 1)
         });
 
         // Level 2
         waveList.Add(new List<Wave> {
-            new Wave(1, 2, 0),
-            new Wave(2, 2, 0),
-            new Wave(2, 3, 0)
+            new Wave(1, 2, 1),
+            new Wave(1, 2, 2),
+            new Wave(2, 2, 2)
         });
 
         // Level 3
@@ -190,6 +191,13 @@ public class GameController : MonoBehaviour {
         AddScore(scoreEnemyShooter);
     }
 
+    public void EnemyDroneHitByBullet(GameObject enemyDrone)
+    {
+        Instantiate(explosion, enemyDrone.transform.position, enemyDrone.transform.rotation);
+        Destroy(enemyDrone);
+        AddScore(scoreEnemyDrone);
+    }
+
     private void DelayedSceneLoad()
     {
         SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
@@ -200,6 +208,7 @@ public class GameController : MonoBehaviour {
         print("Spawning Wave: " + currentWave);
         AsteroidSpawner.instance.SpawnLargeAsteroids(waveList[currentLevel - 1][currentWave - 1].AsteroidsToSpawn);
         AsteroidSpawner.instance.SpawnEnemyShooters(waveList[currentLevel - 1][currentWave - 1].EnemyShootersToSpawn);
+        AsteroidSpawner.instance.SpawnEnemyDrones(waveList[currentLevel - 1][currentWave - 1].EnemyDronesToSpawn);
         currentWave++;
         currentWaveTime = 0.0f;
     }
