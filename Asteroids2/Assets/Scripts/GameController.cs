@@ -26,10 +26,10 @@ public class GameController : MonoBehaviour {
 
     // Level Management
     const int SCENE_MENU = 0;
-    const int SCENE_INTRO = 1;
+    const int SCENE_CREDITS = 1;
     const int SCENE_HELP = 2;
     const int SCENE_GAME = 3;
-    const int SCENE_MISSION_COMPLETE_SCENE = 4;
+    const int SCENE_MISSION_COMPLETE = 4;
     const int SCENE_GAME_OVER = 5;
     const int SCENE_GAME_WON = 6;
     private bool levelLoaded = false;
@@ -130,7 +130,7 @@ public class GameController : MonoBehaviour {
                 levelTime += Time.deltaTime;
                 break;
 
-            case SCENE_MISSION_COMPLETE_SCENE:
+            case SCENE_MISSION_COMPLETE:
                 levelLoaded = false;
                 SetLevelCompleteScoreUI();
                 break ;
