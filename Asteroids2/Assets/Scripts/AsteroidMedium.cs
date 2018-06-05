@@ -5,7 +5,7 @@ using UnityEngine;
 public class AsteroidMedium : MonoBehaviour
 {
     public Rigidbody2D rbody;
-	int speed = 100;
+	public int speed = 100;
 	float spin = 60;
 	float screenLeft = -9.5f;
     float screenRight = 9.5f;
@@ -17,22 +17,15 @@ public class AsteroidMedium : MonoBehaviour
     float spawnBoundaryTop = 6.6f;
     bool withinViewport = false;
 
-    // Use this for initialization
-    void Start()
-    {
-        SetMediumAsteroidPhysics();
-    }
-
     // Update is called once per frame
     void Update()
     {
         UpdateAsteroids();
     }
 
-    public void SetMediumAsteroidPhysics()
+    public void SetMediumAsteroidPhysics(Vector2 direction)
     {
         //Add random amount of Speed & Spin
-		Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         rbody.AddForce(direction * speed);
         rbody.AddTorque(spin);
     }

@@ -6,20 +6,20 @@ public class EnemyDrone : MonoBehaviour {
 
     // Movement
     public Rigidbody2D rbody;
-    public float enemySpeed = 75f;
+    public float enemySpeed = 10f;
     [SerializeField] Boundary boundary;
     GameObject player;
 
     // Spawning
     Vector2 spawnLocation;
-    float screenLeft = -10f;
-    float screenRight = 10f;
-    float screenBottom = -6f;
-    float screenTop = 6f;
-    float spawnBoundaryLeft = -10f;
-    float spawnBoundaryRight = 10f;
-    float spawnBoundaryBottom = -6f;
-    float spawnBoundaryTop = 6f;
+    float screenLeft = -9.5f;
+    float screenRight = 9.5f;
+    float screenBottom = -5.2f;
+    float screenTop = 5.2f;
+    float spawnBoundaryLeft = -9.5f;
+    float spawnBoundaryRight = 9.5f;
+    float spawnBoundaryBottom = -5.6f;
+    float spawnBoundaryTop = 5.6f;
 
     
 
@@ -31,7 +31,7 @@ public class EnemyDrone : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         SetEnemyDroneDirection();
     }
@@ -93,8 +93,10 @@ public class EnemyDrone : MonoBehaviour {
                 playerDirection.x - transform.position.x,
                 playerDirection.y - transform.position.y
                 );
+
             transform.up = newDroneDirection;
-            rbody.velocity = newDroneDirection * enemySpeed * Time.deltaTime;
+            rbody.velocity = newDroneDirection * enemySpeed;
+            print(rbody.velocity.ToString());
         }
 
         
