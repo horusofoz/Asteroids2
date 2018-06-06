@@ -6,7 +6,7 @@ public class EnemyDrone : MonoBehaviour {
 
     // Movement
     public Rigidbody2D rbody;
-    public float enemySpeed = 10f;
+    float enemySpeed = 2.5f;
     [SerializeField] Boundary boundary;
     GameObject player;
 
@@ -95,7 +95,7 @@ public class EnemyDrone : MonoBehaviour {
                 );
 
             transform.up = newDroneDirection;
-            rbody.velocity = newDroneDirection * enemySpeed;
+            rbody.velocity = newDroneDirection.normalized * enemySpeed;
             print(rbody.velocity.ToString());
         }
 
