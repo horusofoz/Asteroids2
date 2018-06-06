@@ -232,6 +232,12 @@ Prefab:
       value: 
       objectReference: {fileID: 1439489840069144, guid: 6bbe964cd0ed9804c9e17490c60ae6af,
         type: 2}
+    - target: {fileID: 114813018742519812, guid: 139cbfaf0b64021468a87eebd9854901,
+        type: 2}
+      propertyPath: pickupFireRate
+      value: 
+      objectReference: {fileID: 1625900659688150, guid: 50cd523b673e98540babeb31ec279b7d,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 139cbfaf0b64021468a87eebd9854901, type: 2}
   m_IsPrefabParent: 0
