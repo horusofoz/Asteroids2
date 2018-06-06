@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour {
     Rigidbody2D rbody;
 
     // Shooting
-    [SerializeField] private float fireRate = 3f;
-    public float fireRateBonus = 0;
+    private float fireRate = 3f;
+    
     private float fireCountdown = 0f;
     public GameObject bullet;
     public Transform bulletSpawn;
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour {
             if (fireCountdown <= 0f)
             {
                 Shoot();
-                fireCountdown = 1f / fireRate;
+                fireCountdown = 1f / (fireRate + GameController.instance.fireRateBonus);
             }
 
             fireCountdown -= Time.deltaTime;
@@ -86,6 +86,4 @@ public class PlayerController : MonoBehaviour {
     {
         Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
     }
-
-
 }

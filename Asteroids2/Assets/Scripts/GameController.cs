@@ -64,6 +64,10 @@ public class GameController : MonoBehaviour {
     public GameObject explosion;
     public AudioClip pickUpSound;
 
+    // Pickup Management
+    public PlayerController player;
+    public float fireRateBonus = 0f;
+
     void Awake()
     {
         if (instance == null)
@@ -161,6 +165,7 @@ public class GameController : MonoBehaviour {
     {
         Instantiate(explosion, player.transform.position, player.transform.rotation);
         Destroy(player);
+        fireRateBonus = 0;
         Invoke("DelayedSceneLoad", sceneLoadDelay);
     }
 
@@ -336,6 +341,7 @@ public class GameController : MonoBehaviour {
         if (pickup.name.Contains("PickUpFireRate"))
         {
             print("Picked up a firerate powerup!");
+            IncreaseFireRateBonus();
         }
         if (pickup.name.Contains("PickUpLife"))
         {
@@ -346,5 +352,13 @@ public class GameController : MonoBehaviour {
             print("Picked up a shield powerup!");
         }
         Destroy(pickup);
+    }
+
+    public void IncreaseFireRateBonus()
+    {
+        if(fireRateBonus < 3)
+        {
+            fireRateBonus += 1.0f;
+        }
     }
 }
