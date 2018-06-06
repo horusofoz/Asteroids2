@@ -345,6 +345,6 @@ public class GameController : MonoBehaviour {
         {
             print("Picked up a shield powerup!");
         }
-        
+        Destroy(pickup);
     }
 }
