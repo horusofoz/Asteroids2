@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour {
     public AudioClip pickUpSound;
 
     // Pickup Management
-    public PlayerController player;
+    //public PlayerController player;
     public float fireRateBonus = 0f;
     private int enemiesDestroyed = 0;
     public GameObject pickupFireRate;
