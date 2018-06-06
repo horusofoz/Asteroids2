@@ -67,6 +67,9 @@ public class GameController : MonoBehaviour {
     // Pickup Management
     public PlayerController player;
     public float fireRateBonus = 0f;
+    private int enemiesDestroyed = 0;
+    public GameObject pickupFireRate;
+
 
     void Awake()
     {
@@ -91,9 +94,9 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(0, 0, 1),
-            new Wave(0, 0, 1),
-            new Wave(0, 0, 1)
+            new Wave(0, 0, 3),
+            new Wave(0, 0, 3),
+            new Wave(0, 0, 3)
         });
 
         // Level 2
@@ -166,6 +169,7 @@ public class GameController : MonoBehaviour {
         Instantiate(explosion, player.transform.position, player.transform.rotation);
         Destroy(player);
         fireRateBonus = 0;
+        enemiesDestroyed = 0;
         Invoke("DelayedSceneLoad", sceneLoadDelay);
     }
 
@@ -203,6 +207,7 @@ public class GameController : MonoBehaviour {
     {
         Instantiate(explosion, enemyDrone.transform.position, enemyDrone.transform.rotation);
         Destroy(enemyDrone);
+        CheckPickUpSpawnConditions(enemyDrone);
         AddScore(scoreEnemyDrone);
     }
 
@@ -329,6 +334,15 @@ public class GameController : MonoBehaviour {
         }
 
         score += timeBonus;
+    }
+
+    public void CheckPickUpSpawnConditions(GameObject enemy)
+    {
+        enemiesDestroyed++;
+        if (enemiesDestroyed % 5 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
+        {
+            Instantiate(pickupFireRate, enemy.transform.position, Quaternion.identity);
+        }
     }
 
     public void PickUpCollected(GameObject pickup)
