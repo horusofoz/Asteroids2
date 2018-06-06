@@ -96,7 +96,6 @@ public class EnemyDrone : MonoBehaviour {
 
             transform.up = newDroneDirection;
             rbody.velocity = newDroneDirection.normalized * enemySpeed;
-            print(rbody.velocity.ToString());
         }
 
         

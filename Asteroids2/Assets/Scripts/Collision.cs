@@ -89,5 +89,12 @@ public class Collision : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+        else if (collision.gameObject.tag == "PickUp")
+        {
+            if (gameObject.tag == "Player")
+            {
+                GameController.instance.PickUpCollected(collision.gameObject);
+            }
+        }
     }
 }

@@ -52,3 +52,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 1439489840069144, guid: 6bbe964cd0ed9804c9e17490c60ae6af, type: 2}
+  pickUpSound: {fileID: 8300000, guid: e773ee5da3e2e7e4fbaf5a9693dadcdc, type: 3}

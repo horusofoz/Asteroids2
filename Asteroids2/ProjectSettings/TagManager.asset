@@ -11,6 +11,7 @@ TagManager:
   - EnemyBullet
   - EnemyShooter
   - EnemyDrone
+  - PickUp
   layers:
   - Default
   - TransparentFX

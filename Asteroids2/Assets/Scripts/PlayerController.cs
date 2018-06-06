@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 
     // Shooting
     [SerializeField] private float fireRate = 3f;
+    public float fireRateBonus = 0;
     private float fireCountdown = 0f;
     public GameObject bullet;
     public Transform bulletSpawn;
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour {
             Mathf.Clamp(rbody.position.y, boundary.yMin, boundary.yMax));
     }
 
-    private void ProcessShoot()
+    void ProcessShoot()
     {
         if (Input.GetButton("Fire1") == true)
         {
@@ -81,9 +82,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void Shoot()
+    void Shoot()
     {
         Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
     }
+
 
 }

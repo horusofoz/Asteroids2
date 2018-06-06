@@ -62,6 +62,7 @@ public class GameController : MonoBehaviour {
 
     // Store reference to explosion
     public GameObject explosion;
+    public AudioClip pickUpSound;
 
     void Awake()
     {
@@ -323,5 +324,27 @@ public class GameController : MonoBehaviour {
         }
 
         score += timeBonus;
+    }
+
+    public void PickUpCollected(GameObject pickup)
+    {
+        SoundManager.instance.PlaySingle(pickUpSound);
+        if (pickup.name.Contains("PickUpBullet"))
+        {
+            print("Picked up a bullet powerup!");
+        }
+        if (pickup.name.Contains("PickUpFireRate"))
+        {
+            print("Picked up a firerate powerup!");
+        }
+        if (pickup.name.Contains("PickUpLife"))
+        {
+            print("Picked up a life powerup!");
+        }
+        if (pickup.name.Contains("PickUpShield"))
+        {
+            print("Picked up a shield powerup!");
+        }
+        
     }
 }
