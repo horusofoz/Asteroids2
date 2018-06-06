@@ -17,22 +17,15 @@ public class AsteroidSmall : MonoBehaviour
     float spawnBoundaryTop = 6.1f;
     bool withinViewport = false;
 
-    // Use this for initialization
-    void Start()
-    {
-        SetSmallAsteroidPhysics();
-    }
-
     // Update is called once per frame
     void Update()
     {
         UpdateAsteroids();
     }
 
-    public void SetSmallAsteroidPhysics()
+    public void SetSmallAsteroidPhysics(Vector2 direction)
     {
 		//Add random amount of Speed & Spin
-		Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         rbody.AddForce(direction * speed);
         rbody.AddTorque(spin);
     }

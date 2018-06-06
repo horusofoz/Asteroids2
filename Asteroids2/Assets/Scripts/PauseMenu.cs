@@ -11,21 +11,17 @@ public class PauseMenu : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("Menu Update Loop Start");
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(GameIsPaused)
             {
-                Debug.Log("Menu Update Resume");
                 Resume();
             }
             else
             {
-                Debug.Log("Menu Update Pause");
                 Pause();
             }
         }
-        Debug.Log("Menu Update Loop End");
 	}
 
     public void Pause()

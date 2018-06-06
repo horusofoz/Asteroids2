@@ -10,10 +10,10 @@ public class EnemyShooter : MonoBehaviour {
     float screenRight = 10f;
     float screenBottom = -6f;
     float screenTop = 6f;
-    float spawnBoundaryLeft = -10f;
-    float spawnBoundaryRight = 10f;
-    float spawnBoundaryBottom = -6f;
-    float spawnBoundaryTop = 6f;
+    float spawnBoundaryLeft = -9.1f;
+    float spawnBoundaryRight = 9.1f;
+    float spawnBoundaryBottom = -5.25f;
+    float spawnBoundaryTop = 5.25f;
     bool withinViewport = false;
     Vector2 spawnLocation;
 
