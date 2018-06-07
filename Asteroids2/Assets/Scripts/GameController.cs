@@ -73,6 +73,7 @@ public class GameController : MonoBehaviour {
     public int bulletLevel = 1;
     public GameObject pickupBullet;
 
+    public List<int> pickupList = new List<int>() { 2, 3};
 
     void Awake()
     {
@@ -116,6 +117,11 @@ public class GameController : MonoBehaviour {
             new Wave(3, 4, 0)
         });
 
+    }
+
+    private void ResetPickUpList()
+    {
+        pickupList = new List<int>() { 2, 3, 3, 3 }; // 1 = Bullet, 2 = FireRate, 3 = Shield, 4 = Life
     }
 
     private void Update()
@@ -292,6 +298,7 @@ public class GameController : MonoBehaviour {
         levelLoaded = false;
         gameReset = true;
         score = 0;
+        ResetPickUpList();
     }
 
     public void AddScore(int scoreToAdd)
@@ -347,9 +354,10 @@ public class GameController : MonoBehaviour {
     public void CheckPickUpSpawnConditions(GameObject enemy)
     {
         enemiesDestroyed++;
-        if (enemiesDestroyed % 5 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
+        if (enemiesDestroyed % 2 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
         {
-            Instantiate(pickupBullet, enemy.transform.position, Quaternion.identity);
+            ChooseRandomPickup(enemy);
+            
         }
     }
 
@@ -390,6 +398,35 @@ public class GameController : MonoBehaviour {
         if(fireRateBonus < 3)
         {
             fireRateBonus += 1.0f;
+        }
+    }
+
+    private void ChooseRandomPickup(GameObject enemy)
+    {
+        int randomPickupNum = UnityEngine.Random.Range(0, pickupList.Count - 1);
+        print("PickupList Count: " + pickupList.Count);
+        //print("Random Num: " + randomPickupNum);
+
+        switch (randomPickupNum)
+        {
+            case 0:
+                Instantiate(pickupBullet, enemy.transform.position, Quaternion.identity);
+                pickupList[randomPickupNum] = pickupList[randomPickupNum] - 1;
+                if(pickupList[randomPickupNum] == 0)
+                {
+                    pickupList.Remove(randomPickupNum);
+                }
+                    break;
+            case 1:
+                Instantiate(pickupFireRate, enemy.transform.position, Quaternion.identity);
+                pickupList[randomPickupNum] = pickupList[randomPickupNum] - 1;
+                if (pickupList[randomPickupNum] == 0)
+                {
+                    pickupList.Remove(randomPickupNum);
+                }
+                break;
+            default:
+                break;
         }
     }
 }
