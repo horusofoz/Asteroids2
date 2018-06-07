@@ -65,10 +65,13 @@ public class GameController : MonoBehaviour {
     public AudioClip pickUpSound;
 
     // Pickup Management
-    //public PlayerController player;
-    public float fireRateBonus = 0f;
     private int enemiesDestroyed = 0;
+
+    public float fireRateBonus = 0f;
     public GameObject pickupFireRate;
+
+    public int bulletLevel = 1;
+    public GameObject pickupBullet;
 
 
     void Awake()
@@ -94,8 +97,8 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(0, 0, 3),
-            new Wave(0, 0, 3),
+            new Wave(1, 1, 1),
+            new Wave(1, 1, 3),
             new Wave(0, 0, 3)
         });
 
@@ -169,6 +172,7 @@ public class GameController : MonoBehaviour {
         Instantiate(explosion, player.transform.position, player.transform.rotation);
         Destroy(player);
         fireRateBonus = 0;
+        bulletLevel = 1;
         enemiesDestroyed = 0;
         Invoke("DelayedSceneLoad", sceneLoadDelay);
     }
@@ -177,6 +181,7 @@ public class GameController : MonoBehaviour {
     {
         Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
 		AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
+        CheckPickUpSpawnConditions(asteroidLarge);
         Destroy(asteroidLarge);
         AddScore(scoreLargeAsteroid);
     }
@@ -185,6 +190,7 @@ public class GameController : MonoBehaviour {
     {
         Instantiate(explosion, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
         AsteroidSpawner.instance.SpawnSmallAsteroids(2, asteroidMedium.transform);
+        CheckPickUpSpawnConditions(asteroidMedium);
         Destroy(asteroidMedium);
         AddScore(scoreMediumAsteroid);
     }
@@ -192,6 +198,7 @@ public class GameController : MonoBehaviour {
     public void AsteroidSmallHitByBullet(GameObject asteroidSmall)
     {
         Instantiate(explosion, asteroidSmall.transform.position, asteroidSmall.transform.rotation);
+        CheckPickUpSpawnConditions(asteroidSmall);
         Destroy(asteroidSmall);
         AddScore(scoreSmallAsteroid);
     }
@@ -199,6 +206,7 @@ public class GameController : MonoBehaviour {
     public void EnemyShooterHitByBullet(GameObject enemyShooter)
     {
         Instantiate(explosion, enemyShooter.transform.position, enemyShooter.transform.rotation);
+        CheckPickUpSpawnConditions(enemyShooter);
         Destroy(enemyShooter);
         AddScore(scoreEnemyShooter);
     }
@@ -206,8 +214,8 @@ public class GameController : MonoBehaviour {
     public void EnemyDroneHitByBullet(GameObject enemyDrone)
     {
         Instantiate(explosion, enemyDrone.transform.position, enemyDrone.transform.rotation);
-        Destroy(enemyDrone);
         CheckPickUpSpawnConditions(enemyDrone);
+        Destroy(enemyDrone);
         AddScore(scoreEnemyDrone);
     }
 
@@ -341,7 +349,7 @@ public class GameController : MonoBehaviour {
         enemiesDestroyed++;
         if (enemiesDestroyed % 5 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
         {
-            Instantiate(pickupFireRate, enemy.transform.position, Quaternion.identity);
+            Instantiate(pickupBullet, enemy.transform.position, Quaternion.identity);
         }
     }
 
@@ -351,6 +359,7 @@ public class GameController : MonoBehaviour {
         if (pickup.name.Contains("PickUpBullet"))
         {
             print("Picked up a bullet powerup!");
+            IncreaseBulletLevel();
         }
         if (pickup.name.Contains("PickUpFireRate"))
         {
@@ -366,6 +375,14 @@ public class GameController : MonoBehaviour {
             print("Picked up a shield powerup!");
         }
         Destroy(pickup);
+    }
+
+    private void IncreaseBulletLevel()
+    {
+        if (bulletLevel < 3)
+        {
+            bulletLevel += 1;
+        }
     }
 
     public void IncreaseFireRateBonus()
