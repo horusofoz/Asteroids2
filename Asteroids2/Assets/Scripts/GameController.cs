@@ -73,7 +73,8 @@ public class GameController : MonoBehaviour {
     public int bulletLevel = 1;
     public GameObject pickupBullet;
 
-    public List<int> pickupList = new List<int>() { 2, 3};
+    public List<int> pickupCountList = new List<int>();
+    public List<GameObject> pickupTypeList = new List<GameObject>();
 
     void Awake()
     {
@@ -92,6 +93,7 @@ public class GameController : MonoBehaviour {
     private void Start()
     {
         CreateWaveLists();
+        ResetPickupLists();
     }
 
     private void CreateWaveLists()
@@ -119,9 +121,12 @@ public class GameController : MonoBehaviour {
 
     }
 
-    private void ResetPickUpList()
+    private void ResetPickupLists()
     {
-        pickupList = new List<int>() { 2, 3, 3, 3 }; // 1 = Bullet, 2 = FireRate, 3 = Shield, 4 = Life
+        pickupCountList = new List<int>() { 2, 3 };
+        pickupTypeList.Clear();
+        pickupTypeList.Add(pickupBullet);
+        pickupTypeList.Add(pickupFireRate);
     }
 
     private void Update()
@@ -298,7 +303,7 @@ public class GameController : MonoBehaviour {
         levelLoaded = false;
         gameReset = true;
         score = 0;
-        ResetPickUpList();
+        ResetPickupLists();
     }
 
     public void AddScore(int scoreToAdd)
@@ -403,30 +408,22 @@ public class GameController : MonoBehaviour {
 
     private void ChooseRandomPickup(GameObject enemy)
     {
-        int randomPickupNum = UnityEngine.Random.Range(0, pickupList.Count - 1);
-        print("PickupList Count: " + pickupList.Count);
-        //print("Random Num: " + randomPickupNum);
-
-        switch (randomPickupNum)
+        if (pickupCountList.Count < 1)
         {
-            case 0:
-                Instantiate(pickupBullet, enemy.transform.position, Quaternion.identity);
-                pickupList[randomPickupNum] = pickupList[randomPickupNum] - 1;
-                if(pickupList[randomPickupNum] == 0)
-                {
-                    pickupList.Remove(randomPickupNum);
-                }
-                    break;
-            case 1:
-                Instantiate(pickupFireRate, enemy.transform.position, Quaternion.identity);
-                pickupList[randomPickupNum] = pickupList[randomPickupNum] - 1;
-                if (pickupList[randomPickupNum] == 0)
-                {
-                    pickupList.Remove(randomPickupNum);
-                }
-                break;
-            default:
-                break;
+            print("No pickups left");
         }
+        else
+        {
+            int randomPickupNum = UnityEngine.Random.Range(0, pickupCountList.Count - 1);
+
+            Instantiate(pickupTypeList[randomPickupNum], enemy.transform.position, Quaternion.identity);
+            pickupCountList[randomPickupNum] = pickupCountList[randomPickupNum] - 1;
+            if (pickupCountList[randomPickupNum] == 0)
+            {
+                pickupCountList.RemoveAt(randomPickupNum);
+                pickupTypeList.RemoveAt(randomPickupNum);
+            }
+        }
+        
     }
 }
