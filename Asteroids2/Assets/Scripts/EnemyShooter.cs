@@ -24,10 +24,15 @@ public class EnemyShooter : MonoBehaviour {
     public Transform bulletSpawn;
 
 
+    Renderer renderer;
+
+        
+
     // Use this for initialization
     void Start()
     {
         SetEnemyShooterPosition();
+        renderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -37,6 +42,8 @@ public class EnemyShooter : MonoBehaviour {
         ScreenWrap();
         ProcessShoot();
     }
+
+    
 
     public void SetEnemyShooterPosition()
     {
@@ -112,13 +119,16 @@ public class EnemyShooter : MonoBehaviour {
 
     private void ProcessShoot()
     {
-        if (fireCountdown <= 0f)
+        if (renderer.isVisible) // If shooter on screen
         {
-            Shoot();
-            fireCountdown = 1f / fireRate;
-        }
+            if (fireCountdown <= 0f)
+            {
+                Shoot();
+                fireCountdown = 1f / fireRate;
+            }
 
-        fireCountdown -= Time.deltaTime;
+            fireCountdown -= Time.deltaTime;
+        }
     }
 
 

@@ -258,6 +258,7 @@ public class GameController : MonoBehaviour {
         levelWaves = waveList[currentLevel - 1].Count;
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
         nextWaveTimerUI = GameObject.Find("NextWave").GetComponent<Text>();
+        ApplyShield();
         UpdateScoreUI();
         SpawnWave();
     }
@@ -393,7 +394,10 @@ public class GameController : MonoBehaviour {
         if (pickup.name.Contains("PickUpShield"))
         {
             print("Picked up a shield powerup!");
-            shieldCount++;
+            if(shieldCount < 3)
+            {
+                shieldCount++;
+            }
             ApplyShield();
         }
         Destroy(pickup);
@@ -438,13 +442,12 @@ public class GameController : MonoBehaviour {
 
     private void ApplyShield()
     {
-        if(shieldCount < 3)
+        if(shieldCount > 0)
         {
             GameObject player = GameObject.Find("Starship");
             GameObject shieldApplied = Instantiate(shield, player.transform.position, player.transform.rotation);
             shieldApplied.transform.parent = player.transform;
         }
-        
     }
 
     public void RemoveShield()
