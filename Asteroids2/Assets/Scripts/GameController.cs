@@ -106,9 +106,9 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(1, 1, 1),
-            new Wave(1, 1, 3),
-            new Wave(0, 0, 3)
+            new Wave(0, 2, 0),
+            new Wave(0, 2, 0),
+            new Wave(0, 3, 0)
         });
 
         // Level 2
@@ -465,6 +465,9 @@ public class GameController : MonoBehaviour {
         if(shieldCount > 0)
         {
             RemoveShield();
+
+
+
         }
         else
         {

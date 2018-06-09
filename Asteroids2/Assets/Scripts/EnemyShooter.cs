@@ -19,7 +19,7 @@ public class EnemyShooter : MonoBehaviour {
 
     // Shooting
     [SerializeField] private float fireRate = 5f;
-    private float fireCountdown = 0f;
+    private float fireCountdown = 1f;
     public GameObject bullet;
     public Transform bulletSpawn;
 
