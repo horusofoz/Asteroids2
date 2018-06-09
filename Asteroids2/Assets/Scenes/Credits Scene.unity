@@ -274,6 +274,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1230687349 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1848575080675528, guid: 07ac6efd01fe9aa4a92002481e12fce7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1271372169}
 --- !u!1 &1234367078
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +490,10 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1848575080675528, guid: 07ac6efd01fe9aa4a92002481e12fce7, type: 2}
+      propertyPath: m_Name
+      value: ButtonMainMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07ac6efd01fe9aa4a92002481e12fce7, type: 2}
@@ -911,7 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1230687349}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &2001215204

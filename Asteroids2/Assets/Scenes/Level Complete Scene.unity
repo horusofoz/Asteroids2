@@ -485,12 +485,21 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1848575080675528, guid: 07ac6efd01fe9aa4a92002481e12fce7, type: 2}
+      propertyPath: m_Name
+      value: ButtonLaunchNextMission
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07ac6efd01fe9aa4a92002481e12fce7, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &1752997705 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224761214938531492, guid: 07ac6efd01fe9aa4a92002481e12fce7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1752997704}
+--- !u!1 &1969990979 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1848575080675528, guid: 07ac6efd01fe9aa4a92002481e12fce7,
     type: 2}
   m_PrefabInternal: {fileID: 1752997704}
 --- !u!1 &2001215201
@@ -539,7 +548,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1969990979}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &2001215204

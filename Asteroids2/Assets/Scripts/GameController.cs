@@ -73,6 +73,12 @@ public class GameController : MonoBehaviour {
     public int bulletLevel = 1;
     public GameObject pickupBullet;
 
+    public GameObject pickupShield;
+    public GameObject shield;
+    //public bool shielded = false;
+    public int shieldCount = 0;
+
+
     public List<int> pickupCountList = new List<int>();
     public List<GameObject> pickupTypeList = new List<GameObject>();
 
@@ -123,10 +129,11 @@ public class GameController : MonoBehaviour {
 
     private void ResetPickupLists()
     {
-        pickupCountList = new List<int>() { 2, 3 };
+        pickupCountList = new List<int>() { 2, 3, 3 };
         pickupTypeList.Clear();
         pickupTypeList.Add(pickupBullet);
         pickupTypeList.Add(pickupFireRate);
+        pickupTypeList.Add(pickupShield);
     }
 
     private void Update()
@@ -386,6 +393,8 @@ public class GameController : MonoBehaviour {
         if (pickup.name.Contains("PickUpShield"))
         {
             print("Picked up a shield powerup!");
+            shieldCount++;
+            ApplyShield();
         }
         Destroy(pickup);
     }
@@ -425,5 +434,38 @@ public class GameController : MonoBehaviour {
             }
         }
         
+    }
+
+    private void ApplyShield()
+    {
+        if(shieldCount < 3)
+        {
+            GameObject player = GameObject.Find("Starship");
+            GameObject shieldApplied = Instantiate(shield, player.transform.position, player.transform.rotation);
+            shieldApplied.transform.parent = player.transform;
+        }
+        
+    }
+
+    public void RemoveShield()
+    {
+        shieldCount--;
+        if (shieldCount <= 0)
+        {
+            shield = GameObject.Find("Shield (Clone)");
+            Destroy(shield);
+        }
+    }
+
+    public void PlayerHit(GameObject player)
+    {
+        if(shieldCount > 0)
+        {
+            RemoveShield();
+        }
+        else
+        {
+            PlayerDied(player);
+        }
     }
 }
