@@ -129,9 +129,9 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(0, 2, 0),
-            new Wave(0, 2, 0),
-            new Wave(0, 3, 0)
+            new Wave(0, 0, 3),
+            new Wave(0, 0, 3),
+            new Wave(0, 0, 3)
         });
 
         // Level 2
@@ -283,7 +283,8 @@ public class GameController : MonoBehaviour {
         FireRateCounterUI = GameObject.Find("PickUpCounterTextFireRate").GetComponent<Text>();
         ShieldCounterUI = GameObject.Find("PickUpCounterTextShield").GetComponent<Text>();
         shield = GameObject.Find("Shield").GetComponent<Renderer>();
-
+        UpdatePickUpCountersUI();
+        ApplyShield();
         UpdateScoreUI();
         SpawnWave();
     }
@@ -424,7 +425,7 @@ public class GameController : MonoBehaviour {
         {
             print("Picked up a life powerup!");
         }
-
+        UpdatePickUpCountersUI();
         Destroy(pickup);
     }
 
@@ -433,7 +434,7 @@ public class GameController : MonoBehaviour {
         if (bulletLevel < 3)
         {
             bulletLevel += 1;
-            BulletCounterUI.text = bulletLevel.ToString();
+            //BulletCounterUI.text = bulletLevel.ToString();
         }
     }
 
@@ -442,7 +443,7 @@ public class GameController : MonoBehaviour {
         if (fireRateBonus < 3)
         {
             fireRateBonus += 1.0f;
-            FireRateCounterUI.text = fireRateBonus.ToString();
+            //FireRateCounterUI.text = fireRateBonus.ToString();
         }
     }
 
@@ -489,6 +490,7 @@ public class GameController : MonoBehaviour {
     public void RemoveShield()
     {
         shieldCount--;
+
         if (shieldCount <= 0)
         {
             shield.enabled = false; // Remove shield renderer
@@ -509,6 +511,7 @@ public class GameController : MonoBehaviour {
             print("Shield pickup not in pickup list. Readding.");
             pickupList.Add(new PickUp<GameObject, int>(pickupShield, 1));
         }
+        UpdatePickUpCountersUI();
     }
 
     public void PlayerHit(GameObject player)
@@ -548,6 +551,13 @@ public class GameController : MonoBehaviour {
         {
             print(item.Name.name + " " + item.Remaining + " Remaining");
         }
+    }
+
+    public void UpdatePickUpCountersUI()
+    {
+        BulletCounterUI.text = bulletLevel.ToString();
+        FireRateCounterUI.text = fireRateBonus.ToString();
+        ShieldCounterUI.text = shieldCount.ToString();
     }
 }
 
