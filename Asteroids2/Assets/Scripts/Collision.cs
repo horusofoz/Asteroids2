@@ -18,7 +18,7 @@ public class Collision : MonoBehaviour
 
 			if (gameObject.tag == "Player")
 			{
-                GameController.instance.PlayerDied(gameObject);
+                GameController.instance.PlayerHit(gameObject);
             }
 		}
 		else if (collision.gameObject.tag == "AsteroidMedium")
@@ -31,7 +31,7 @@ public class Collision : MonoBehaviour
 
             if (gameObject.tag == "Player")
             {
-                GameController.instance.PlayerDied(gameObject);
+                GameController.instance.PlayerHit(gameObject);
             }
         }
 		else if (collision.gameObject.tag == "AsteroidSmall")
@@ -44,7 +44,7 @@ public class Collision : MonoBehaviour
 
             if (gameObject.tag == "Player")
             {
-                GameController.instance.PlayerDied(gameObject);
+                GameController.instance.PlayerHit(gameObject);
             }
         }
         else if (collision.gameObject.tag == "EnemyBullet")
@@ -57,7 +57,7 @@ public class Collision : MonoBehaviour
 
             if (gameObject.tag == "Player")
             {
-                GameController.instance.PlayerDied(gameObject);
+                GameController.instance.PlayerHit(gameObject);
                 Destroy(collision.gameObject);
             }
         }
@@ -71,7 +71,7 @@ public class Collision : MonoBehaviour
 
             if (gameObject.tag == "Player")
             {
-                GameController.instance.PlayerDied(gameObject);
+                GameController.instance.PlayerHit(gameObject);
                 Destroy(collision.gameObject);
             }
         }
@@ -85,7 +85,7 @@ public class Collision : MonoBehaviour
 
             if (gameObject.tag == "Player")
             {
-                GameController.instance.PlayerDied(gameObject);
+                GameController.instance.PlayerHit(gameObject);
                 Destroy(collision.gameObject);
             }
         }

@@ -18,6 +18,20 @@ public class Wave
     }
 }
 
+public class PickUp<Key, Val> // Custom class based on key/value pair to make value mutable. https://stackoverflow.com/questions/13454721/how-to-modify-a-keyvaluepair-value
+{
+    public Key Name { get; set; }
+    public Val Remaining { get; set; }
+
+    public PickUp() { }
+
+    public PickUp(Key key, Val val)
+    {
+        this.Name = key;
+        this.Remaining = val;
+    }
+}
+
 
 public class GameController : MonoBehaviour {
 
@@ -65,6 +79,15 @@ public class GameController : MonoBehaviour {
     public AudioClip pickUpSound;
 
     // Pickup Management
+    const int PICKUP_BULLET_NUM = 0;
+    const int PICKUP_FIRERATE_NUM = 1;
+    const int PICKUP_SHIELD_NUM = 2;
+    const int PICKUP_LIFE_NUM = 3;
+
+    private Text BulletCounterUI;
+    private Text FireRateCounterUI;
+    private Text ShieldCounterUI;
+
     private int enemiesDestroyed = 0;
 
     public float fireRateBonus = 0f;
@@ -74,13 +97,13 @@ public class GameController : MonoBehaviour {
     public GameObject pickupBullet;
 
     public GameObject pickupShield;
-    public GameObject shield;
-    //public bool shielded = false;
+    private Renderer shield;
     public int shieldCount = 0;
 
 
     public List<int> pickupCountList = new List<int>();
     public List<GameObject> pickupTypeList = new List<GameObject>();
+    public List<PickUp<GameObject, int>> pickupList = new List<PickUp<GameObject, int>>();
 
     void Awake()
     {
@@ -129,11 +152,9 @@ public class GameController : MonoBehaviour {
 
     private void ResetPickupLists()
     {
-        pickupCountList = new List<int>() { 2, 3, 3 };
-        pickupTypeList.Clear();
-        pickupTypeList.Add(pickupBullet);
-        pickupTypeList.Add(pickupFireRate);
-        pickupTypeList.Add(pickupShield);
+        pickupList.Add(new PickUp<GameObject, int>(pickupBullet, 2));
+        pickupList.Add(new PickUp<GameObject, int>(pickupFireRate, 3));
+        pickupList.Add(new PickUp<GameObject, int>(pickupShield, 3));
     }
 
     private void Update()
@@ -162,15 +183,15 @@ public class GameController : MonoBehaviour {
             case SCENE_MISSION_COMPLETE:
                 levelLoaded = false;
                 SetLevelCompleteScoreUI();
-                break ;
+                break;
             case SCENE_GAME_OVER:
             case SCENE_GAME_WON:
-                if(gameReset == false)
+                if (gameReset == false)
                 {
                     SetFinalScoreUI();
                     ResetGame();
                 }
-                
+
                 break;
             default:
                 break;
@@ -198,7 +219,7 @@ public class GameController : MonoBehaviour {
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
     {
         Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
-		AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
+        AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
         CheckPickUpSpawnConditions(asteroidLarge);
         Destroy(asteroidLarge);
         AddScore(scoreLargeAsteroid);
@@ -258,7 +279,11 @@ public class GameController : MonoBehaviour {
         levelWaves = waveList[currentLevel - 1].Count;
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
         nextWaveTimerUI = GameObject.Find("NextWave").GetComponent<Text>();
-        ApplyShield();
+        BulletCounterUI = GameObject.Find("PickUpCounterTextBullet").GetComponent<Text>();
+        FireRateCounterUI = GameObject.Find("PickUpCounterTextFireRate").GetComponent<Text>();
+        ShieldCounterUI = GameObject.Find("PickUpCounterTextShield").GetComponent<Text>();
+        shield = GameObject.Find("Shield").GetComponent<Renderer>();
+
         UpdateScoreUI();
         SpawnWave();
     }
@@ -283,11 +308,11 @@ public class GameController : MonoBehaviour {
             {
                 SpawnWave();
             }
-            else 
+            else
             {
                 currentLevel++;
 
-                if(currentLevel > waveList.Count)
+                if (currentLevel > waveList.Count)
                 {
                     SceneHandler.instance.LoadSceneGameWon();
                 }
@@ -295,7 +320,7 @@ public class GameController : MonoBehaviour {
                 {
                     SetLevelCompleteScore();
                     SceneHandler.instance.LoadSceneMissionComplete();
-                }                
+                }
             }
 
         }
@@ -335,7 +360,7 @@ public class GameController : MonoBehaviour {
         {
             nextWaveTimerUI.text = ("Last Wave");
         }
-        
+
     }
 
     public void SetFinalScoreUI()
@@ -367,10 +392,9 @@ public class GameController : MonoBehaviour {
     public void CheckPickUpSpawnConditions(GameObject enemy)
     {
         enemiesDestroyed++;
-        if (enemiesDestroyed % 2 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
+        if (enemiesDestroyed % 1 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
         {
             ChooseRandomPickup(enemy);
-            
         }
     }
 
@@ -379,27 +403,28 @@ public class GameController : MonoBehaviour {
         SoundManager.instance.PlaySingle(pickUpSound);
         if (pickup.name.Contains("PickUpBullet"))
         {
-            print("Picked up a bullet powerup!");
             IncreaseBulletLevel();
+            UpdatePickUpList(pickup);
         }
         if (pickup.name.Contains("PickUpFireRate"))
         {
-            print("Picked up a firerate powerup!");
             IncreaseFireRateBonus();
+            UpdatePickUpList(pickup);
+        }
+        if (pickup.name.Contains("PickUpShield"))
+        {
+            if (shieldCount < 3)
+            {
+                shieldCount++;
+                UpdatePickUpList(pickup);
+            }
+            ApplyShield();
         }
         if (pickup.name.Contains("PickUpLife"))
         {
             print("Picked up a life powerup!");
         }
-        if (pickup.name.Contains("PickUpShield"))
-        {
-            print("Picked up a shield powerup!");
-            if(shieldCount < 3)
-            {
-                shieldCount++;
-            }
-            ApplyShield();
-        }
+
         Destroy(pickup);
     }
 
@@ -408,45 +433,56 @@ public class GameController : MonoBehaviour {
         if (bulletLevel < 3)
         {
             bulletLevel += 1;
+            BulletCounterUI.text = bulletLevel.ToString();
         }
     }
 
     public void IncreaseFireRateBonus()
     {
-        if(fireRateBonus < 3)
+        if (fireRateBonus < 3)
         {
             fireRateBonus += 1.0f;
+            FireRateCounterUI.text = fireRateBonus.ToString();
         }
     }
 
     private void ChooseRandomPickup(GameObject enemy)
     {
-        if (pickupCountList.Count < 1)
+
+        if (pickupList.Count < 1)
         {
             print("No pickups left");
         }
         else
         {
-            int randomPickupNum = UnityEngine.Random.Range(0, pickupCountList.Count - 1);
+            int randomPickupNum = UnityEngine.Random.Range(0, pickupList.Count);
+            //print("PickUp List Count: " + pickupList.Count);
+            //print("Random Pickup Number: " + randomPickupNum);
+            //print("Pickup Type " + pickupList[randomPickupNum].Name + "Spawned");
 
-            Instantiate(pickupTypeList[randomPickupNum], enemy.transform.position, Quaternion.identity);
+
+
+            Instantiate(pickupList[randomPickupNum].Name, enemy.transform.position, Quaternion.identity);
+            /*
+            pickupList[randomPickupNum].Remaining = pickupList[randomPickupNum].Remaining - 1;
+            */
+
+            /*
             pickupCountList[randomPickupNum] = pickupCountList[randomPickupNum] - 1;
             if (pickupCountList[randomPickupNum] == 0)
             {
                 pickupCountList.RemoveAt(randomPickupNum);
                 pickupTypeList.RemoveAt(randomPickupNum);
             }
+            */
         }
-        
     }
 
     private void ApplyShield()
     {
-        if(shieldCount > 0)
+        if (shieldCount > 0)
         {
-            GameObject player = GameObject.Find("Starship");
-            GameObject shieldApplied = Instantiate(shield, player.transform.position, player.transform.rotation);
-            shieldApplied.transform.parent = player.transform;
+            shield.enabled = true;
         }
     }
 
@@ -455,23 +491,70 @@ public class GameController : MonoBehaviour {
         shieldCount--;
         if (shieldCount <= 0)
         {
-            shield = GameObject.Find("Shield (Clone)");
-            Destroy(shield);
+            shield.enabled = false; // Remove shield renderer
+        }
+
+        var shieldPickUp = pickupList.Find(x => x.Name.name.ToString() == "PickUpShield"); // Get shield pickup from list
+
+        if(shieldPickUp != null) // If shield pickup exists in the pickup list
+        {
+            if (shieldPickUp.Remaining < 3)
+            {
+                shieldPickUp.Remaining++;
+                print("Shield pickup still in pickup list. Incrementing reamining to " + shieldPickUp.Remaining);
+            }
+        }
+        else // re-add to the pickupList with all shields available
+        {
+            print("Shield pickup not in pickup list. Readding.");
+            pickupList.Add(new PickUp<GameObject, int>(pickupShield, 1));
         }
     }
 
     public void PlayerHit(GameObject player)
     {
-        if(shieldCount > 0)
+        if (shieldCount > 0)
         {
+            print("Shield Hit");
             RemoveShield();
-
-
-
         }
         else
         {
             PlayerDied(player);
         }
     }
+
+    public void UpdatePickUpList(GameObject pickUp)
+    {
+        print(pickUp.name + " collected.");
+
+        var pickUpCollected = pickupList.Find(x => x.Name.ToString() == pickUp.ToString().Replace("(Clone)", ""));
+
+        if(pickUpCollected != null)
+        {
+            if (pickUpCollected.Remaining > 0)
+            {
+                pickUpCollected.Remaining--;
+
+                if (pickUpCollected.Remaining < 1)
+                {
+                    print("Removing " + pickUpCollected.Name.name);
+                    pickupList.Remove(pickUpCollected);
+                }
+            }
+        }
+
+        foreach (var item in pickupList)
+        {
+            print(item.Name.name + " " + item.Remaining + " Remaining");
+        }
+    }
 }
+
+
+// Move pickup removal from spawning to collected
+// Need to put shields back in pickup list if removed from player
+// Need to remove pickups from list onlyt if collected, not when spawned
+// Removing shield makes player invulnerable for a second
+// Make player flash while invulnerable
+// Mini explosions for player vs enemy bullet
