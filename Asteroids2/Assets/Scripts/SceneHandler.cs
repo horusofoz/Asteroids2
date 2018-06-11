@@ -13,6 +13,7 @@ public class SceneHandler : MonoBehaviour
     const int SCENE_MISSION_COMPLETE = 4;
     const int SCENE_GAME_OVER = 5;
     const int SCENE_GAME_WON = 6;
+    const int SCENE_PLAYER_DIED = 7;
 
     void Awake()
     {
@@ -27,70 +28,6 @@ public class SceneHandler : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-
-    void Update()
-    {
-        //ProcessInput();
-    }
-    /*
-    private void ProcessInput()
-    {
-        switch (SceneManager.GetActiveScene().buildIndex)
-        {
-            case SCENE_MENU:
-                LoadSceneIntro();
-                break;
-            case SCENE_CREDITS:
-                ProcessInputIntro();
-                break;
-            case SCENE_HELP:
-                LoadSceneIntro();
-                break;
-            case SCENE_GAME:
-                //No action
-                break;
-            case SCENE_MISSION_COMPLETE:
-                ProcessInputMissionComplete();
-                break;
-            case SCENE_GAME_OVER:
-            case SCENE_GAME_WON:
-                ProcessInputGameOver();
-                break;
-            default:
-                break;
-        }
-    }
-    
-
-
-    private void ProcessInputIntro()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            SceneManager.LoadScene(SCENE_HELP);
-        }
-        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            SceneManager.LoadScene(SCENE_GAME);
-        }
-    }
-
-    private void ProcessInputMissionComplete()
-    {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            SceneManager.LoadScene(SCENE_GAME);
-        }
-    }
-
-    private void ProcessInputGameOver()
-    {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            SceneManager.LoadScene(SCENE_MENU);
-        }
-    }
-    */
 
     // Scene Loaders
     public void LoadSceneMenu()
@@ -128,7 +65,10 @@ public class SceneHandler : MonoBehaviour
         SceneManager.LoadScene(SCENE_GAME_WON);
     }
 
-    
+    public void LoadScenePlayerDied()
+    {
+        SceneManager.LoadScene(SCENE_PLAYER_DIED);
+    }
 
     
 

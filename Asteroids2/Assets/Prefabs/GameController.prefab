@@ -61,7 +61,7 @@ MonoBehaviour:
     type: 2}
   pickupShield: {fileID: 1767633278209944, guid: d89a4abe82220bd42b0a728a8d7a86b9,
     type: 2}
-  shield: {fileID: 0}
   shieldCount: 0
-  pickupCountList: 
-  pickupTypeList: []
+  pickupLife: {fileID: 1794822882662670, guid: fbf1239427bdffd43b2b4ab5e856720c, type: 2}
+  pickupScore: {fileID: 1794822882662670, guid: a6bb785b21e36b04892bc719f91c5fa9,
+    type: 2}

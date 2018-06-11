@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour {
     const int SCENE_MISSION_COMPLETE = 4;
     const int SCENE_GAME_OVER = 5;
     const int SCENE_GAME_WON = 6;
+    const int SCENE_PLAYER_DIED = 7;
     private bool levelLoaded = false;
     private float sceneLoadDelay = 2.0f;
     private bool gameReset = false;
@@ -61,6 +62,7 @@ public class GameController : MonoBehaviour {
     // UI
     private Text nextWaveTimerUI;
     private Text scoreText;
+    private Text playerDiedLifeCounterUI;
 
     // Score Management
     private static int score;
@@ -69,6 +71,7 @@ public class GameController : MonoBehaviour {
     private int scoreSmallAsteroid = 500;
     private int scoreEnemyShooter = 1000;
     private int scoreEnemyDrone = 1000;
+    private int scorePickUp = 1500;
     private float levelTime = 0.0f;
     private int timeBonus = 0;
     private int levelScore = 0;
@@ -79,14 +82,11 @@ public class GameController : MonoBehaviour {
     public AudioClip pickUpSound;
 
     // Pickup Management
-    const int PICKUP_BULLET_NUM = 0;
-    const int PICKUP_FIRERATE_NUM = 1;
-    const int PICKUP_SHIELD_NUM = 2;
-    const int PICKUP_LIFE_NUM = 3;
 
     private Text BulletCounterUI;
     private Text FireRateCounterUI;
     private Text ShieldCounterUI;
+    private Text LifeCounterUI;
 
     private int enemiesDestroyed = 0;
 
@@ -100,9 +100,11 @@ public class GameController : MonoBehaviour {
     private Renderer shield;
     public int shieldCount = 0;
 
+    public GameObject pickupLife;
+    private int lives = 0;
 
-    public List<int> pickupCountList = new List<int>();
-    public List<GameObject> pickupTypeList = new List<GameObject>();
+    public GameObject pickupScore;
+
     public List<PickUp<GameObject, int>> pickupList = new List<PickUp<GameObject, int>>();
 
     void Awake()
@@ -129,32 +131,44 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(0, 0, 3),
-            new Wave(0, 0, 3),
-            new Wave(0, 0, 3)
+            new Wave(1, 0, 0),
+            new Wave(1, 0, 0),
+            new Wave(2, 0, 0)
         });
 
         // Level 2
         waveList.Add(new List<Wave> {
-            new Wave(1, 2, 1),
-            new Wave(1, 2, 2),
-            new Wave(2, 2, 2)
+            new Wave(1, 0, 1),
+            new Wave(0, 0, 2),
+            new Wave(2, 0, 1),
+            new Wave(2, 0, 2)
         });
 
         // Level 3
         waveList.Add(new List<Wave> {
-            new Wave(2, 2, 0),
-            new Wave(2, 3, 0),
-            new Wave(3, 4, 0)
+            new Wave(1, 1, 0),
+            new Wave(1, 1, 1),
+            new Wave(0, 2, 0),
+            new Wave(0, 2, 2)
+        });
+
+        // Level 4
+        waveList.Add(new List<Wave> {
+            new Wave(1, 1, 1),
+            new Wave(2, 2, 2),
+            new Wave(1, 2, 3),
+            new Wave(3, 3, 3)
         });
 
     }
 
     private void ResetPickupLists()
     {
+        pickupList.Clear();
         pickupList.Add(new PickUp<GameObject, int>(pickupBullet, 2));
         pickupList.Add(new PickUp<GameObject, int>(pickupFireRate, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupShield, 3));
+        pickupList.Add(new PickUp<GameObject, int>(pickupLife, 3));
     }
 
     private void Update()
@@ -191,7 +205,11 @@ public class GameController : MonoBehaviour {
                     SetFinalScoreUI();
                     ResetGame();
                 }
-
+                break;
+            case SCENE_PLAYER_DIED:
+                levelLoaded = false;
+                ClearSpawners();
+                UpdatePlayerDiedLifeCounter();
                 break;
             default:
                 break;
@@ -213,7 +231,21 @@ public class GameController : MonoBehaviour {
         fireRateBonus = 0;
         bulletLevel = 1;
         enemiesDestroyed = 0;
-        Invoke("DelayedSceneLoad", sceneLoadDelay);
+        if(lives < 1)
+        {
+            Invoke("DelayedGameOverSceneLoad", sceneLoadDelay);
+        }
+        else
+        {
+            DecreaseLifeCount();
+            Invoke("DelayedPlayerDiedSceneLoad", sceneLoadDelay);
+            ResetPickupLists();
+            if(lives > 0)
+            {
+                var lifePickUp = pickupList.Find(x => x.Name.name.ToString() == "PickUpLife");
+                lifePickUp.Remaining = lifePickUp.Remaining - lives;
+            }
+        }
     }
 
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
@@ -258,9 +290,14 @@ public class GameController : MonoBehaviour {
         AddScore(scoreEnemyDrone);
     }
 
-    private void DelayedSceneLoad()
+    private void DelayedGameOverSceneLoad()
     {
         SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
+    }
+
+    private void DelayedPlayerDiedSceneLoad()
+    {
+        SceneHandler.instance.LoadScenePlayerDied(); // Should probably move this direct into scene handler and have an overload allowing delayed 
     }
 
     public void SpawnWave()
@@ -277,12 +314,16 @@ public class GameController : MonoBehaviour {
         levelTime = 0.0f;
         currentWave = 1;
         levelWaves = waveList[currentLevel - 1].Count;
+
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
         nextWaveTimerUI = GameObject.Find("NextWave").GetComponent<Text>();
         BulletCounterUI = GameObject.Find("PickUpCounterTextBullet").GetComponent<Text>();
         FireRateCounterUI = GameObject.Find("PickUpCounterTextFireRate").GetComponent<Text>();
         ShieldCounterUI = GameObject.Find("PickUpCounterTextShield").GetComponent<Text>();
+        LifeCounterUI = GameObject.Find("PickUpCounterTextLife").GetComponent<Text>();
+
         shield = GameObject.Find("Shield").GetComponent<Renderer>();
+
         UpdatePickUpCountersUI();
         ApplyShield();
         UpdateScoreUI();
@@ -333,6 +374,7 @@ public class GameController : MonoBehaviour {
         ClearSpawners();
         currentLevel = 1;
         currentWave = 1;
+        lives = 0;
         levelWaves = 0;
         levelLoaded = false;
         gameReset = true;
@@ -393,7 +435,7 @@ public class GameController : MonoBehaviour {
     public void CheckPickUpSpawnConditions(GameObject enemy)
     {
         enemiesDestroyed++;
-        if (enemiesDestroyed % 1 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
+        if (enemiesDestroyed % 4 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
         {
             ChooseRandomPickup(enemy);
         }
@@ -424,8 +466,11 @@ public class GameController : MonoBehaviour {
         if (pickup.name.Contains("PickUpLife"))
         {
             print("Picked up a life powerup!");
+            IncreaseLifeCount();
+            UpdatePickUpList(pickup);
         }
         UpdatePickUpCountersUI();
+        AddScore(scorePickUp);
         Destroy(pickup);
     }
 
@@ -452,30 +497,13 @@ public class GameController : MonoBehaviour {
 
         if (pickupList.Count < 1)
         {
-            print("No pickups left");
+            print("Spawning Score Pickup");
+            Instantiate(pickupScore, enemy.transform.position, Quaternion.identity);
         }
         else
         {
             int randomPickupNum = UnityEngine.Random.Range(0, pickupList.Count);
-            //print("PickUp List Count: " + pickupList.Count);
-            //print("Random Pickup Number: " + randomPickupNum);
-            //print("Pickup Type " + pickupList[randomPickupNum].Name + "Spawned");
-
-
-
             Instantiate(pickupList[randomPickupNum].Name, enemy.transform.position, Quaternion.identity);
-            /*
-            pickupList[randomPickupNum].Remaining = pickupList[randomPickupNum].Remaining - 1;
-            */
-
-            /*
-            pickupCountList[randomPickupNum] = pickupCountList[randomPickupNum] - 1;
-            if (pickupCountList[randomPickupNum] == 0)
-            {
-                pickupCountList.RemoveAt(randomPickupNum);
-                pickupTypeList.RemoveAt(randomPickupNum);
-            }
-            */
         }
     }
 
@@ -558,13 +586,46 @@ public class GameController : MonoBehaviour {
         BulletCounterUI.text = bulletLevel.ToString();
         FireRateCounterUI.text = fireRateBonus.ToString();
         ShieldCounterUI.text = shieldCount.ToString();
+        LifeCounterUI.text = lives.ToString();
+    }
+
+    public void IncreaseLifeCount()
+    {
+        if(lives < 3)
+        {
+            lives++;
+        }
+    }
+
+    public void DecreaseLifeCount()
+    {
+        lives--;
+
+        var lifePickUp = pickupList.Find(x => x.Name.name.ToString() == "PickUpLife");
+        if(lifePickUp != null) // If life pickup exists in the pickup list
+        {
+            if (lifePickUp.Remaining < 3)
+            {
+                lifePickUp.Remaining++;
+                print("Life pickup still in pickup list. Incrementing reamining to " + lifePickUp.Remaining);
+            }
+            else // re-add to the pickupList with all shields available
+            {
+                print("Life pickup not in pickup list. Readding.");
+                pickupList.Add(new PickUp<GameObject, int>(pickupLife, 1));
+            }
+        }
+    }
+
+    public void UpdatePlayerDiedLifeCounter()
+    {
+        playerDiedLifeCounterUI = GameObject.Find("PlayerDiedLifeCounter").GetComponent<Text>();
+        playerDiedLifeCounterUI.text = lives.ToString();
     }
 }
 
 
-// Move pickup removal from spawning to collected
-// Need to put shields back in pickup list if removed from player
-// Need to remove pickups from list onlyt if collected, not when spawned
-// Removing shield makes player invulnerable for a second
+
+
 // Make player flash while invulnerable
 // Mini explosions for player vs enemy bullet

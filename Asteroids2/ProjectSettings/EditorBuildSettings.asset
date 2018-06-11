@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Won Scene.unity
     guid: ed5bafb6a1d224bb2bfcb82560c79271
+  - enabled: 1
+    path: Assets/Scenes/Player Died Scene.unity
+    guid: 65742296e6f595d4b9d8a5bad5bab157
   m_configObjects: {}
