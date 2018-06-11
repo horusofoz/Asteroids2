@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
     // Movement
     [SerializeField] private float thrustSpeed = 7.5f;
     [SerializeField] private float maxPlayerSpeed = 10f;
-    [SerializeField] private float rotationSpeed = 5.0f;
+    [SerializeField] private float rotationSpeed = 3.0f;
     [SerializeField] Boundary boundary;
     Rigidbody2D rbody;
 

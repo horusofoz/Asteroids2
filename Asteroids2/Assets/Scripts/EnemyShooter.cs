@@ -6,14 +6,14 @@ public class EnemyShooter : MonoBehaviour {
 
     public Rigidbody2D rbody;
     int enemySpeed = 100;
-    float screenLeft = -10f;
-    float screenRight = 10f;
-    float screenBottom = -6f;
-    float screenTop = 6f;
+    float screenLeft = -9.3f;
+    float screenRight = 9.3f;
+    float screenBottom = -5.4f;
+    float screenTop = 5.4f;
     float spawnBoundaryLeft = -9.1f;
     float spawnBoundaryRight = 9.1f;
-    float spawnBoundaryBottom = -5.25f;
-    float spawnBoundaryTop = 5.25f;
+    float spawnBoundaryBottom = -5.3f;
+    float spawnBoundaryTop = 5.3f;
     bool withinViewport = false;
     Vector2 spawnLocation;
 

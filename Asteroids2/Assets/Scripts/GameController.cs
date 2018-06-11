@@ -81,31 +81,30 @@ public class GameController : MonoBehaviour {
     public GameObject explosion;
     public AudioClip pickUpSound;
 
-    // Pickup Management
-
+    // Pick Ups
+    // Pick UP UI
     private Text BulletCounterUI;
     private Text FireRateCounterUI;
     private Text ShieldCounterUI;
     private Text LifeCounterUI;
 
-    private int enemiesDestroyed = 0;
-
-    public float fireRateBonus = 0f;
+    // Pick Up Objects
     public GameObject pickupFireRate;
-
-    public int bulletLevel = 1;
     public GameObject pickupBullet;
-
     public GameObject pickupShield;
+    public GameObject pickupLife;
+    public GameObject pickupScore;
+    public List<PickUp<GameObject, int>> pickupList = new List<PickUp<GameObject, int>>();
+
+    // Pick Up Counters
+    private int enemiesDestroyed = 0;
+    public float fireRateBonus = 0f;
+    public int bulletLevel = 1;
     private Renderer shield;
     public int shieldCount = 0;
-
-    public GameObject pickupLife;
     private int lives = 0;
 
-    public GameObject pickupScore;
-
-    public List<PickUp<GameObject, int>> pickupList = new List<PickUp<GameObject, int>>();
+    private int pickUpSpawnRate = 3;
 
     void Awake()
     {
@@ -169,6 +168,7 @@ public class GameController : MonoBehaviour {
         pickupList.Add(new PickUp<GameObject, int>(pickupFireRate, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupShield, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupLife, 3));
+        pickupList.Add(new PickUp<GameObject, int>(pickupScore, 500));
     }
 
     private void Update()
@@ -435,7 +435,7 @@ public class GameController : MonoBehaviour {
     public void CheckPickUpSpawnConditions(GameObject enemy)
     {
         enemiesDestroyed++;
-        if (enemiesDestroyed % 4 == 0) //If number of enemies destroyed is divisble by 5 without any remainder
+        if (enemiesDestroyed % pickUpSpawnRate == 0) //If number of enemies destroyed is divisble by 5 without any remainder
         {
             ChooseRandomPickup(enemy);
         }
@@ -465,7 +465,6 @@ public class GameController : MonoBehaviour {
         }
         if (pickup.name.Contains("PickUpLife"))
         {
-            print("Picked up a life powerup!");
             IncreaseLifeCount();
             UpdatePickUpList(pickup);
         }
