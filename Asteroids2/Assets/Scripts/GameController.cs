@@ -104,6 +104,7 @@ public class GameController : MonoBehaviour {
     public int bulletLevel = 1;
     private Renderer shield;
     public int shieldCount = 0;
+    public AudioClip shieldHitSound;
     private int lives = 0;
 
     private int pickUpSpawnRate = 3;
@@ -548,6 +549,7 @@ public class GameController : MonoBehaviour {
         if (shieldCount > 0)
         {
             print("Shield Hit");
+            SoundManager.instance.PlaySingle(shieldHitSound);
             RemoveShield();
         }
         else
