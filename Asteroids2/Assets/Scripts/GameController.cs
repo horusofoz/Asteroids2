@@ -78,7 +78,9 @@ public class GameController : MonoBehaviour {
     private int levelBonusTime = 0;
 
     // Store reference to explosion
-    public GameObject explosion;
+    public GameObject explosionSmall;
+    public GameObject explosionLarge;
+    public GameObject explosionMedium;
     public AudioClip pickUpSound;
 
     // Pick Ups
@@ -226,7 +228,7 @@ public class GameController : MonoBehaviour {
 
     public void PlayerDied(GameObject player)
     {
-        Instantiate(explosion, player.transform.position, player.transform.rotation);
+        Instantiate(explosionSmall, player.transform.position, player.transform.rotation);
         Destroy(player);
         fireRateBonus = 0;
         bulletLevel = 1;
@@ -250,7 +252,7 @@ public class GameController : MonoBehaviour {
 
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
     {
-        Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
+        Instantiate(explosionLarge, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
         AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
         CheckPickUpSpawnConditions(asteroidLarge);
         Destroy(asteroidLarge);
@@ -259,7 +261,7 @@ public class GameController : MonoBehaviour {
 
     public void AsteroidMediumHitByBullet(GameObject asteroidMedium)
     {
-        Instantiate(explosion, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
+        Instantiate(explosionMedium, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
         AsteroidSpawner.instance.SpawnSmallAsteroids(2, asteroidMedium.transform);
         CheckPickUpSpawnConditions(asteroidMedium);
         Destroy(asteroidMedium);
@@ -268,7 +270,7 @@ public class GameController : MonoBehaviour {
 
     public void AsteroidSmallHitByBullet(GameObject asteroidSmall)
     {
-        Instantiate(explosion, asteroidSmall.transform.position, asteroidSmall.transform.rotation);
+        Instantiate(explosionSmall, asteroidSmall.transform.position, asteroidSmall.transform.rotation);
         CheckPickUpSpawnConditions(asteroidSmall);
         Destroy(asteroidSmall);
         AddScore(scoreSmallAsteroid);
@@ -276,7 +278,7 @@ public class GameController : MonoBehaviour {
 
     public void EnemyShooterHitByBullet(GameObject enemyShooter)
     {
-        Instantiate(explosion, enemyShooter.transform.position, enemyShooter.transform.rotation);
+        Instantiate(explosionSmall, enemyShooter.transform.position, enemyShooter.transform.rotation);
         CheckPickUpSpawnConditions(enemyShooter);
         Destroy(enemyShooter);
         AddScore(scoreEnemyShooter);
@@ -284,7 +286,7 @@ public class GameController : MonoBehaviour {
 
     public void EnemyDroneHitByBullet(GameObject enemyDrone)
     {
-        Instantiate(explosion, enemyDrone.transform.position, enemyDrone.transform.rotation);
+        Instantiate(explosionSmall, enemyDrone.transform.position, enemyDrone.transform.rotation);
         CheckPickUpSpawnConditions(enemyDrone);
         Destroy(enemyDrone);
         AddScore(scoreEnemyDrone);
