@@ -51,23 +51,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d09b9d53a1d45342b05f5cfd4ca0e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionSmall: {fileID: 1202360805144428, guid: 4eb57491175210641a03392a5c1ff64d,
-    type: 2}
-  explosionLarge: {fileID: 1202360805144428, guid: 216e761caa6cd8f48bb3d9360d43c306,
-    type: 2}
-  explosionMedium: {fileID: 1202360805144428, guid: 28ee81de59458f142943847408bc6806,
-    type: 2}
+  explosion: {fileID: 1439489840069144, guid: 6bbe964cd0ed9804c9e17490c60ae6af, type: 2}
   pickUpSound: {fileID: 8300000, guid: e773ee5da3e2e7e4fbaf5a9693dadcdc, type: 3}
+  fireRateBonus: 0
   pickupFireRate: {fileID: 1625900659688150, guid: 50cd523b673e98540babeb31ec279b7d,
     type: 2}
+  bulletLevel: 1
   pickupBullet: {fileID: 1317386629586854, guid: 43fc9a3953f4d484faaa880e4c032a29,
     type: 2}
   pickupShield: {fileID: 1767633278209944, guid: d89a4abe82220bd42b0a728a8d7a86b9,
     type: 2}
+  shieldCount: 0
   pickupLife: {fileID: 1794822882662670, guid: fbf1239427bdffd43b2b4ab5e856720c, type: 2}
   pickupScore: {fileID: 1794822882662670, guid: a6bb785b21e36b04892bc719f91c5fa9,
     type: 2}
-  fireRateBonus: 0
-  bulletLevel: 1
-  shieldCount: 3
-  shieldHitSound: {fileID: 8300000, guid: 33a52c2f7de55a64aaa4c62f25e8f7c5, type: 3}

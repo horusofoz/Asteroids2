@@ -78,9 +78,7 @@ public class GameController : MonoBehaviour {
     private int levelBonusTime = 0;
 
     // Store reference to explosion
-    public GameObject explosionSmall;
-    public GameObject explosionLarge;
-    public GameObject explosionMedium;
+    public GameObject explosion;
     public AudioClip pickUpSound;
 
     // Pick Ups
@@ -104,7 +102,6 @@ public class GameController : MonoBehaviour {
     public int bulletLevel = 1;
     private Renderer shield;
     public int shieldCount = 0;
-    public AudioClip shieldHitSound;
     private int lives = 0;
 
     private int pickUpSpawnRate = 3;
@@ -229,7 +226,7 @@ public class GameController : MonoBehaviour {
 
     public void PlayerDied(GameObject player)
     {
-        Instantiate(explosionSmall, player.transform.position, player.transform.rotation);
+        Instantiate(explosion, player.transform.position, player.transform.rotation);
         Destroy(player);
         fireRateBonus = 0;
         bulletLevel = 1;
@@ -253,7 +250,7 @@ public class GameController : MonoBehaviour {
 
     public void AsteroidLargeHitByBullet(GameObject asteroidLarge)
     {
-        Instantiate(explosionLarge, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
+        Instantiate(explosion, asteroidLarge.transform.position, asteroidLarge.transform.rotation);
         AsteroidSpawner.instance.SpawnMediumAsteroids(2, asteroidLarge.transform);
         CheckPickUpSpawnConditions(asteroidLarge);
         Destroy(asteroidLarge);
@@ -262,7 +259,7 @@ public class GameController : MonoBehaviour {
 
     public void AsteroidMediumHitByBullet(GameObject asteroidMedium)
     {
-        Instantiate(explosionMedium, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
+        Instantiate(explosion, asteroidMedium.transform.position, asteroidMedium.transform.rotation);
         AsteroidSpawner.instance.SpawnSmallAsteroids(2, asteroidMedium.transform);
         CheckPickUpSpawnConditions(asteroidMedium);
         Destroy(asteroidMedium);
@@ -271,7 +268,7 @@ public class GameController : MonoBehaviour {
 
     public void AsteroidSmallHitByBullet(GameObject asteroidSmall)
     {
-        Instantiate(explosionSmall, asteroidSmall.transform.position, asteroidSmall.transform.rotation);
+        Instantiate(explosion, asteroidSmall.transform.position, asteroidSmall.transform.rotation);
         CheckPickUpSpawnConditions(asteroidSmall);
         Destroy(asteroidSmall);
         AddScore(scoreSmallAsteroid);
@@ -279,7 +276,7 @@ public class GameController : MonoBehaviour {
 
     public void EnemyShooterHitByBullet(GameObject enemyShooter)
     {
-        Instantiate(explosionSmall, enemyShooter.transform.position, enemyShooter.transform.rotation);
+        Instantiate(explosion, enemyShooter.transform.position, enemyShooter.transform.rotation);
         CheckPickUpSpawnConditions(enemyShooter);
         Destroy(enemyShooter);
         AddScore(scoreEnemyShooter);
@@ -287,7 +284,7 @@ public class GameController : MonoBehaviour {
 
     public void EnemyDroneHitByBullet(GameObject enemyDrone)
     {
-        Instantiate(explosionSmall, enemyDrone.transform.position, enemyDrone.transform.rotation);
+        Instantiate(explosion, enemyDrone.transform.position, enemyDrone.transform.rotation);
         CheckPickUpSpawnConditions(enemyDrone);
         Destroy(enemyDrone);
         AddScore(scoreEnemyDrone);
@@ -549,7 +546,6 @@ public class GameController : MonoBehaviour {
         if (shieldCount > 0)
         {
             print("Shield Hit");
-            SoundManager.instance.PlaySingle(shieldHitSound);
             RemoveShield();
         }
         else
