@@ -16,7 +16,6 @@ public class AsteroidLarge : MonoBehaviour
 	float spawnBoundaryBottom = -6.5f;
 	float spawnBoundaryTop = 6.5f;
 	bool withinViewport = false;
-	int spawnBox;
     Vector2 spawnLocation;
 
 	// Use this for initialization
@@ -65,7 +64,6 @@ public class AsteroidLarge : MonoBehaviour
         //Choose one spawn box at random
         int count = vectors.Count;
 		int num = Random.Range(0, 3);
-		spawnBox = num;
         var randomVectorFromList = vectors[num];
         spawnLocation = randomVectorFromList;
 
@@ -75,65 +73,9 @@ public class AsteroidLarge : MonoBehaviour
 
     void SetAsteroidPhysics()
 	{
-		//Set asteroid direction     
-		Vector2 direction = new Vector2();
-        if (spawnBox == 0)
-		{
-			direction.x = 1f;
-			if (spawnLocation.y < 0f)
-			{
-				direction.y = Random.Range(0.25f, 0.5f);
-			}
-			else if (spawnLocation.y > 0f)
-			{
-				direction.y = Random.Range(-0.25f, -0.5f);
-			}
-			else direction.y = Random.Range(-0.75f, 0.75f);
-		}
-        if (spawnBox == 1)
-		{
-			direction.x = -1f;
-			if (spawnLocation.y < 0f)
-            {
-                direction.y = Random.Range(0.25f, 0.5f);
-            }
-            else if (spawnLocation.y > 0f)
-            {
-                direction.y = Random.Range(-0.25f, -0.5f);
-            }
-            else direction.y = Random.Range(-0.75f, 0.75f);
-		}
-        if (spawnBox == 2)
-		{
-			if (spawnLocation.x < 0f)
-            {
-				direction.x = Random.Range(0.25f, 0.5f);
-            }
-			else if (spawnLocation.x > 0f)
-            {
-				direction.x = Random.Range(-0.25f, -0.5f);
-            }
-			else direction.x = Random.Range(-0.75f, 0.75f);
-			direction.y = 1f;
-		}
-        if (spawnBox == 3)
-		{
-			if (spawnLocation.x < 0f)
-            {
-                direction.x = Random.Range(0.25f, 0.5f);
-            }
-            else if (spawnLocation.x > 0f)
-            {
-                direction.x = Random.Range(-0.25f, -0.5f);
-            }
-            else direction.x = Random.Range(-0.75f, 0.75f);
-			direction.y = -1f;
-		}
-
-        //Apply the direction & speed
-		rbody.AddForce(direction * speed);
-
-        //Apply object rotation
+		//Add amount of Speed & Spin
+		Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        rbody.AddForce(direction * speed);
         rbody.AddTorque(spin);
 	}
 
