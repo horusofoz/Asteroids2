@@ -5,7 +5,7 @@ using UnityEngine;
 public class AsteroidMedium : MonoBehaviour
 {
     public Rigidbody2D rbody;
-	public int speed = 100;
+	public int speed = 85;
 	float spin = 60;
 	float screenLeft = -9.5f;
     float screenRight = 9.5f;

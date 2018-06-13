@@ -5,8 +5,8 @@ using UnityEngine;
 public class AsteroidSmall : MonoBehaviour
 {
     public Rigidbody2D rbody;
-	int speed = 115;
-	float spin = 50;
+	int speed = 90;
+	float spin = 35;
 	float screenLeft = -9.2f;
 	float screenRight = 9.2f;
 	float screenBottom = -5.3f;

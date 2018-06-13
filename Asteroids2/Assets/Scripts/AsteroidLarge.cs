@@ -5,17 +5,13 @@ using UnityEngine;
 public class AsteroidLarge : MonoBehaviour
 {
 	public Rigidbody2D rbody;
-	int speed = 100;
+	int speed = 70;
 	float spin = 180;
-	float screenLeft = -10.5f;
-	float screenRight = 10.5f;
-	float screenBottom = -6.6f;
-	float screenTop = 6.6f;
-    float spawnBoundaryLeft = -10.4f;
-	float spawnBoundaryRight = 10.4f;
-	float spawnBoundaryBottom = -6.5f;
-	float spawnBoundaryTop = 6.5f;
-	bool withinViewport = false;
+	float screenLeft = -10.4f;
+	float screenRight = 10.4f;
+	float screenBottom = -6.5f;
+	float screenTop = 6.5f;
+	int spawnBox;
     Vector2 spawnLocation;
 
 	// Use this for initialization
@@ -33,117 +29,77 @@ public class AsteroidLarge : MonoBehaviour
    
 	public void SetLargeAsteroidPosition()
 	{
-        
 		//List the 4 possible spawn boxes
         List<Vector2> vectors = new List<Vector2>();
 
         //Left spawn box
-        float xLeft = Random.Range(spawnBoundaryLeft, screenLeft);
+		float xLeft = screenLeft;
         float yLeft = Random.Range(screenBottom, screenTop);
         Vector2 leftSpawn = new Vector2(xLeft, yLeft);
         vectors.Add(leftSpawn);
 
-        //Right spawn box
-        float xRight = Random.Range(screenRight, spawnBoundaryRight);
-        float yRight = Random.Range(screenBottom, screenTop);
+		//Right spawn box
+		float xRight = screenRight;
+		float yRight = Random.Range(screenBottom, screenTop);
         Vector2 rightSpawn = new Vector2(xRight, yRight);
         vectors.Add(rightSpawn);
         
         //Bottom spawn box
         float xBottom = Random.Range(screenLeft, screenRight);
-        float yBottom = Random.Range(screenBottom, spawnBoundaryBottom);
-        Vector2 bottomSpawn = new Vector2(xBottom, yBottom);
+		float yBottom = screenBottom;
+		Vector2 bottomSpawn = new Vector2(xBottom, yBottom);
         vectors.Add(bottomSpawn);
 
-        //Top spawn box
-        float xTop = Random.Range(screenLeft, screenRight);
-        float yTop = Random.Range(spawnBoundaryTop, screenTop);
-        Vector2 topSpawn = new Vector2(xTop, yTop);
+		//Top spawn box
+		float xTop = Random.Range(screenLeft, screenRight);
+		float yTop = screenTop;
+		Vector2 topSpawn = new Vector2(xTop, yTop);
         vectors.Add(topSpawn);
 
         //Choose one spawn box at random
-        int count = vectors.Count;
-		int num = Random.Range(0, 3);
+		int num = Random.Range(0, 4);
+		spawnBox = num;
         var randomVectorFromList = vectors[num];
-        spawnLocation = randomVectorFromList;
+		spawnLocation = randomVectorFromList;
 
         //Set new random vector as spawn position
-        transform.position = spawnLocation;
+		transform.position = spawnLocation;
 	}
 
     void SetAsteroidPhysics()
 	{
-		//Add amount of Speed & Spin
-		Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-        rbody.AddForce(direction * speed);
-        rbody.AddTorque(spin);
+		//Set asteroid direction              Vector2 direction = new Vector2();         if (spawnBox == 0)
+		{
+			direction.x = 1f;             if (spawnLocation.y < 0f)             { 				direction.y = Random.Range(0.25f, 0.25f);             }             else if (spawnLocation.y > 0f)             {                 direction.y = Random.Range(-0.25f, -0.25f);             }             else direction.y = Random.Range(-0.75f, 0.75f);         }         if (spawnBox == 1)         {             direction.x = -1f;             if (spawnLocation.y < 0f)             {                 direction.y = Random.Range(0.25f, 0.5f);             }             else if (spawnLocation.y > 0f)             {                 direction.y = Random.Range(-0.25f, -0.5f);             }             else direction.y = Random.Range(-0.75f, 0.75f);         }         if (spawnBox == 2)         {             if (spawnLocation.x < 0f)             {                 direction.x = Random.Range(0.25f, 0.5f);             }             else if (spawnLocation.x > 0f)             {                 direction.x = Random.Range(-0.25f, -0.5f);             }             else direction.x = Random.Range(-0.75f, 0.75f);             direction.y = 1f;         }         if (spawnBox == 3)         {             if (spawnLocation.x < 0f)             {                 direction.x = Random.Range(0.25f, 0.5f);             }             else if (spawnLocation.x > 0f)             {                 direction.x = Random.Range(-0.25f, -0.5f);             }             else direction.x = Random.Range(-0.75f, 0.75f);             direction.y = -1f;         }          //Apply the direction & speed         rbody.AddForce(direction * speed);          //Apply object rotation         rbody.AddTorque(spin);
 	}
 
 	void UpdateAsteroids()
 	{
-		IsWithinViewport();
         ScreenWrap();
 	}
-
-	//Checks whether asteroid is on screen or not
-    void IsWithinViewport()
-    {
-        if (transform.position.y < screenTop && transform.position.y > screenBottom && transform.position.x < screenRight && transform.position.x > screenLeft)
-        {
-            withinViewport = true;
-            ScreenWrap();
-        }
-    }
 
     //When asteroid leaves screen it wraps around to opposite side
     void ScreenWrap()
     {
-        if (withinViewport == true)
+        Vector2 newPos = transform.position;
+
+        if (transform.position.y > screenTop)
         {
-            Vector2 newPos = transform.position;
-
-            if (transform.position.y > screenTop)
-            {
-                newPos.y = screenBottom;
-            }
-            if (transform.position.y < screenBottom)
-            {
-                newPos.y = screenTop;
-            }
-            if (transform.position.x > screenRight)
-            {
-                newPos.x = screenLeft;
-            }
-            if (transform.position.x < screenLeft)
-            {
-                newPos.x = screenRight;
-            }
-
-            transform.position = newPos;
+            newPos.y = screenBottom;
+        }
+        if (transform.position.y < screenBottom)
+        {
+            newPos.y = screenTop;
+        }
+        if (transform.position.x > screenRight)
+        {
+            newPos.x = screenLeft;
+        }
+        if (transform.position.x < screenLeft)
+        {
+            newPos.x = screenRight;
         }
 
-        else if (withinViewport == false)
-        {
-            Vector2 newPos = transform.position;
-
-            if (transform.position.y > spawnBoundaryTop)
-            {
-                newPos.y = spawnBoundaryBottom;
-            }
-            if (transform.position.y < spawnBoundaryBottom)
-            {
-                newPos.y = spawnBoundaryTop;
-            }
-            if (transform.position.x > spawnBoundaryRight)
-            {
-                newPos.x = spawnBoundaryLeft;
-            }
-            if (transform.position.x < spawnBoundaryLeft)
-            {
-                newPos.x = spawnBoundaryRight;
-            }
-
-            transform.position = newPos;
-        }
+        transform.position = newPos;
     }
 }
