@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour {
 
-    public float lifeTime = 0.3f;
+    public float lifeTime = 1.0f;
 
     public AudioClip explosionSound;
 
