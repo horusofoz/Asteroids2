@@ -63,6 +63,30 @@ public class GameController : MonoBehaviour {
     private Text nextWaveTimerUI;
     private Text scoreText;
     private Text playerDiedLifeCounterUI;
+    private Text BulletCounterUI;
+    private Text FireRateCounterUI;
+    private Text ShieldCounterUI;
+    private Text LifeCounterUI;
+    private Image BulletCounterIconUI;
+    private Image FireRateCounterIconUI;
+    private Image ShieldCounterIconUI;
+    private Image LifeCounterIconUI;
+    public Sprite BulletCounterIconUIYellow;
+    public Sprite FireRateCounterIconUIYellow;
+    public Sprite ShieldCounterIconUIYellow;
+    public Sprite LifeCounterIconUIYellow;
+    public Sprite BulletCounterIconUIRed;
+    public Sprite FireRateCounterIconUIRed;
+    public Sprite ShieldCounterIconUIRed;
+    public Sprite LifeCounterIconUIRed;
+    public Sprite BulletCounterIconUIBlue;
+    public Sprite FireRateCounterIconUIBlue;
+    public Sprite ShieldCounterIconUIBlue;
+    public Sprite LifeCounterIconUIBlue;
+    private Color BlueUI = new Color(0.2117647f, 0.7333333f, 0.9607844f);
+    private Color RedUI = new Color(0.6745098f, 0.2235294f, 0.2235294f);
+    private Color YellowUI = new Color(0.9686275f, 0.9058824f, 0.3372549f);
+    
 
     // Score Management
     private static int score;
@@ -83,13 +107,6 @@ public class GameController : MonoBehaviour {
     public GameObject explosionMedium;
     public AudioClip pickUpSound;
 
-    // Pick Ups
-    // Pick UP UI
-    private Text BulletCounterUI;
-    private Text FireRateCounterUI;
-    private Text ShieldCounterUI;
-    private Text LifeCounterUI;
-
     // Pick Up Objects
     public GameObject pickupFireRate;
     public GameObject pickupBullet;
@@ -101,7 +118,7 @@ public class GameController : MonoBehaviour {
     // Pick Up Counters
     private int enemiesDestroyed = 0;
     public float fireRateBonus = 0f;
-    public int bulletLevel = 1;
+    public int bulletLevel = 0;
     private Renderer shield;
     public int shieldCount = 0;
     public AudioClip shieldHitSound;
@@ -168,7 +185,7 @@ public class GameController : MonoBehaviour {
     private void ResetPickupLists()
     {
         pickupList.Clear();
-        pickupList.Add(new PickUp<GameObject, int>(pickupBullet, 2));
+        pickupList.Add(new PickUp<GameObject, int>(pickupBullet, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupFireRate, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupShield, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupLife, 3));
@@ -233,7 +250,7 @@ public class GameController : MonoBehaviour {
         Instantiate(explosionSmall, player.transform.position, player.transform.rotation);
         Destroy(player);
         fireRateBonus = 0;
-        bulletLevel = 1;
+        bulletLevel = 0;
         enemiesDestroyed = 0;
         if(lives < 1)
         {
@@ -325,6 +342,10 @@ public class GameController : MonoBehaviour {
         FireRateCounterUI = GameObject.Find("PickUpCounterTextFireRate").GetComponent<Text>();
         ShieldCounterUI = GameObject.Find("PickUpCounterTextShield").GetComponent<Text>();
         LifeCounterUI = GameObject.Find("PickUpCounterTextLife").GetComponent<Text>();
+        BulletCounterIconUI = GameObject.Find("PickUpCounterIconBullet").GetComponent<Image>();
+        FireRateCounterIconUI = GameObject.Find("PickUpCounterIconFireRate").GetComponent<Image>();
+        ShieldCounterIconUI = GameObject.Find("PickUpCounterIconShield").GetComponent<Image>();
+        LifeCounterIconUI = GameObject.Find("PickUpCounterIconLife").GetComponent<Image>();
 
         shield = GameObject.Find("Shield").GetComponent<Renderer>();
 
@@ -482,7 +503,7 @@ public class GameController : MonoBehaviour {
         if (bulletLevel < 3)
         {
             bulletLevel += 1;
-            //BulletCounterUI.text = bulletLevel.ToString();
+            UpdatePickUpCounterUI("bullet");
         }
     }
 
@@ -491,7 +512,7 @@ public class GameController : MonoBehaviour {
         if (fireRateBonus < 3)
         {
             fireRateBonus += 1.0f;
-            //FireRateCounterUI.text = fireRateBonus.ToString();
+            UpdatePickUpCounterUI("fireRate");
         }
     }
 
@@ -588,24 +609,154 @@ public class GameController : MonoBehaviour {
 
     public void UpdatePickUpCountersUI()
     {
-        BulletCounterUI.text = bulletLevel.ToString();
-        FireRateCounterUI.text = fireRateBonus.ToString();
-        ShieldCounterUI.text = shieldCount.ToString();
-        LifeCounterUI.text = lives.ToString();
+        UpdatePickUpCounterUI("bullet");
+        UpdatePickUpCounterUI("fireRate");
+        UpdatePickUpCounterUI("life");
+        UpdatePickUpCounterUI("shield");
     }
+
+    public void UpdatePickUpCounterUI(string pickUp)
+    {
+        switch (pickUp)
+        {
+            case "bullet":
+                BulletCounterUI.text = bulletLevel.ToString();
+                UpdatePickUpCounterTextColour(BulletCounterUI, bulletLevel);
+                UpdateBulletCounterIcon(BulletCounterIconUI, bulletLevel);
+                break;
+
+            case "fireRate":
+                FireRateCounterUI.text = fireRateBonus.ToString();
+                UpdatePickUpCounterTextColour(FireRateCounterUI, (int)fireRateBonus);
+                UpdateFireRateCounterIcon(FireRateCounterIconUI, (int)fireRateBonus);
+                break;
+
+            case "life":
+                LifeCounterUI.text = lives.ToString();
+                UpdatePickUpCounterTextColour(LifeCounterUI, lives);
+                UpdateLifeCounterIcon(LifeCounterIconUI, lives);
+                break;
+
+            case "shield":
+                ShieldCounterUI.text = shieldCount.ToString();
+                UpdatePickUpCounterTextColour(ShieldCounterUI, shieldCount);
+                UpdateShieldCounterIcon(ShieldCounterIconUI, shieldCount);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void UpdatePickUpCounterTextColour(Text pickUpText, int counter)
+    {
+        switch (counter)
+        {
+            case 0:
+            case 1:
+                pickUpText.color = YellowUI;
+                break;
+            case 2:
+                pickUpText.color = RedUI;
+                break;
+            case 3:
+                pickUpText.color = BlueUI;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void UpdateBulletCounterIcon(Image pickUp, int counter)
+    {
+        switch (counter)
+        {
+            case 0:
+            case 1:
+                pickUp.sprite = BulletCounterIconUIYellow;
+                break;
+            case 2:
+                pickUp.sprite = BulletCounterIconUIRed;
+                break;
+            case 3:
+                pickUp.sprite = BulletCounterIconUIBlue;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void UpdateFireRateCounterIcon(Image pickUp, int counter)
+    {
+        switch (counter)
+        {
+            case 0:
+            case 1:
+                pickUp.sprite = FireRateCounterIconUIYellow;
+                break;
+            case 2:
+                pickUp.sprite = FireRateCounterIconUIRed;
+                break;
+            case 3:
+                pickUp.sprite = FireRateCounterIconUIBlue;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void UpdateShieldCounterIcon(Image pickUp, int counter)
+    {
+        switch (counter)
+        {
+            case 0:
+            case 1:
+                pickUp.sprite = ShieldCounterIconUIYellow;
+                break;
+            case 2:
+                pickUp.sprite = ShieldCounterIconUIRed;
+                break;
+            case 3:
+                pickUp.sprite = ShieldCounterIconUIBlue;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void UpdateLifeCounterIcon(Image pickUp, int counter)
+    {
+        switch (counter)
+        {
+            case 0:
+            case 1:
+                pickUp.sprite = LifeCounterIconUIYellow;
+                break;
+            case 2:
+                pickUp.sprite = LifeCounterIconUIRed;
+                break;
+            case 3:
+                pickUp.sprite = LifeCounterIconUIBlue;
+                break;
+            default:
+                break;
+        }
+    }
+
 
     public void IncreaseLifeCount()
     {
         if(lives < 3)
         {
             lives++;
+            UpdatePickUpCounterUI("life");
         }
     }
 
     public void DecreaseLifeCount()
     {
         lives--;
-
+        UpdatePickUpCounterUI("life");
         var lifePickUp = pickupList.Find(x => x.Name.name.ToString() == "PickUpLife");
         if(lifePickUp != null) // If life pickup exists in the pickup list
         {
@@ -616,7 +767,7 @@ public class GameController : MonoBehaviour {
             }
             else // re-add to the pickupList with all shields available
             {
-                print("Life pickup not in pickup list. Readding.");
+                print("Life pickup not in pickup list. Re-adding.");
                 pickupList.Add(new PickUp<GameObject, int>(pickupLife, 1));
             }
         }
@@ -631,6 +782,7 @@ public class GameController : MonoBehaviour {
 
 
 
-
+// Todo
 // Make player flash while invulnerable
 // Mini explosions for player vs enemy bullet
+// Refactor icon updating code to remove duplication code smell
