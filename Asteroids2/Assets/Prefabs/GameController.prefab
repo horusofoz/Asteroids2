@@ -83,6 +83,9 @@ MonoBehaviour:
     type: 3}
   BulletCounterIconUIBlue: {fileID: 21300000, guid: 063825da1af353043bed7a2444e9ebf4,
     type: 3}
+  shield1: {fileID: 21300000, guid: 4b5f32bd4a437644698559d7fe03e9c3, type: 3}
+  shield2: {fileID: 21300000, guid: 8a4c70a701c027749ac954167db3d6e7, type: 3}
+  shield3: {fileID: 21300000, guid: 2c8aa564bbc423f49b3ee65ec4d144a9, type: 3}
   explosionSmall: {fileID: 1202360805144428, guid: 4eb57491175210641a03392a5c1ff64d,
     type: 2}
   explosionLarge: {fileID: 1202360805144428, guid: 216e761caa6cd8f48bb3d9360d43c306,

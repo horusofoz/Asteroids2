@@ -105,6 +105,14 @@ public class GameController : MonoBehaviour {
 
     List<Color> UIColors = new List<Color>() { GrayUI, RedUI, GreenUI, BlueUI };
 
+    // Shield Sprites
+    private List<Sprite> shieldSprites = new List<Sprite>();
+    public Sprite shield1;
+    public Sprite shield2;
+    public Sprite shield3;
+    private Renderer shield;
+    private SpriteRenderer shieldImage;
+
     // Score Management
     private static int score;
     private int scoreLargeAsteroid = 250;
@@ -136,7 +144,7 @@ public class GameController : MonoBehaviour {
     private int enemiesDestroyed = 0;
     public float fireRateBonus = 0f;
     public int bulletLevel = 0;
-    private Renderer shield;
+    
     public int shieldCount = 0;
     public AudioClip shieldHitSound;
     public AudioClip shieldDestroyed;
@@ -246,6 +254,14 @@ public class GameController : MonoBehaviour {
             ShieldCounterIconUIRed,
             ShieldCounterIconUIGreen,
             ShieldCounterIconUIBlue
+        });
+    }
+
+    private void CreateShieldList()
+    {
+        shieldSprites.AddRange(new List<Sprite>
+        {
+
         });
     }
 
@@ -405,6 +421,7 @@ public class GameController : MonoBehaviour {
         LifeCounterIconUI = GameObject.Find("PickUpCounterIconLife").GetComponent<Image>();
 
         shield = GameObject.Find("Shield").GetComponent<Renderer>();
+        shieldImage = GameObject.Find("Shield").GetComponent<SpriteRenderer>();
 
         UpdatePickUpCountersUI();
         ApplyShield();
@@ -590,9 +607,25 @@ public class GameController : MonoBehaviour {
 
     private void ApplyShield()
     {
-        if (shieldCount > 0)
+        switch (shieldCount)
         {
-            shield.enabled = true;
+            case 0:
+                shield.enabled = false;
+                break;
+            case 1:
+                shieldImage.sprite = shield1;
+                shield.enabled = true;
+                break;
+            case 2:
+                shieldImage.sprite = shield2;
+                shield.enabled = true;
+                break;
+            case 3:
+                shieldImage.sprite = shield3;
+                shield.enabled = true;
+                break;
+            default:
+                break;
         }
     }
 
@@ -602,7 +635,6 @@ public class GameController : MonoBehaviour {
 
         if (shieldCount <= 0)
         {
-            shield.enabled = false; // Remove shield renderer
             SoundManager.instance.PlayVoice(shieldDestroyed);
         }
 
@@ -622,6 +654,7 @@ public class GameController : MonoBehaviour {
             pickupList.Add(new PickUp<GameObject, int>(pickupShield, 1));
         }
         UpdatePickUpCountersUI();
+        ApplyShield();
     }
 
     public void PlayerHit(GameObject player)
