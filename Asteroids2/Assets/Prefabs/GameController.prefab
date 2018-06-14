@@ -69,5 +69,5 @@ MonoBehaviour:
     type: 2}
   fireRateBonus: 0
   bulletLevel: 1
-  shieldCount: 3
+  shieldCount: 0
   shieldHitSound: {fileID: 8300000, guid: 33a52c2f7de55a64aaa4c62f25e8f7c5, type: 3}
