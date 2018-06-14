@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rbody: {fileID: 50363481934587566}
   fireRate: 1
-  bullet: {fileID: 1646110519101932, guid: affe22baad77f444781f2465a0b7cc29, type: 2}
+  bullet: {fileID: 1646110519101932, guid: 99671b407640f2f42a1297d046caa3b2, type: 2}
   bulletSpawn: {fileID: 4046342708261468}
 --- !u!212 &212126086686922930
 SpriteRenderer:

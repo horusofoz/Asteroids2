@@ -25,7 +25,9 @@ public class PlayerController : MonoBehaviour {
     private float fireRate = 3f;
     
     private float fireCountdown = 0f;
-    public GameObject bullet;
+    public GameObject bulletYellow;
+    public GameObject bulletRed;
+    public GameObject bulletGreen;
     public GameObject bulletLaser;
     public Transform bulletSpawn1;
     public Transform bulletSpawn2;
@@ -90,18 +92,18 @@ public class PlayerController : MonoBehaviour {
             switch (GameController.instance.bulletLevel)
             {
                 case 0:
-                    Instantiate(bullet, bulletSpawn1.position, bulletSpawn1.rotation);
+                    Instantiate(bulletYellow, bulletSpawn1.position, bulletSpawn1.rotation);
                     break;
 
                 case 1:
-                    Instantiate(bullet, bulletSpawn2.position, bulletSpawn2.rotation);
-                    Instantiate(bullet, bulletSpawn3.position, bulletSpawn3.rotation);
+                    Instantiate(bulletRed, bulletSpawn2.position, bulletSpawn2.rotation);
+                    Instantiate(bulletRed, bulletSpawn3.position, bulletSpawn3.rotation);
                 break;
 
                 case 2:
-                    Instantiate(bullet, bulletSpawn1.position, bulletSpawn1.rotation);
-                    Instantiate(bullet, bulletSpawn2.position, bulletSpawn2.rotation);
-                    Instantiate(bullet, bulletSpawn3.position, bulletSpawn3.rotation);
+                    Instantiate(bulletGreen, bulletSpawn1.position, bulletSpawn1.rotation);
+                    Instantiate(bulletGreen, bulletSpawn2.position, bulletSpawn2.rotation);
+                    Instantiate(bulletGreen, bulletSpawn3.position, bulletSpawn3.rotation);
                 break;
 
                 case 3:

@@ -265,7 +265,13 @@ MonoBehaviour:
     xMax: 8.25
     yMin: -4.25
     yMax: 4.25
-  bullet: {fileID: 1193534600619144, guid: 9ea5d70766abd234f9ab78221b34b7c1, type: 2}
+  bulletYellow: {fileID: 1193534600619144, guid: 9ea5d70766abd234f9ab78221b34b7c1,
+    type: 2}
+  bulletRed: {fileID: 1646110519101932, guid: affe22baad77f444781f2465a0b7cc29, type: 2}
+  bulletGreen: {fileID: 1193534600619144, guid: d3125d7a521ae9e4c9ee628329dcd1a2,
+    type: 2}
+  bulletLaser: {fileID: 1193534600619144, guid: 08d37528ff572c04aa2c97404bf3a2d9,
+    type: 2}
   bulletSpawn1: {fileID: 4107235518326080}
   bulletSpawn2: {fileID: 4851357649050714}
   bulletSpawn3: {fileID: 4631159355565652}
@@ -287,7 +293,7 @@ SpriteRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1823734739825912}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

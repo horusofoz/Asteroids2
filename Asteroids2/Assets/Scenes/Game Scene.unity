@@ -694,22 +694,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 212472153593232564, guid: 220bc39d4a40feb499ba723800eac50c,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 114259047336217350, guid: 220bc39d4a40feb499ba723800eac50c,
-        type: 2}
-      propertyPath: bulletLaser
-      value: 
-      objectReference: {fileID: 1193534600619144, guid: 08d37528ff572c04aa2c97404bf3a2d9,
-        type: 2}
-    - target: {fileID: 212316693277603902, guid: 220bc39d4a40feb499ba723800eac50c,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 220bc39d4a40feb499ba723800eac50c, type: 2}
   m_IsPrefabParent: 0
