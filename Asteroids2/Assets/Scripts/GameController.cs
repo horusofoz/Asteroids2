@@ -105,6 +105,7 @@ public class GameController : MonoBehaviour {
     private Renderer shield;
     public int shieldCount = 0;
     public AudioClip shieldHitSound;
+    public AudioClip shieldDestroyed;
     private int lives = 0;
 
     private int pickUpSpawnRate = 3;
@@ -524,6 +525,7 @@ public class GameController : MonoBehaviour {
         if (shieldCount <= 0)
         {
             shield.enabled = false; // Remove shield renderer
+            SoundManager.instance.PlayVoice(shieldDestroyed);
         }
 
         var shieldPickUp = pickupList.Find(x => x.Name.name.ToString() == "PickUpShield"); // Get shield pickup from list

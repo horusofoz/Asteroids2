@@ -70,4 +70,5 @@ MonoBehaviour:
   fireRateBonus: 0
   bulletLevel: 1
   shieldCount: 0
-  shieldHitSound: {fileID: 8300000, guid: 33a52c2f7de55a64aaa4c62f25e8f7c5, type: 3}
+  shieldHitSound: {fileID: 8300000, guid: 414d2ffd4518501479df41cdc586c374, type: 3}
+  shieldDestroyed: {fileID: 8300000, guid: 675fe749abbe97f48892d0dcebd32895, type: 3}

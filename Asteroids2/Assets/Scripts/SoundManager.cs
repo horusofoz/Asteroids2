@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
 {
 
     public AudioSource fxSource;
+    public AudioSource voiceSource;
     public AudioSource musicSource;
     public static SoundManager instance = null;
 
@@ -38,5 +39,11 @@ public class SoundManager : MonoBehaviour
         float randomPitch = Random.Range(lowPitchRange, highPitchRange);
         fxSource.pitch = randomPitch;
         fxSource.Play();
+    }
+
+    public void PlayVoice(AudioClip clip)
+    {
+        voiceSource.clip = clip;
+        voiceSource.Play();
     }
 }
