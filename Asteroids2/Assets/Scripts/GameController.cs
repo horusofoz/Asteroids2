@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -71,22 +70,40 @@ public class GameController : MonoBehaviour {
     private Image FireRateCounterIconUI;
     private Image ShieldCounterIconUI;
     private Image LifeCounterIconUI;
-    public Sprite BulletCounterIconUIYellow;
-    public Sprite FireRateCounterIconUIYellow;
-    public Sprite ShieldCounterIconUIYellow;
-    public Sprite LifeCounterIconUIYellow;
-    public Sprite BulletCounterIconUIRed;
-    public Sprite FireRateCounterIconUIRed;
-    public Sprite ShieldCounterIconUIRed;
-    public Sprite LifeCounterIconUIRed;
-    public Sprite BulletCounterIconUIBlue;
-    public Sprite FireRateCounterIconUIBlue;
-    public Sprite ShieldCounterIconUIBlue;
-    public Sprite LifeCounterIconUIBlue;
-    private Color BlueUI = new Color(0.2117647f, 0.7333333f, 0.9607844f);
-    private Color RedUI = new Color(0.6745098f, 0.2235294f, 0.2235294f);
-    private Color YellowUI = new Color(0.9686275f, 0.9058824f, 0.3372549f);
+
     
+    public Sprite FireRateCounterIconUIGray;
+    public Sprite FireRateCounterIconUIRed;
+    public Sprite FireRateCounterIconUIGreen;
+    public Sprite FireRateCounterIconUIBlue;
+
+    public Sprite ShieldCounterIconUIGray;
+    public Sprite ShieldCounterIconUIRed;
+    public Sprite ShieldCounterIconUIGreen;
+    public Sprite ShieldCounterIconUIBlue;
+
+    public Sprite LifeCounterIconUIGray;
+    public Sprite LifeCounterIconUIRed;
+    public Sprite LifeCounterIconUIGreen;
+    public Sprite LifeCounterIconUIBlue;
+
+    public Sprite BulletCounterIconUIGray;
+    public Sprite BulletCounterIconUIRed;
+    public Sprite BulletCounterIconUIGreen;
+    public Sprite BulletCounterIconUIBlue;
+
+    List<Sprite> bulletIcons = new List<Sprite>();
+    List<Sprite> fireRateIcons = new List<Sprite>();
+    List<Sprite> lifeIcons = new List<Sprite>();
+    List<Sprite> shieldIcons = new List<Sprite>();
+
+    private static Color GrayUI = new Color(0.6f, 0.6f, 0.6f);
+    private static Color RedUI = new Color(0.6745098f, 0.2235294f, 0.2235294f);
+    private static Color GreenUI = new Color(0.4431373f, 0.7882354f, 0.2156863f);
+    private static Color BlueUI = new Color(0.2117647f, 0.7333333f, 0.9607844f);
+    private static Color YellowUI = new Color(0.9686275f, 0.9058824f, 0.3372549f);
+
+    List<Color> UIColors = new List<Color>() { GrayUI, RedUI, GreenUI, BlueUI };
 
     // Score Management
     private static int score;
@@ -145,6 +162,7 @@ public class GameController : MonoBehaviour {
     {
         CreateWaveLists();
         ResetPickupLists();
+        CreatePickUpCounterLists();
     }
 
     private void CreateWaveLists()
@@ -190,6 +208,45 @@ public class GameController : MonoBehaviour {
         pickupList.Add(new PickUp<GameObject, int>(pickupShield, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupLife, 3));
         pickupList.Add(new PickUp<GameObject, int>(pickupScore, 500));
+    }
+
+    private void CreatePickUpCounterLists()
+    {
+        // Bullets
+        bulletIcons.AddRange( new List<Sprite>
+        {
+            BulletCounterIconUIGray,
+            BulletCounterIconUIRed,
+            BulletCounterIconUIGreen,
+            BulletCounterIconUIBlue
+        });
+
+        // Fire Rate
+        fireRateIcons.AddRange(new List<Sprite>
+        {
+            FireRateCounterIconUIGray,
+            FireRateCounterIconUIRed,
+            FireRateCounterIconUIGreen,
+            FireRateCounterIconUIBlue
+        });
+
+        // Life
+        lifeIcons.AddRange(new List<Sprite>
+        {
+            LifeCounterIconUIGray,
+            LifeCounterIconUIRed,
+            LifeCounterIconUIGreen,
+            LifeCounterIconUIBlue
+        });
+
+        // Shield
+        shieldIcons.AddRange(new List<Sprite>
+        {
+            ShieldCounterIconUIGray,
+            ShieldCounterIconUIRed,
+            ShieldCounterIconUIGreen,
+            ShieldCounterIconUIBlue
+        });
     }
 
     private void Update()
@@ -503,7 +560,7 @@ public class GameController : MonoBehaviour {
         if (bulletLevel < 3)
         {
             bulletLevel += 1;
-            UpdatePickUpCounterUI("bullet");
+            UpdatePickUpCounterUI("bullet", bulletLevel);
         }
     }
 
@@ -512,7 +569,7 @@ public class GameController : MonoBehaviour {
         if (fireRateBonus < 3)
         {
             fireRateBonus += 1.0f;
-            UpdatePickUpCounterUI("fireRate");
+            UpdatePickUpCounterUI("fireRate", (int)fireRateBonus);
         }
     }
 
@@ -609,154 +666,58 @@ public class GameController : MonoBehaviour {
 
     public void UpdatePickUpCountersUI()
     {
-        UpdatePickUpCounterUI("bullet");
-        UpdatePickUpCounterUI("fireRate");
-        UpdatePickUpCounterUI("life");
-        UpdatePickUpCounterUI("shield");
+        UpdatePickUpCounterUI("bullet", bulletLevel);
+        UpdatePickUpCounterUI("fireRate", (int)fireRateBonus);
+        UpdatePickUpCounterUI("life", lives);
+        UpdatePickUpCounterUI("shield", shieldCount);
     }
 
-    public void UpdatePickUpCounterUI(string pickUp)
+    public void UpdatePickUpCounterUI(string pickUp, int counter)
     {
         switch (pickUp)
         {
             case "bullet":
                 BulletCounterUI.text = bulletLevel.ToString();
-                UpdatePickUpCounterTextColour(BulletCounterUI, bulletLevel);
-                UpdateBulletCounterIcon(BulletCounterIconUI, bulletLevel);
+                BulletCounterUI.color = UIColors[counter];
+                BulletCounterIconUI.sprite = bulletIcons[counter];
                 break;
 
             case "fireRate":
                 FireRateCounterUI.text = fireRateBonus.ToString();
-                UpdatePickUpCounterTextColour(FireRateCounterUI, (int)fireRateBonus);
-                UpdateFireRateCounterIcon(FireRateCounterIconUI, (int)fireRateBonus);
+                FireRateCounterUI.color = UIColors[counter];
+                FireRateCounterIconUI.sprite = fireRateIcons[counter];
                 break;
 
             case "life":
                 LifeCounterUI.text = lives.ToString();
-                UpdatePickUpCounterTextColour(LifeCounterUI, lives);
-                UpdateLifeCounterIcon(LifeCounterIconUI, lives);
+                LifeCounterUI.color = UIColors[counter];
+                LifeCounterIconUI.sprite = lifeIcons[counter];
                 break;
 
             case "shield":
                 ShieldCounterUI.text = shieldCount.ToString();
-                UpdatePickUpCounterTextColour(ShieldCounterUI, shieldCount);
-                UpdateShieldCounterIcon(ShieldCounterIconUI, shieldCount);
+                ShieldCounterUI.color = UIColors[counter];
+                ShieldCounterIconUI.sprite = shieldIcons[counter];
                 break;
 
             default:
                 break;
         }
     }
-
-    public void UpdatePickUpCounterTextColour(Text pickUpText, int counter)
-    {
-        switch (counter)
-        {
-            case 0:
-            case 1:
-                pickUpText.color = YellowUI;
-                break;
-            case 2:
-                pickUpText.color = RedUI;
-                break;
-            case 3:
-                pickUpText.color = BlueUI;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void UpdateBulletCounterIcon(Image pickUp, int counter)
-    {
-        switch (counter)
-        {
-            case 0:
-            case 1:
-                pickUp.sprite = BulletCounterIconUIYellow;
-                break;
-            case 2:
-                pickUp.sprite = BulletCounterIconUIRed;
-                break;
-            case 3:
-                pickUp.sprite = BulletCounterIconUIBlue;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void UpdateFireRateCounterIcon(Image pickUp, int counter)
-    {
-        switch (counter)
-        {
-            case 0:
-            case 1:
-                pickUp.sprite = FireRateCounterIconUIYellow;
-                break;
-            case 2:
-                pickUp.sprite = FireRateCounterIconUIRed;
-                break;
-            case 3:
-                pickUp.sprite = FireRateCounterIconUIBlue;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void UpdateShieldCounterIcon(Image pickUp, int counter)
-    {
-        switch (counter)
-        {
-            case 0:
-            case 1:
-                pickUp.sprite = ShieldCounterIconUIYellow;
-                break;
-            case 2:
-                pickUp.sprite = ShieldCounterIconUIRed;
-                break;
-            case 3:
-                pickUp.sprite = ShieldCounterIconUIBlue;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void UpdateLifeCounterIcon(Image pickUp, int counter)
-    {
-        switch (counter)
-        {
-            case 0:
-            case 1:
-                pickUp.sprite = LifeCounterIconUIYellow;
-                break;
-            case 2:
-                pickUp.sprite = LifeCounterIconUIRed;
-                break;
-            case 3:
-                pickUp.sprite = LifeCounterIconUIBlue;
-                break;
-            default:
-                break;
-        }
-    }
-
 
     public void IncreaseLifeCount()
     {
         if(lives < 3)
         {
             lives++;
-            UpdatePickUpCounterUI("life");
+            UpdatePickUpCounterUI("life", lives);
         }
     }
 
     public void DecreaseLifeCount()
     {
         lives--;
-        UpdatePickUpCounterUI("life");
+        UpdatePickUpCounterUI("life", lives);
         var lifePickUp = pickupList.Find(x => x.Name.name.ToString() == "PickUpLife");
         if(lifePickUp != null) // If life pickup exists in the pickup list
         {
@@ -779,10 +740,3 @@ public class GameController : MonoBehaviour {
         playerDiedLifeCounterUI.text = lives.ToString();
     }
 }
-
-
-
-// Todo
-// Make player flash while invulnerable
-// Mini explosions for player vs enemy bullet
-// Refactor icon updating code to remove duplication code smell

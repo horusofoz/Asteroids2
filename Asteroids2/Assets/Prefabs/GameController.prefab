@@ -51,6 +51,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d09b9d53a1d45342b05f5cfd4ca0e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FireRateCounterIconUIGray: {fileID: 21300000, guid: 0bbadaefc5730f241aa13a13bee95bfb,
+    type: 3}
+  FireRateCounterIconUIRed: {fileID: 21300000, guid: f74e6a44dc516ac43b1d8e59e91d5cd2,
+    type: 3}
+  FireRateCounterIconUIGreen: {fileID: 21300000, guid: f0fa256dd52428c4391d04ca3362cc76,
+    type: 3}
+  FireRateCounterIconUIBlue: {fileID: 21300000, guid: e1a4cf640d28422439d4476fae56b9b1,
+    type: 3}
+  ShieldCounterIconUIGray: {fileID: 21300000, guid: 571bdb379a8dcd54ba57481baf7b1df7,
+    type: 3}
+  ShieldCounterIconUIRed: {fileID: 21300000, guid: 1340bbb8e1e5f1b49a4e5bef25ac6f79,
+    type: 3}
+  ShieldCounterIconUIGreen: {fileID: 21300000, guid: 11af5d692ca1cd342a5f0fdf48fb2dc4,
+    type: 3}
+  ShieldCounterIconUIBlue: {fileID: 21300000, guid: 5f0244cc32762f5439aa53070c2ed6a6,
+    type: 3}
+  LifeCounterIconUIGray: {fileID: 21300000, guid: 7594842bfaa3154428cecfb2bd4c73a1,
+    type: 3}
+  LifeCounterIconUIRed: {fileID: 21300000, guid: 7c1f565c015717847982db401c56273e,
+    type: 3}
+  LifeCounterIconUIGreen: {fileID: 21300000, guid: 8b47876c30de8c441b3fdbe457ea3821,
+    type: 3}
+  LifeCounterIconUIBlue: {fileID: 21300000, guid: 1ab4cd2e587a6a248a15b025f75d4c0a,
+    type: 3}
+  BulletCounterIconUIGray: {fileID: 21300000, guid: de57890f5e286fd408731df07d45c6a3,
+    type: 3}
+  BulletCounterIconUIRed: {fileID: 21300000, guid: c8ecdee8ad0671c418185a29a20ee36e,
+    type: 3}
+  BulletCounterIconUIGreen: {fileID: 21300000, guid: 17bbca01127e0d7489ece388aaa6fcb5,
+    type: 3}
+  BulletCounterIconUIBlue: {fileID: 21300000, guid: 063825da1af353043bed7a2444e9ebf4,
+    type: 3}
   explosionSmall: {fileID: 1202360805144428, guid: 4eb57491175210641a03392a5c1ff64d,
     type: 2}
   explosionLarge: {fileID: 1202360805144428, guid: 216e761caa6cd8f48bb3d9360d43c306,
@@ -68,7 +100,7 @@ MonoBehaviour:
   pickupScore: {fileID: 1794822882662670, guid: a6bb785b21e36b04892bc719f91c5fa9,
     type: 2}
   fireRateBonus: 0
-  bulletLevel: 1
+  bulletLevel: 0
   shieldCount: 0
   shieldHitSound: {fileID: 8300000, guid: 414d2ffd4518501479df41cdc586c374, type: 3}
   shieldDestroyed: {fileID: 8300000, guid: 675fe749abbe97f48892d0dcebd32895, type: 3}
