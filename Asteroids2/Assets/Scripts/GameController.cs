@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -113,12 +114,15 @@ public class GameController : MonoBehaviour {
     private Renderer shield;
     private SpriteRenderer shieldImage;
 
+    public AnimationClip shieldHit;
+
     // Score Management
     private static int score;
     private int scoreLargeAsteroid = 250;
     private int scoreMediumAsteroid = 375;
     private int scoreSmallAsteroid = 500;
     private int scoreEnemyShooter = 1000;
+    private int scoreEnemyBullet = 75;
     private int scoreEnemyDrone = 1000;
     private int scorePickUp = 1500;
     private float levelTime = 0.0f;
@@ -127,9 +131,10 @@ public class GameController : MonoBehaviour {
     private int levelBonusTime = 0;
 
     // Store reference to explosion
+    public GameObject explosionTiny;
     public GameObject explosionSmall;
-    public GameObject explosionLarge;
     public GameObject explosionMedium;
+    public GameObject explosionLarge;
     public AudioClip pickUpSound;
 
     // Pick Up Objects
@@ -177,9 +182,11 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 0),
-            new Wave(1, 0, 0),
-            new Wave(2, 0, 0)
+            new Wave(0, 0, 1),
+            new Wave(0, 0, 1),
+            new Wave(0, 0, 1),
+            new Wave(0, 0, 1),
+            new Wave(0, 0, 1)
         });
 
         // Level 2
@@ -475,6 +482,7 @@ public class GameController : MonoBehaviour {
         currentWave = 1;
         lives = 0;
         levelWaves = 0;
+        bulletLevel = 0;
         levelLoaded = false;
         gameReset = true;
         score = 0;
@@ -595,7 +603,6 @@ public class GameController : MonoBehaviour {
 
         if (pickupList.Count < 1)
         {
-            print("Spawning Score Pickup");
             Instantiate(pickupScore, enemy.transform.position, Quaternion.identity);
         }
         else
@@ -645,12 +652,10 @@ public class GameController : MonoBehaviour {
             if (shieldPickUp.Remaining < 3)
             {
                 shieldPickUp.Remaining++;
-                print("Shield pickup still in pickup list. Incrementing reamining to " + shieldPickUp.Remaining);
             }
         }
         else // re-add to the pickupList with all shields available
         {
-            print("Shield pickup not in pickup list. Readding.");
             pickupList.Add(new PickUp<GameObject, int>(pickupShield, 1));
         }
         UpdatePickUpCountersUI();
@@ -661,8 +666,9 @@ public class GameController : MonoBehaviour {
     {
         if (shieldCount > 0)
         {
-            print("Shield Hit");
             SoundManager.instance.PlaySingle(shieldHitSound);
+            PlayerController playerControllerScript = player.GetComponent<PlayerController>();
+            playerControllerScript.FlashShield();
             RemoveShield();
         }
         else
@@ -673,8 +679,6 @@ public class GameController : MonoBehaviour {
 
     public void UpdatePickUpList(GameObject pickUp)
     {
-        print(pickUp.name + " collected.");
-
         var pickUpCollected = pickupList.Find(x => x.Name.ToString() == pickUp.ToString().Replace("(Clone)", ""));
 
         if(pickUpCollected != null)
@@ -685,15 +689,9 @@ public class GameController : MonoBehaviour {
 
                 if (pickUpCollected.Remaining < 1)
                 {
-                    print("Removing " + pickUpCollected.Name.name);
                     pickupList.Remove(pickUpCollected);
                 }
             }
-        }
-
-        foreach (var item in pickupList)
-        {
-            print(item.Name.name + " " + item.Remaining + " Remaining");
         }
     }
 
@@ -757,11 +755,9 @@ public class GameController : MonoBehaviour {
             if (lifePickUp.Remaining < 3)
             {
                 lifePickUp.Remaining++;
-                print("Life pickup still in pickup list. Incrementing reamining to " + lifePickUp.Remaining);
             }
             else // re-add to the pickupList with all shields available
             {
-                print("Life pickup not in pickup list. Re-adding.");
                 pickupList.Add(new PickUp<GameObject, int>(pickupLife, 1));
             }
         }
@@ -772,4 +768,14 @@ public class GameController : MonoBehaviour {
         playerDiedLifeCounterUI = GameObject.Find("PlayerDiedLifeCounter").GetComponent<Text>();
         playerDiedLifeCounterUI.text = lives.ToString();
     }
+
+    public void EnemyBulletHitByBullet(GameObject enemyBullet)
+    {
+        Instantiate(explosionTiny, enemyBullet.transform.position, enemyBullet.transform.rotation);
+        Destroy(enemyBullet);
+        AddScore(scoreEnemyBullet);
+    }
+
+    
+
 }

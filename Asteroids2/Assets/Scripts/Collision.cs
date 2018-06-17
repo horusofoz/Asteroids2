@@ -51,7 +51,7 @@ public class Collision : MonoBehaviour
         {
             if (gameObject.tag == "Bullet")
             {
-                Destroy(collision.gameObject);
+                GameController.instance.EnemyBulletHitByBullet(collision.gameObject);
                 Destroy(gameObject);
             }
 
@@ -85,8 +85,10 @@ public class Collision : MonoBehaviour
 
             if (gameObject.tag == "Player")
             {
+                //GameController.instance.PlayerHit(gameObject);
+                //Destroy(collision.gameObject);
                 GameController.instance.PlayerHit(gameObject);
-                Destroy(collision.gameObject);
+                GameController.instance.EnemyDroneHitByBullet(collision.gameObject);
             }
         }
         else if (collision.gameObject.tag == "PickUp")

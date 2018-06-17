@@ -33,10 +33,16 @@ public class PlayerController : MonoBehaviour {
     public Transform bulletSpawn2;
     public Transform bulletSpawn3;
 
+    // Animation
+
+    public AnimationClip shieldHit;
+    private Animator StarShipAnimator;
+
     void Start ()
     {
         rbody = GetComponent<Rigidbody2D>();
         playerAlive = true;
+        StarShipAnimator = GetComponent<Animator>();
     }
 	
     void Update()
@@ -113,5 +119,11 @@ public class PlayerController : MonoBehaviour {
                 default:
                         break;
             }
+    }
+
+    public void FlashShield()
+    {
+        print("flash shield");
+        StarShipAnimator.Play(shieldHit.name);
     }
 }

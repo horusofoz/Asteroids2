@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 114259047336217350}
   - component: {fileID: 60049263321406082}
   - component: {fileID: 114586712904199780}
+  - component: {fileID: 95719521598464880}
   m_Layer: 0
   m_Name: Starship
   m_TagString: Player
@@ -125,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1537167107582112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.68, y: 1.04, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4107235518326080}
@@ -245,6 +246,24 @@ PolygonCollider2D:
       - {x: -0.45, y: -0.47}
       - {x: -0.37, y: -0.45999998}
       - {x: -0.099999994, y: -0.48999998}
+--- !u!95 &95719521598464880
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1537167107582112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04c2da43b3fa8c847937ec8935abe536, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114259047336217350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -275,6 +294,7 @@ MonoBehaviour:
   bulletSpawn1: {fileID: 4107235518326080}
   bulletSpawn2: {fileID: 4851357649050714}
   bulletSpawn3: {fileID: 4631159355565652}
+  shieldHit: {fileID: 7400000, guid: d97dfcf58d59e82448f5d3619ad18c5b, type: 2}
 --- !u!114 &114586712904199780
 MonoBehaviour:
   m_ObjectHideFlags: 1

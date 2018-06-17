@@ -86,11 +86,14 @@ MonoBehaviour:
   shield1: {fileID: 21300000, guid: 4b5f32bd4a437644698559d7fe03e9c3, type: 3}
   shield2: {fileID: 21300000, guid: 8a4c70a701c027749ac954167db3d6e7, type: 3}
   shield3: {fileID: 21300000, guid: 2c8aa564bbc423f49b3ee65ec4d144a9, type: 3}
+  shieldHit: {fileID: 7400000, guid: d97dfcf58d59e82448f5d3619ad18c5b, type: 2}
+  explosionTiny: {fileID: 1202360805144428, guid: ea3be4a7b5f6fd04f9941738dbe24e88,
+    type: 2}
   explosionSmall: {fileID: 1202360805144428, guid: 4eb57491175210641a03392a5c1ff64d,
     type: 2}
-  explosionLarge: {fileID: 1202360805144428, guid: 216e761caa6cd8f48bb3d9360d43c306,
-    type: 2}
   explosionMedium: {fileID: 1202360805144428, guid: 28ee81de59458f142943847408bc6806,
+    type: 2}
+  explosionLarge: {fileID: 1202360805144428, guid: 216e761caa6cd8f48bb3d9360d43c306,
     type: 2}
   pickUpSound: {fileID: 8300000, guid: e773ee5da3e2e7e4fbaf5a9693dadcdc, type: 3}
   pickupFireRate: {fileID: 1625900659688150, guid: 50cd523b673e98540babeb31ec279b7d,
