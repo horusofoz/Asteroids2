@@ -12,6 +12,7 @@ TagManager:
   - EnemyShooter
   - EnemyDrone
   - PickUp
+  - EnemyBoss
   layers:
   - Default
   - TransparentFX

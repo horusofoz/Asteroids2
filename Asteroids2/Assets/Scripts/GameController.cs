@@ -124,6 +124,7 @@ public class GameController : MonoBehaviour {
     private int scoreEnemyShooter = 1000;
     private int scoreEnemyBullet = 75;
     private int scoreEnemyDrone = 1000;
+	private int scoreEnemyBoss = 250;
     private int scorePickUp = 1500;
     private float levelTime = 0.0f;
     private int timeBonus = 0;
@@ -389,6 +390,14 @@ public class GameController : MonoBehaviour {
         CheckPickUpSpawnConditions(enemyDrone);
         Destroy(enemyDrone);
         AddScore(scoreEnemyDrone);
+    }
+
+	public void EnemyBossHitByBullet(GameObject enemyBoss)
+    {
+		Instantiate(explosionLarge, enemyBoss.transform.position, enemyBoss.transform.rotation);
+		CheckPickUpSpawnConditions(enemyBoss);
+		Destroy(enemyBoss);
+		AddScore(scoreEnemyBoss);
     }
 
     private void DelayedGameOverSceneLoad()

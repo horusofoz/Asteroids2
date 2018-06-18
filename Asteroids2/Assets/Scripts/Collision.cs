@@ -98,5 +98,18 @@ public class Collision : MonoBehaviour
                 GameController.instance.PickUpCollected(collision.gameObject);
             }
         }
+		if (collision.gameObject.tag == "EnemyBoss")
+        {
+            if (gameObject.tag == "Bullet")
+            {
+				GameController.instance.EnemyBossHitByBullet(collision.gameObject);
+                Destroy(gameObject); // Destroy Bullet
+            }
+
+            if (gameObject.tag == "Player")
+            {
+                GameController.instance.PlayerHit(gameObject);
+            }
+        }
     }
 }
