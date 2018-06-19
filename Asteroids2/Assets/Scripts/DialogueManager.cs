@@ -109,10 +109,10 @@ public class DialogueManager : MonoBehaviour {
         }
     }
 
-    public void DisableStartButton()
+    /*public void DisableStartButton()
     {
         DisableStartButton = GameObject.Find("")
-    }
+    }*/
 }
 
 

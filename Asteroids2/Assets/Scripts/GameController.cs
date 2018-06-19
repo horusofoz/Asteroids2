@@ -394,9 +394,12 @@ public class GameController : MonoBehaviour {
 
 	public void EnemyBossHitByBullet(GameObject enemyBoss)
     {
-		Instantiate(explosionLarge, enemyBoss.transform.position, enemyBoss.transform.rotation);
-		CheckPickUpSpawnConditions(enemyBoss);
-		Destroy(enemyBoss);
+        HealthBar.health -= 2f;
+        if (HealthBar.health == 0f)
+        {
+            Instantiate(explosionLarge, enemyBoss.transform.position, enemyBoss.transform.rotation);
+			Destroy(enemyBoss);
+        }
 		AddScore(scoreEnemyBoss);
     }
 
