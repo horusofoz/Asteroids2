@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Player Died Scene.unity
     guid: 65742296e6f595d4b9d8a5bad5bab157
+  - enabled: 1
+    path: Assets/Scenes/Mission Brief.unity
+    guid: 886f56597cd5ca34fbc238c2ddc70f62
   m_configObjects: {}
