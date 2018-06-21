@@ -14,6 +14,7 @@ public class SceneHandler : MonoBehaviour
     const int SCENE_GAME_OVER = 5;
     const int SCENE_GAME_WON = 6;
     const int SCENE_PLAYER_DIED = 7;
+    const int SCENE_MISSION_BRIEF = 8;
 
     void Awake()
     {
@@ -70,7 +71,10 @@ public class SceneHandler : MonoBehaviour
         SceneManager.LoadScene(SCENE_PLAYER_DIED);
     }
 
-    
+    public void LoadSceneMissionBrief()
+    {
+        SceneManager.LoadScene(SCENE_MISSION_BRIEF);
+    }
 
     
 }

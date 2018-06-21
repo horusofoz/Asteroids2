@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour {
     const int SCENE_GAME_OVER = 5;
     const int SCENE_GAME_WON = 6;
     const int SCENE_PLAYER_DIED = 7;
+    const int SCENE_MISSION_BRIEF = 8;
     private bool levelLoaded = false;
     private float sceneLoadDelay = 2.0f;
     private bool gameReset = false;
@@ -102,7 +103,6 @@ public class GameController : MonoBehaviour {
     private static Color RedUI = new Color(0.6745098f, 0.2235294f, 0.2235294f);
     private static Color GreenUI = new Color(0.4431373f, 0.7882354f, 0.2156863f);
     private static Color BlueUI = new Color(0.2117647f, 0.7333333f, 0.9607844f);
-    private static Color YellowUI = new Color(0.9686275f, 0.9058824f, 0.3372549f);
 
     List<Color> UIColors = new List<Color>() { GrayUI, RedUI, GreenUI, BlueUI };
 
@@ -183,27 +183,24 @@ public class GameController : MonoBehaviour {
     {
         // Level 1
         waveList.Add(new List<Wave> {
-            new Wave(0, 0, 1),
-            new Wave(0, 0, 1),
-            new Wave(0, 0, 1),
-            new Wave(0, 0, 1),
-            new Wave(0, 0, 1)
+            new Wave(1, 0, 0),
+            new Wave(2, 0, 0)
         });
 
         // Level 2
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 1),
-            new Wave(0, 0, 2),
+            new Wave(1, 0, 0),
+            new Wave(2, 0, 0),
             new Wave(2, 0, 1),
             new Wave(2, 0, 2)
         });
 
         // Level 3
         waveList.Add(new List<Wave> {
-            new Wave(1, 1, 0),
+            new Wave(2, 0, 0),
+            new Wave(2, 1, 0),
             new Wave(1, 1, 1),
-            new Wave(0, 2, 0),
-            new Wave(0, 2, 2)
+            new Wave(2, 2, 2)
         });
 
         // Level 4

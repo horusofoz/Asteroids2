@@ -123,7 +123,6 @@ public class PlayerController : MonoBehaviour {
 
     public void FlashShield()
     {
-        print("flash shield");
         StarShipAnimator.Play(shieldHit.name);
     }
 }

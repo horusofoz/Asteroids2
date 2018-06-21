@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 222484270527002708}
   - component: {fileID: 114045264484793508}
   - component: {fileID: 114085008787987396}
-  - component: {fileID: 114732097020979538}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -113,7 +112,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114732097020979538}
+      - m_Target: {fileID: 0}
         m_MethodName: TriggerDialogue
         m_Mode: 1
         m_Arguments:
@@ -159,25 +158,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: next
---- !u!114 &114732097020979538
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1848575080675528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88c34bc65ba5e96419ef50750e1887d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    name: Level1
-    sentences:
-    - This is the officer first text
-    - This is the pilot first text
-    - This is the officer second text
-    - This is the pilot second text
-    - This is the officer third text
 --- !u!222 &222484270527002708
 CanvasRenderer:
   m_ObjectHideFlags: 1

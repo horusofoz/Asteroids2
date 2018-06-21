@@ -4,39 +4,30 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
-
-    public Text OfficerText;
-    public Text PilotText;
+    
     public Text ActiveText;
-    public Text OfficerNameText;
-    public Text PilotNameText;
-    public Text ActiveNameText;
-    public Image OfficerPic;
-    public Image PilotPic;
-    public Image ActivePic;
-
-    private List<List<string>> DialogueList = new List<List<string>>();
-
+    private static Color BlueUI = new Color(0.2117647f, 0.7333333f, 0.9607844f);
+    private static Color YellowUI = new Color(0.9686275f, 0.9058824f, 0.3372549f);
     public Queue<string> sentences;
+    private GameObject LaunchButton;
 
-    public enum Speaker
-    {
-        Officer,
-        Pilot
-    };
+    public enum Speaker { Officer, Pilot };
 
     Speaker speaker = Speaker.Pilot;
 
-	// Use this for initialization
-	void Start ()
+    public Dialogue dialogue;
+
+    // Use this for initialization
+    void Awake()
     {
         sentences = new Queue<string>();
-	}
+        StartDialogue(dialogue);
+        LaunchButton = GameObject.Find("ButtonLaunchNextMission");
+        LaunchButton.SetActive(false);
+    }
 	
 	public void StartDialogue(Dialogue dialogue)
     {
-        Debug.Log("Starting dialogue + " + dialogue.name);
-
         sentences.Clear();
 
         foreach(string sentence in dialogue.sentences)
@@ -45,7 +36,6 @@ public class DialogueManager : MonoBehaviour {
         }
 
         DisplayNextSentence();
-
     }
 
     public void DisplayNextSentence()
@@ -60,60 +50,45 @@ public class DialogueManager : MonoBehaviour {
         if(speaker == Speaker.Officer)
         {
             speaker = Speaker.Pilot;
+            ActiveText.alignment = TextAnchor.UpperRight;
+            ActiveText.color = BlueUI;
         }
         else
         {
             speaker = Speaker.Officer;
+            ActiveText.alignment = TextAnchor.UpperLeft;
+            ActiveText.color = YellowUI;
         }
 
         string sentence = sentences.Dequeue();
 
-        SetDialogueSpeaker(speaker);
-
         ActiveText.text = sentence;
-        print(sentence);
     }
 
     public void EndDialogue()
     {
-        Debug.Log("End of conversation.");
+        DisableNextButton();
+        LaunchButton.SetActive(true);
     }
 
-    public void SetDialogueSpeaker(Speaker speaker)
+    public void DisableNextButton()
     {
-        if(speaker == Speaker.Officer)
+        GameObject StartButton = GameObject.Find("ButtonNextDialogue");
+        GameObject SkipButton = GameObject.Find("ButtonSkipDialogue");
+
+        if (StartButton != null)
         {
-            // Enable Officer components
-            OfficerText.enabled = OfficerNameText.enabled = OfficerPic.enabled = true;            
-
-            // Disable pilot components
-            PilotText.enabled = PilotNameText.enabled = PilotPic.enabled = false;       
-
-            // Set officer as active
-            ActiveText = OfficerText;
-            ActiveNameText = OfficerNameText;
-            ActivePic = OfficerPic;
+            StartButton.SetActive(false);
         }
-        else
+        if (SkipButton != null)
         {
-            // Disable Officer components
-            OfficerText.enabled = OfficerNameText.enabled = OfficerPic.enabled = false;
-
-            // Enable pilot components
-            PilotText.enabled = PilotNameText.enabled = PilotPic.enabled = true;
-
-            // Set pilot as active
-            ActiveText = PilotText;
-            ActiveNameText = PilotNameText;
-            ActivePic = PilotPic;
+            SkipButton.SetActive(false);
         }
     }
-
-    /*public void DisableStartButton()
-    {
-        DisableStartButton = GameObject.Find("")
-    }*/
 }
+
+    
+
 
 
 
