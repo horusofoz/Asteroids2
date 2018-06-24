@@ -55,7 +55,7 @@ public class GameController : MonoBehaviour {
     private bool gameReset = false;
 
     // Wave Management
-    private int currentLevel = 1;
+    public int currentLevel = 2;
     private int currentWave = 1;
     private int levelWaves = 0;
     private float waveTimer = 20.0f;
@@ -66,14 +66,10 @@ public class GameController : MonoBehaviour {
     private Text nextWaveTimerUI;
     private Text scoreText;
     private Text playerDiedLifeCounterUI;
-    //private Text BulletCounterUI;
-    //private Text FireRateCounterUI;
-    //private Text ShieldCounterUI;
-    //private Text LifeCounterUI;
-    private Image BulletCounterIconUI;
-    private Image FireRateCounterIconUI;
-    private Image ShieldCounterIconUI;
-    private Image LifeCounterIconUI;
+    private Image BulletCounterUI;
+    private Image FireRateCounterUI;
+    private Image ShieldCounterUI;
+    private Image LifeCounterUI;
 
     
     public Sprite FireRateCounterIconUIGray;
@@ -190,14 +186,23 @@ public class GameController : MonoBehaviour {
             new Wave(2, 0, 0, 0)
         });
 
-        // Level 2 - Asteroids , intro drones
+        // Level 2 - More asteroids
         waveList.Add(new List<Wave> {
             new Wave(1, 0, 0, 0),
             new Wave(2, 0, 0, 0),
-            new Wave(2, 0, 1, 0),
+            new Wave(3, 0, 0, 0),
+            new Wave(3, 0, 0, 0)
         });
 
-        // Level 3 - Asteroids, drones
+        // Level 3 - Asteroids , intro drones
+        waveList.Add(new List<Wave> {
+            new Wave(1, 0, 0, 0),
+            new Wave(2, 0, 1, 0),
+            new Wave(2, 0, 1, 0),
+            new Wave(2, 0, 2, 0),
+        });
+
+        // Level 4 - Asteroids, drones
         waveList.Add(new List<Wave> {
             new Wave(1, 0, 1, 0),
             new Wave(2, 0, 2, 0),
@@ -205,7 +210,7 @@ public class GameController : MonoBehaviour {
             new Wave(3, 0, 3, 0)
         });
 
-        // Level 4 - Asteroids, drones, intro shooters
+        // Level 5 - Asteroids, drones, intro shooters
         waveList.Add(new List<Wave> {
             new Wave(2, 0, 1, 0),
             new Wave(1, 1, 0, 0),
@@ -214,17 +219,17 @@ public class GameController : MonoBehaviour {
             new Wave(1, 3, 2, 0)
         });
 
-        // Level 5 - Asteroids, drones, shooters
+        // Level 6 - Asteroids, drones, shooters
         waveList.Add(new List<Wave> {
             new Wave(1, 1, 1, 0),
             new Wave(1, 1, 2, 0),
             new Wave(2, 2, 0, 0),
             new Wave(2, 2, 2, 0),
             new Wave(2, 2, 2, 0),
-            new Wave(1, 3, 2, 0)
+            new Wave(1, 3, 3, 0)
         });
 
-        // Level 6 - Asteroids, drones, shooters, intro shooters2
+        // Level 7 - Asteroids, drones, shooters, intro shooters2
         waveList.Add(new List<Wave> {
             new Wave(1, 1, 1, 0),
             new Wave(1, 0, 0, 1),
@@ -232,6 +237,26 @@ public class GameController : MonoBehaviour {
             new Wave(1, 1, 1, 1),
             new Wave(1, 1, 0, 2),
             new Wave(2, 2, 2, 1)
+        });
+
+        // Level 8 - Asteroids, drones, shooters, shooters2
+        waveList.Add(new List<Wave> {
+            new Wave(1, 2, 2, 1),
+            new Wave(1, 1, 3, 2),
+            new Wave(2, 3, 2, 1),
+            new Wave(3, 1, 1, 2),
+            new Wave(1, 1, 3, 1),
+            new Wave(2, 2, 2, 3)
+        });
+
+        // Level 9 - Asteroids, drones, shooters, shooters2
+        waveList.Add(new List<Wave> {
+            new Wave(2, 2, 2, 1),
+            new Wave(2, 2, 1, 2),
+            new Wave(2, 3, 2, 2),
+            new Wave(3, 2, 2, 2),
+            new Wave(3, 2, 3, 1),
+            new Wave(2, 2, 2, 3)
         });
     }
 
@@ -432,12 +457,12 @@ public class GameController : MonoBehaviour {
 
     private void DelayedGameOverSceneLoad()
     {
-        SceneHandler.instance.LoadSceneGameOver(); // Should probably move this direct into scene handler and have an overload allowing delayed 
+        SceneHandler.instance.LoadSceneGameOver();
     }
 
     private void DelayedPlayerDiedSceneLoad()
     {
-        SceneHandler.instance.LoadScenePlayerDied(); // Should probably move this direct into scene handler and have an overload allowing delayed 
+        SceneHandler.instance.LoadScenePlayerDied();
     }
 
     public void SpawnWave()
@@ -458,14 +483,10 @@ public class GameController : MonoBehaviour {
 
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
         nextWaveTimerUI = GameObject.Find("NextWave").GetComponent<Text>();
-        //BulletCounterUI = GameObject.Find("PickUpCounterTextBullet").GetComponent<Text>();
-        //FireRateCounterUI = GameObject.Find("PickUpCounterTextFireRate").GetComponent<Text>();
-        //ShieldCounterUI = GameObject.Find("PickUpCounterTextShield").GetComponent<Text>();
-        //LifeCounterUI = GameObject.Find("PickUpCounterTextLife").GetComponent<Text>();
-        BulletCounterIconUI = GameObject.Find("PickUpCounterIconBullet").GetComponent<Image>();
-        FireRateCounterIconUI = GameObject.Find("PickUpCounterIconFireRate").GetComponent<Image>();
-        ShieldCounterIconUI = GameObject.Find("PickUpCounterIconShield").GetComponent<Image>();
-        LifeCounterIconUI = GameObject.Find("PickUpCounterIconLife").GetComponent<Image>();
+        BulletCounterUI = GameObject.Find("PickUpCounterIconBullet").GetComponent<Image>();
+        FireRateCounterUI = GameObject.Find("PickUpCounterIconFireRate").GetComponent<Image>();
+        ShieldCounterUI = GameObject.Find("PickUpCounterIconShield").GetComponent<Image>();
+        LifeCounterUI = GameObject.Find("PickUpCounterIconLife").GetComponent<Image>();
 
         shield = GameObject.Find("Shield").GetComponent<Renderer>();
         shieldImage = GameObject.Find("Shield").GetComponent<SpriteRenderer>();
@@ -748,27 +769,19 @@ public class GameController : MonoBehaviour {
         switch (pickUp)
         {
             case "bullet":
-                //BulletCounterUI.text = bulletLevel.ToString();
-                //BulletCounterUI.color = UIColors[counter];
-                BulletCounterIconUI.sprite = bulletIcons[counter];
+                BulletCounterUI.sprite = bulletIcons[counter];
                 break;
 
             case "fireRate":
-                //FireRateCounterUI.text = fireRateBonus.ToString();
-                //FireRateCounterUI.color = UIColors[counter];
-                FireRateCounterIconUI.sprite = fireRateIcons[counter];
+                FireRateCounterUI.sprite = fireRateIcons[counter];
                 break;
 
             case "life":
-                //LifeCounterUI.text = lives.ToString();
-                //LifeCounterUI.color = UIColors[counter];
-                LifeCounterIconUI.sprite = lifeIcons[counter];
+                LifeCounterUI.sprite = lifeIcons[counter];
                 break;
 
             case "shield":
-                //ShieldCounterUI.text = shieldCount.ToString();
-                //ShieldCounterUI.color = UIColors[counter];
-                ShieldCounterIconUI.sprite = shieldIcons[counter];
+                ShieldCounterUI.sprite = shieldIcons[counter];
                 break;
 
             default:

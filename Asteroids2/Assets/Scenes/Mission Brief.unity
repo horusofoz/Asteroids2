@@ -743,46 +743,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveText: {fileID: 342243510}
-  dialogue:
-    name: Level 1
-    sentences:
-    - "Welcome Captain Yeager.\r\n\r\nMy name is Lieutenant Anne.\r\n\r\nYou've been
-      invited here today because you are the best combat pilot the Human Federation
-      has had  to date."
-    - "I don't know about the best but I'm here to server.\r\n\r\nWhat's the mission?"
-    - "Straight to business. I like that.\n\nThe mission is simple. Explorers sent
-      to the Andromeda galaxy to scout planets for possible colony sites have not
-      returned. \n\nWe've been able to maintain contact up to sector 42, quadrant
-      B. At that point, we lose contact and tracking beacons stop transmitting.\n\nThe
-      quadrant is known to contain several asteroid fields. This would explain why
-      we keep losing ships in the area."
-    - How many explorers have we lost in the area?
-    - Twelve ships. Each carrying 100 explorers.
-    - 'I see. This is obviously a dangerous place.
-
-
-      But why a combat pilot?
-
-
-      Wouldn''t drones be more efficient?'
-    - "Two reasons Captain. \n\nFirst we already have sent drones. They all get destroyed
-      sooner then the explorers and none were able to provide data that made sense.\n\nSecond
-      the data we did get back indicated unknown energy signatures. We don't know
-      if this is caused by a previously unrecorded space phenomena or worse."
-    - What do you mean worse?
-    - 'Captain...
-
-
-      There is the distinct possibility that we have encountered an alien life form.
-      One that is intelligent enough to reach space and angry enough to destroy our
-      ships without provocation.
-
-
-      In either case, we need the best of the best to find out what we face here.
-
-
-      Are you up to it Captain Yeager?'
-    - Fuel up my ship Lieutenant. I'm ready to launch.
 --- !u!4 &1027581016
 Transform:
   m_ObjectHideFlags: 0

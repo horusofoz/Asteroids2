@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d09b9d53a1d45342b05f5cfd4ca0e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: 1
   FireRateCounterIconUIGray: {fileID: 21300000, guid: 0bbadaefc5730f241aa13a13bee95bfb,
     type: 3}
   FireRateCounterIconUIRed: {fileID: 21300000, guid: f74e6a44dc516ac43b1d8e59e91d5cd2,

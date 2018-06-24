@@ -15,22 +15,87 @@ public class DialogueManager : MonoBehaviour {
 
     Speaker speaker = Speaker.Pilot;
 
-    public Dialogue dialogue;
+    private Dialogue dialogue;
+
+    private List<List<string>> dialogueList = new List<List<string>>();
 
     // Use this for initialization
     void Awake()
     {
+        CreateDialogueLists();
         sentences = new Queue<string>();
         StartDialogue(dialogue);
         LaunchButton = GameObject.Find("ButtonLaunchNextMission");
         LaunchButton.SetActive(false);
     }
-	
-	public void StartDialogue(Dialogue dialogue)
+
+    private void CreateDialogueLists()
+    {
+        // Level 1 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Welcome Captain Yeager.\n\nMy name is Lieutenant Anne.",
+            "Lieutenant. What's the mission?",
+            "Straight to the point. Ok.\n\nSeveral explorers sent to the Andromeda galaxy have gone missing in action.\n\nWe lose contact when they enter the asteroid fields of sector 42, quadrant B.\n\nWe need someone of your skill to map a path and see if you can find any survivors.",
+            "Understood. Ready when you are, Lieutenant."
+        });
+
+        // Level 2 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Captain, you are now approaching the main body of the asteroid field.",
+            "That doesn't look good.",
+            "Buckle up Captain. it's going to be a bumpy ride."
+        });
+
+        // Level 3 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Level 3 dialogue to be implemented"
+        });
+
+        // Level 4 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Level 4 dialogue to be implemented"
+        });
+
+        // Level 5 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Level 5 dialogue to be implemented"
+        });
+
+        // Level 6 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Level 6 dialogue to be implemented"
+        });
+
+        // Level 7 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Level 7 dialogue to be implemented"
+        });
+
+        // Level 8 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Level 8 dialogue to be implemented"
+        });
+
+        // Level 9 Brief
+        dialogueList.Add(new List<string>()
+        {
+            "Level 9 dialogue to be implemented"
+        });
+    }
+
+        public void StartDialogue(Dialogue dialogue)
     {
         sentences.Clear();
 
-        foreach(string sentence in dialogue.sentences)
+        foreach(string sentence in dialogueList[GameController.instance.currentLevel - 1])
         {
             sentences.Enqueue(sentence);
         }

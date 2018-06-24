@@ -76,5 +76,4 @@ public class SceneHandler : MonoBehaviour
         SceneManager.LoadScene(SCENE_MISSION_BRIEF);
     }
 
-    
 }

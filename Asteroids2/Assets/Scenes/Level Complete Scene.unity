@@ -412,17 +412,17 @@ Prefab:
     - target: {fileID: 224761214938531492, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 50
+      value: 42.6
       objectReference: {fileID: 0}
     - target: {fileID: 224761214938531492, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 463.6
+      value: 224.6
       objectReference: {fileID: 0}
     - target: {fileID: 224761214938531492, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 75.8
+      value: 40.95
       objectReference: {fileID: 0}
     - target: {fileID: 224761214938531492, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
@@ -457,7 +457,7 @@ Prefab:
     - target: {fileID: 114419962505781180, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
       propertyPath: m_Text
-      value: Launch next mission
+      value: Continue
       objectReference: {fileID: 0}
     - target: {fileID: 114085008787987396, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
@@ -478,7 +478,7 @@ Prefab:
     - target: {fileID: 114085008787987396, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadSceneGame
+      value: LoadSceneMissionBrief
       objectReference: {fileID: 0}
     - target: {fileID: 114085008787987396, guid: 07ac6efd01fe9aa4a92002481e12fce7,
         type: 2}
