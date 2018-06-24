@@ -9,12 +9,14 @@ public class Wave
     public int AsteroidsToSpawn;
     public int EnemyShootersToSpawn;
     public int EnemyDronesToSpawn;
+    public int EnemyShooters2ToSpawn;
 
-    public Wave(int numAsteroids, int numEnemyShooters, int numEnemyDrones)
+    public Wave(int numAsteroids, int numEnemyShooters, int numEnemyDrones, int numEnemyShooters2)
     {
         AsteroidsToSpawn = numAsteroids;
         EnemyShootersToSpawn = numEnemyShooters;
         EnemyDronesToSpawn = numEnemyDrones;
+        EnemyShooters2ToSpawn = numEnemyShooters2;
     }
 }
 
@@ -64,10 +66,10 @@ public class GameController : MonoBehaviour {
     private Text nextWaveTimerUI;
     private Text scoreText;
     private Text playerDiedLifeCounterUI;
-    private Text BulletCounterUI;
-    private Text FireRateCounterUI;
-    private Text ShieldCounterUI;
-    private Text LifeCounterUI;
+    //private Text BulletCounterUI;
+    //private Text FireRateCounterUI;
+    //private Text ShieldCounterUI;
+    //private Text LifeCounterUI;
     private Image BulletCounterIconUI;
     private Image FireRateCounterIconUI;
     private Image ShieldCounterIconUI;
@@ -124,7 +126,8 @@ public class GameController : MonoBehaviour {
     private int scoreEnemyShooter = 1000;
     private int scoreEnemyBullet = 75;
     private int scoreEnemyDrone = 1000;
-	private int scoreEnemyBoss = 250;
+    private int scoreEnemyShooter2 = 2000;
+    private int scoreEnemyBoss = 250;
     private int scorePickUp = 1500;
     private float levelTime = 0.0f;
     private int timeBonus = 0;
@@ -181,36 +184,55 @@ public class GameController : MonoBehaviour {
 
     private void CreateWaveLists()
     {
-        // Level 1
+        // Level 1 - Asteroids only
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 0),
-            new Wave(2, 0, 0)
+            new Wave(1, 0, 0, 0),
+            new Wave(2, 0, 0, 0)
         });
 
-        // Level 2
+        // Level 2 - Asteroids , intro drones
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 0),
-            new Wave(2, 0, 0),
-            new Wave(2, 0, 1),
-            new Wave(2, 0, 2)
+            new Wave(1, 0, 0, 0),
+            new Wave(2, 0, 0, 0),
+            new Wave(2, 0, 1, 0),
         });
 
-        // Level 3
+        // Level 3 - Asteroids, drones
         waveList.Add(new List<Wave> {
-            new Wave(2, 0, 0),
-            new Wave(2, 1, 0),
-            new Wave(1, 1, 1),
-            new Wave(2, 2, 2)
+            new Wave(1, 0, 1, 0),
+            new Wave(2, 0, 2, 0),
+            new Wave(3, 0, 1, 0),
+            new Wave(3, 0, 3, 0)
         });
 
-        // Level 4
+        // Level 4 - Asteroids, drones, intro shooters
         waveList.Add(new List<Wave> {
-            new Wave(1, 1, 1),
-            new Wave(2, 2, 2),
-            new Wave(1, 2, 3),
-            new Wave(3, 3, 3)
+            new Wave(2, 0, 1, 0),
+            new Wave(1, 1, 0, 0),
+            new Wave(0, 2, 1, 0),
+            new Wave(1, 2, 2, 0),
+            new Wave(1, 3, 2, 0)
         });
 
+        // Level 5 - Asteroids, drones, shooters
+        waveList.Add(new List<Wave> {
+            new Wave(1, 1, 1, 0),
+            new Wave(1, 1, 2, 0),
+            new Wave(2, 2, 0, 0),
+            new Wave(2, 2, 2, 0),
+            new Wave(2, 2, 2, 0),
+            new Wave(1, 3, 2, 0)
+        });
+
+        // Level 6 - Asteroids, drones, shooters, intro shooters2
+        waveList.Add(new List<Wave> {
+            new Wave(1, 1, 1, 0),
+            new Wave(1, 0, 0, 1),
+            new Wave(2, 0, 1, 1),
+            new Wave(1, 1, 1, 1),
+            new Wave(1, 1, 0, 2),
+            new Wave(2, 2, 2, 1)
+        });
     }
 
     private void ResetPickupLists()
@@ -389,7 +411,15 @@ public class GameController : MonoBehaviour {
         AddScore(scoreEnemyDrone);
     }
 
-	public void EnemyBossHitByBullet(GameObject enemyBoss)
+    public void EnemyShooter2HitByBullet(GameObject enemyShooter2)
+    {
+        Instantiate(explosionSmall, enemyShooter2.transform.position, enemyShooter2.transform.rotation);
+        CheckPickUpSpawnConditions(enemyShooter2);
+        Destroy(enemyShooter2);
+        AddScore(scoreEnemyShooter2);
+    }
+
+    public void EnemyBossHitByBullet(GameObject enemyBoss)
     {
         HealthBar.health -= 2f;
         if (HealthBar.health == 0f)
@@ -415,6 +445,7 @@ public class GameController : MonoBehaviour {
         AsteroidSpawner.instance.SpawnLargeAsteroids(waveList[currentLevel - 1][currentWave - 1].AsteroidsToSpawn);
         AsteroidSpawner.instance.SpawnEnemyShooters(waveList[currentLevel - 1][currentWave - 1].EnemyShootersToSpawn);
         AsteroidSpawner.instance.SpawnEnemyDrones(waveList[currentLevel - 1][currentWave - 1].EnemyDronesToSpawn);
+        AsteroidSpawner.instance.SpawnEnemyShooters2(waveList[currentLevel - 1][currentWave - 1].EnemyShooters2ToSpawn);
         currentWave++;
         currentWaveTime = 0.0f;
     }
@@ -427,10 +458,10 @@ public class GameController : MonoBehaviour {
 
         scoreText = GameObject.Find("ScoreUI").GetComponent<Text>();
         nextWaveTimerUI = GameObject.Find("NextWave").GetComponent<Text>();
-        BulletCounterUI = GameObject.Find("PickUpCounterTextBullet").GetComponent<Text>();
-        FireRateCounterUI = GameObject.Find("PickUpCounterTextFireRate").GetComponent<Text>();
-        ShieldCounterUI = GameObject.Find("PickUpCounterTextShield").GetComponent<Text>();
-        LifeCounterUI = GameObject.Find("PickUpCounterTextLife").GetComponent<Text>();
+        //BulletCounterUI = GameObject.Find("PickUpCounterTextBullet").GetComponent<Text>();
+        //FireRateCounterUI = GameObject.Find("PickUpCounterTextFireRate").GetComponent<Text>();
+        //ShieldCounterUI = GameObject.Find("PickUpCounterTextShield").GetComponent<Text>();
+        //LifeCounterUI = GameObject.Find("PickUpCounterTextLife").GetComponent<Text>();
         BulletCounterIconUI = GameObject.Find("PickUpCounterIconBullet").GetComponent<Image>();
         FireRateCounterIconUI = GameObject.Find("PickUpCounterIconFireRate").GetComponent<Image>();
         ShieldCounterIconUI = GameObject.Find("PickUpCounterIconShield").GetComponent<Image>();
@@ -717,26 +748,26 @@ public class GameController : MonoBehaviour {
         switch (pickUp)
         {
             case "bullet":
-                BulletCounterUI.text = bulletLevel.ToString();
-                BulletCounterUI.color = UIColors[counter];
+                //BulletCounterUI.text = bulletLevel.ToString();
+                //BulletCounterUI.color = UIColors[counter];
                 BulletCounterIconUI.sprite = bulletIcons[counter];
                 break;
 
             case "fireRate":
-                FireRateCounterUI.text = fireRateBonus.ToString();
-                FireRateCounterUI.color = UIColors[counter];
+                //FireRateCounterUI.text = fireRateBonus.ToString();
+                //FireRateCounterUI.color = UIColors[counter];
                 FireRateCounterIconUI.sprite = fireRateIcons[counter];
                 break;
 
             case "life":
-                LifeCounterUI.text = lives.ToString();
-                LifeCounterUI.color = UIColors[counter];
+                //LifeCounterUI.text = lives.ToString();
+                //LifeCounterUI.color = UIColors[counter];
                 LifeCounterIconUI.sprite = lifeIcons[counter];
                 break;
 
             case "shield":
-                ShieldCounterUI.text = shieldCount.ToString();
-                ShieldCounterUI.color = UIColors[counter];
+                //ShieldCounterUI.text = shieldCount.ToString();
+                //ShieldCounterUI.color = UIColors[counter];
                 ShieldCounterIconUI.sprite = shieldIcons[counter];
                 break;
 

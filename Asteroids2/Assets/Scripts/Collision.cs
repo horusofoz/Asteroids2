@@ -75,6 +75,20 @@ public class Collision : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+        else if (collision.gameObject.tag == "EnemyShooter2")
+        {
+            if (gameObject.tag == "Bullet")
+            {
+                GameController.instance.EnemyShooter2HitByBullet(collision.gameObject);
+                Destroy(gameObject);
+            }
+
+            if (gameObject.tag == "Player")
+            {
+                GameController.instance.PlayerHit(gameObject);
+                Destroy(collision.gameObject);
+            }
+        }
         else if (collision.gameObject.tag == "EnemyDrone")
         {
             if (gameObject.tag == "Bullet")
@@ -85,8 +99,6 @@ public class Collision : MonoBehaviour
 
             if (gameObject.tag == "Player")
             {
-                //GameController.instance.PlayerHit(gameObject);
-                //Destroy(collision.gameObject);
                 GameController.instance.PlayerHit(gameObject);
                 GameController.instance.EnemyDroneHitByBullet(collision.gameObject);
             }

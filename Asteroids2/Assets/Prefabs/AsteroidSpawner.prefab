@@ -60,3 +60,5 @@ MonoBehaviour:
   enemyShooter: {fileID: 1698335481268040, guid: a596515935f25fa4e844d201e99e2b00,
     type: 2}
   enemyDrone: {fileID: 1829746399886534, guid: 9278e1cdaf888b646b8fad95e0ec4a31, type: 2}
+  enemyShooter2: {fileID: 1829746399886534, guid: a3359d1d238a7884b97b5f5a64027331,
+    type: 2}
