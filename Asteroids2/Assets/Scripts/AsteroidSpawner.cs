@@ -96,12 +96,14 @@ public class AsteroidSpawner : MonoBehaviour {
 
 	public void SpawnEnemyBoss(int num)
     {
-		Vector3 spawnPoint = new Vector3(0, 6.3f, 0);
+		Vector3 spawnLocation = new Vector3(0, 6.3f, 0);
+		Vector3 spawnRotation = new Vector3(0, 0, 180);
 
         for (int i = 0; i < num; i++)
 		{
 			GameObject newEnemyBoss;
-			newEnemyBoss = Instantiate(enemyBoss, new Vector3(0, 6.3f, 0), Quaternion.identity);
+			newEnemyBoss = Instantiate(enemyBoss, spawnLocation, Quaternion.Euler(spawnRotation));
+			newEnemyBoss.transform.parent = gameObject.transform;
         }
     }
 }

@@ -37,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1574444117756076}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 3.6, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50502027856911260
 Rigidbody2D:
   serializedVersion: 4
@@ -191,6 +191,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c358450c5f30e475b885ecbd5f58480d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyBoss: {fileID: 1574444117756076}
+  rbody: {fileID: 50502027856911260}
+  boundary:
+    xMin: 0
+    xMax: 0
+    yMin: 0
+    yMax: 0
 --- !u!212 &212832178524084544
 SpriteRenderer:
   m_ObjectHideFlags: 1
