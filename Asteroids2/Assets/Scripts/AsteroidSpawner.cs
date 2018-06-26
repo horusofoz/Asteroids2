@@ -10,6 +10,8 @@ public class AsteroidSpawner : MonoBehaviour {
     public GameObject enemyShooter;
     public GameObject enemyDrone;
     public GameObject enemyShooter2;
+	public GameObject enemyBoss;
+
     Vector3 asteroidOffset = new Vector3(1, 1, 0);
 
     public static AsteroidSpawner instance = null;
@@ -89,6 +91,17 @@ public class AsteroidSpawner : MonoBehaviour {
             GameObject newEnemyShooter2;
             newEnemyShooter2 = Instantiate(enemyShooter2);
             newEnemyShooter2.transform.parent = gameObject.transform;
+        }
+    }
+
+	public void SpawnEnemyBoss(int num)
+    {
+		Vector3 spawnPoint = new Vector3(0, 6.3f, 0);
+
+        for (int i = 0; i < num; i++)
+		{
+			GameObject newEnemyBoss;
+			newEnemyBoss = Instantiate(enemyBoss, new Vector3(0, 6.3f, 0), Quaternion.identity);
         }
     }
 }

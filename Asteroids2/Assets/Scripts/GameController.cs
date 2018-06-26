@@ -10,13 +10,15 @@ public class Wave
     public int EnemyShootersToSpawn;
     public int EnemyDronesToSpawn;
     public int EnemyShooters2ToSpawn;
+	public int EnemyBossToSpawn;
 
-    public Wave(int numAsteroids, int numEnemyShooters, int numEnemyDrones, int numEnemyShooters2)
+    public Wave(int numAsteroids, int numEnemyShooters, int numEnemyDrones, int numEnemyShooters2, int numEnemyBoss)
     {
         AsteroidsToSpawn = numAsteroids;
         EnemyShootersToSpawn = numEnemyShooters;
         EnemyDronesToSpawn = numEnemyDrones;
         EnemyShooters2ToSpawn = numEnemyShooters2;
+		EnemyBossToSpawn = numEnemyBoss;
     }
 }
 
@@ -182,81 +184,91 @@ public class GameController : MonoBehaviour {
     {
         // Level 1 - Asteroids only
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 0, 0),
-            new Wave(2, 0, 0, 0)
+            new Wave(1, 0, 0, 0, 1),
+			new Wave(2, 0, 0, 0, 0)
         });
 
         // Level 2 - More asteroids
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 0, 0),
-            new Wave(2, 0, 0, 0),
-            new Wave(3, 0, 0, 0),
-            new Wave(3, 0, 0, 0)
+			new Wave(1, 0, 0, 0, 0),
+			new Wave(2, 0, 0, 0, 0),
+			new Wave(3, 0, 0, 0, 0),
+			new Wave(3, 0, 0, 0, 0)
         });
 
         // Level 3 - Asteroids , intro drones
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 0, 0),
-            new Wave(2, 0, 1, 0),
-            new Wave(2, 0, 1, 0),
-            new Wave(2, 0, 2, 0),
+			new Wave(1, 0, 0, 0, 0),
+			new Wave(2, 0, 1, 0, 0),
+			new Wave(2, 0, 1, 0, 0),
+			new Wave(2, 0, 2, 0, 0),
         });
 
         // Level 4 - Asteroids, drones
         waveList.Add(new List<Wave> {
-            new Wave(1, 0, 1, 0),
-            new Wave(2, 0, 2, 0),
-            new Wave(3, 0, 1, 0),
-            new Wave(3, 0, 3, 0)
+			new Wave(1, 0, 1, 0, 0),
+			new Wave(2, 0, 2, 0, 0),
+			new Wave(3, 0, 1, 0, 0),
+			new Wave(3, 0, 3, 0, 0)
         });
 
         // Level 5 - Asteroids, drones, intro shooters
         waveList.Add(new List<Wave> {
-            new Wave(2, 0, 1, 0),
-            new Wave(1, 1, 0, 0),
-            new Wave(0, 2, 1, 0),
-            new Wave(1, 2, 2, 0),
-            new Wave(1, 3, 2, 0)
+			new Wave(2, 0, 1, 0, 0),
+			new Wave(1, 1, 0, 0, 0),
+			new Wave(0, 2, 1, 0, 0),
+			new Wave(1, 2, 2, 0, 0),
+			new Wave(1, 3, 2, 0, 0)
         });
 
         // Level 6 - Asteroids, drones, shooters
         waveList.Add(new List<Wave> {
-            new Wave(1, 1, 1, 0),
-            new Wave(1, 1, 2, 0),
-            new Wave(2, 2, 0, 0),
-            new Wave(2, 2, 2, 0),
-            new Wave(2, 2, 2, 0),
-            new Wave(1, 3, 3, 0)
+			new Wave(1, 1, 1, 0, 0),
+			new Wave(1, 1, 2, 0, 0),
+			new Wave(2, 2, 0, 0, 0),
+			new Wave(2, 2, 2, 0, 0),
+			new Wave(2, 2, 2, 0, 0),
+			new Wave(1, 3, 3, 0, 0)
         });
 
         // Level 7 - Asteroids, drones, shooters, intro shooters2
         waveList.Add(new List<Wave> {
-            new Wave(1, 1, 1, 0),
-            new Wave(1, 0, 0, 1),
-            new Wave(2, 0, 1, 1),
-            new Wave(1, 1, 1, 1),
-            new Wave(1, 1, 0, 2),
-            new Wave(2, 2, 2, 1)
+			new Wave(1, 1, 1, 0, 0),
+			new Wave(1, 0, 0, 1, 0),
+			new Wave(2, 0, 1, 1, 0),
+			new Wave(1, 1, 1, 1, 0),
+			new Wave(1, 1, 0, 2, 0),
+			new Wave(2, 2, 2, 1, 0)
         });
 
         // Level 8 - Asteroids, drones, shooters, shooters2
         waveList.Add(new List<Wave> {
-            new Wave(1, 2, 2, 1),
-            new Wave(1, 1, 3, 2),
-            new Wave(2, 3, 2, 1),
-            new Wave(3, 1, 1, 2),
-            new Wave(1, 1, 3, 1),
-            new Wave(2, 2, 2, 3)
+			new Wave(1, 2, 2, 1, 0),
+			new Wave(1, 1, 3, 2, 0),
+			new Wave(2, 3, 2, 1, 0),
+			new Wave(3, 1, 1, 2, 0),
+			new Wave(1, 1, 3, 1, 0),
+			new Wave(2, 2, 2, 3, 0)
         });
 
-        // Level 9 - Asteroids, drones, shooters, shooters2
+        // Level 9 - More Asteroids, drones, shooters, shooters2
         waveList.Add(new List<Wave> {
-            new Wave(2, 2, 2, 1),
-            new Wave(2, 2, 1, 2),
-            new Wave(2, 3, 2, 2),
-            new Wave(3, 2, 2, 2),
-            new Wave(3, 2, 3, 1),
-            new Wave(2, 2, 2, 3)
+			new Wave(2, 2, 2, 1, 0),
+			new Wave(2, 2, 1, 2, 0),
+			new Wave(2, 3, 2, 2, 0),
+			new Wave(3, 2, 2, 2, 0),
+			new Wave(3, 2, 3, 1, 0),
+			new Wave(2, 2, 2, 3, 0)
+        });
+
+		// Level 10 - Boss, Asteroids, drones, shooters, shooters2
+        waveList.Add(new List<Wave> {
+			new Wave(0, 0, 0, 0, 1),
+			new Wave(2, 2, 1, 2, 0),
+			new Wave(2, 3, 2, 2, 0),
+			new Wave(3, 2, 2, 2, 0),
+			new Wave(3, 2, 3, 1, 0),
+			new Wave(2, 2, 2, 3, 0)
         });
     }
 
@@ -471,6 +483,7 @@ public class GameController : MonoBehaviour {
         AsteroidSpawner.instance.SpawnEnemyShooters(waveList[currentLevel - 1][currentWave - 1].EnemyShootersToSpawn);
         AsteroidSpawner.instance.SpawnEnemyDrones(waveList[currentLevel - 1][currentWave - 1].EnemyDronesToSpawn);
         AsteroidSpawner.instance.SpawnEnemyShooters2(waveList[currentLevel - 1][currentWave - 1].EnemyShooters2ToSpawn);
+		AsteroidSpawner.instance.SpawnEnemyBoss(waveList[currentLevel - 1][currentWave - 1].EnemyBossToSpawn);
         currentWave++;
         currentWaveTime = 0.0f;
     }
@@ -828,7 +841,4 @@ public class GameController : MonoBehaviour {
         Destroy(enemyBullet);
         AddScore(scoreEnemyBullet);
     }
-
-    
-
 }
